@@ -38,6 +38,8 @@ int main(int argc, char **argv)
 
 	GHashTable* hash = g_hash_table_new(g_str_hash, g_str_equal);
 
+	printf("Num Args: %d", argc);
+
 	if (argc < 1 ) {
 	       fprintf(stderr, "Expected minimum option -i\n");
 	       exit(EXIT_FAILURE);
