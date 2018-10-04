@@ -32,8 +32,8 @@ int main(int argc, char **argv)
 	FILE* outFile;
 	char *inFileName;
 	char *outFileName;
-	extern char *optarg;
-	extern int optind, optopt;
+	//extern char *optarg;
+	//extern int optind, optopt;
 
 	int labelCount;
 
@@ -58,11 +58,11 @@ int main(int argc, char **argv)
 				printf("optarg: %s\n", optarg);	
 				//inFileName = optarg;
 				inFileName = argv[2];
-				printf("inFileName: %s", inFileName);
+				printf("inFileName: %s\n", inFileName);
 				break;
 			case 'o':
 				outFileName = optarg;
-				printf("outFileName: %s", inFileName);
+				printf("outFileName: %s\n", inFileName);
 				break;
 			default:
             	fprintf(stderr, "Usage: %s [-i input file] \n",
