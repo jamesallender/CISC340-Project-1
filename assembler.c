@@ -57,8 +57,11 @@ int main(int argc, char **argv)
 			case 'i':
 				printf("optarg: %s\n", optarg);	
 				//inFileName = optarg;
-				//inFileName = argv[2];
-				inFileName = argv[(optind+1)];
+				inFileName = argv[2];
+				printf("1: %s\n", argv[(optind-1)]);
+				printf("2: %s\n", argv[(optind)]);
+				printf("3: %s\n", argv[(optind+1)]);
+				//inFileName = argv[(optind+1)];
 				printf("inFileName: %s\n", inFileName);
 				break;
 			case 'o':
