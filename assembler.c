@@ -29,20 +29,38 @@ int main(int argc, char **argv)
 
 	int opt;
 
-	FILE* myFile;
+	char* inFileName;
+	char* outFileName;
+	FILE* inFile;
+	FILE* outFile;
 
 	int labelCount;
 
 	GHashTable* hash = g_hash_table_new(g_str_hash, g_str_equal);
 
-	while ((opt = getopt(argc, argv, "i:")) != -1)
-	{
-               switch (opt)
-		{
-               	case 'i':
-			myFile = fopen(argument, "r");
+	if (argc < 1 ) {
+	       fprintf(stderr, "Expected minimum option -i\n");
+	       exit(EXIT_FAILURE);
+        }
+
+	while ((opt = getopt(argc, argv, "i:")) != -1){
+        exit(EXIT_SUCCESS);
+		switch (opt){
+			case 'i':
+				inFileName = argument;
+			case 'o':
+				outFileName = argument;
+			default:
+            	fprintf(stderr, "Usage: %s [-i input file] \n",
+                    	argv[0]);
+               	exit(EXIT_FAILURE);
+       }
+	}
+
+	// Process in File
+     inFile = fopen(inFileName, "r");
 			int lineAddress = 0;
-			while (fgets(line, 50, myFile) !=NULL)
+			while (fgets(line, 50, inFile) !=NULL)
         		{
 
 				if (line[0] == ' ' | line[0] == '\t'){}
@@ -59,17 +77,17 @@ int main(int argc, char **argv)
 			lineAddress++;
 			}
 			
-			fclose(myFile);
+			fclose(inFile);
 
 
 /*		SECOND PASS		*/
 
 
-			myFile = fopen(argument, "r");
+			inFile = fopen(inFileName, "r");
 
 			char *lineArr[6];
 
-			while (fgets(line, 50, myFile) !=NULL)
+			while (fgets(line, 50, inFile) !=NULL)
                         {
 			
 				//Cond: Line has no label	
@@ -88,7 +106,7 @@ int main(int argc, char **argv)
 				}
     				
 				//Cond: Line has a label
-                                else{
+                else{
 					lineArr[0] = strtok (line," \t"); //Label
 
 					lineArr[1] = strtok (NULL," \t"); //Opp Code
@@ -105,25 +123,13 @@ int main(int argc, char **argv)
                             	
                        	}
 
-			fclose(myFile);
+			fclose(inFile);
 
                    	break;
-
-		default:
-                	fprintf(stderr, "Usage: %s [-i input file] \n",
-                        	argv[0]);
-                   	exit(EXIT_FAILURE);
-               }
-	}
-
-	if (argc == 1 ) {
-               fprintf(stderr, "Expected option -i\n");
-               exit(EXIT_FAILURE);
-        }
-        exit(EXIT_SUCCESS);
  
     return 0;
 }//main
+
 
 int findOppCode ( char *name){
 
