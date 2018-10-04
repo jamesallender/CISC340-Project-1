@@ -29,10 +29,12 @@ int main(int argc, char **argv)
 
 	int opt;
 
-	char* inFileName;
-	char* outFileName;
 	FILE* inFile;
 	FILE* outFile;
+	char *inFileName;
+    char *outFileName;
+    extern char *optarg;
+    extern int optind, optopt;
 
 	int labelCount;
 
@@ -40,7 +42,7 @@ int main(int argc, char **argv)
 
 	GHashTable* hash = g_hash_table_new(g_str_hash, g_str_equal);
 
-	printf("Num Args: %d", argc);
+	printf("\nNum Args: %d\n", argc);
 
 	// Verify correct # of args given
 	if (argc != 3 && argc != 5 ) {
@@ -49,13 +51,13 @@ int main(int argc, char **argv)
         }
 
     // go through the args and get options
-    printf("befor while");
+    printf("befor while\n");
 	while ((opt = getopt(argc, argv, "io:")) != -1){
 		switch (opt){
 			printf("top of switch");
 			case 'i':
-				//inFileName = optarg;
-				inFileName = argv[2];
+				inFileName = optarg;
+				//inFileName = argv[2];
 				printf("inFileName: %s", inFileName);
 				break;
 			case 'o':
