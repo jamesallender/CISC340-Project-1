@@ -49,10 +49,10 @@ int main(int argc, char **argv)
         exit(EXIT_SUCCESS);
 		switch (opt){
 			case 'i':
-				inFile = argv[opt];
+				inFile = optarg;
 				break;
 			case 'o':
-				outFile = argv[opt];
+				outFile = optarg;
 
 				break;
 			default:
