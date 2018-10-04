@@ -48,8 +48,10 @@ int main(int argc, char **argv)
 		switch (opt){
 			case 'i':
 				inFileName = argument;
+				break;
 			case 'o':
 				outFileName = argument;
+				break;
 			default:
             	fprintf(stderr, "Usage: %s [-i input file] \n",
                     	argv[0]);
@@ -124,8 +126,6 @@ int main(int argc, char **argv)
                        	}
 
 			fclose(inFile);
-
-                   	break;
  
     return 0;
 }//main
