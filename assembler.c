@@ -29,8 +29,6 @@ int main(int argc, char **argv)
 
 	int opt;
 
-	char* inFileName;
-	char* outFileName;
 	FILE* inFile;
 	FILE* outFile;
 
@@ -40,19 +38,22 @@ int main(int argc, char **argv)
 
 	printf("Num Args: %d", argc);
 
+	// Verify correct # of args given
 	if (argc != 3 && argc != 5 ) {
 	       fprintf(stderr, "Expected minimum option -i\n");
 	       exit(EXIT_FAILURE);
         }
 
+    // go through the args and get options
 	while ((opt = getopt(argc, argv, "io:")) != -1){
         exit(EXIT_SUCCESS);
 		switch (opt){
 			case 'i':
-				inFileName = argument;
+				inFile = argv[opt];
 				break;
 			case 'o':
-				outFileName = argument;
+				outFile = argv[opt];
+
 				break;
 			default:
             	fprintf(stderr, "Usage: %s [-i input file] \n",
@@ -62,7 +63,7 @@ int main(int argc, char **argv)
 	}
 
 	// Process in File
-     inFile = fopen(inFileName, "r");
+     inFile = fopen(inFile, "r");
 			int lineAddress = 0;
 			while (fgets(line, 50, inFile) !=NULL)
         		{
