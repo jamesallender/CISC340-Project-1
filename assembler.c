@@ -19,7 +19,7 @@ int main(int argc, char **argv)
 {
 	char *argument = argv[2];
 
-    	char line[8];
+    char line[8];
 
 	char* pEnd;
 
@@ -33,8 +33,8 @@ int main(int argc, char **argv)
 	FILE* outFile;
 	char *inFileName;
     char *outFileName;
-    //extern char *optarg;
-    //extern int optind, optopt;
+    // extern char *optarg;
+    // extern int optind, optopt;
 
 	int labelCount;
 
