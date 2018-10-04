@@ -40,12 +40,12 @@ int main(int argc, char **argv)
 
 	printf("Num Args: %d", argc);
 
-	if (argc < 1 ) {
+	if (argc != 3 || argc != 5 ) {
 	       fprintf(stderr, "Expected minimum option -i\n");
 	       exit(EXIT_FAILURE);
         }
 
-	while ((opt = getopt(argc, argv, "i:")) != -1){
+	while ((opt = getopt(argc, argv, "io:")) != -1){
         exit(EXIT_SUCCESS);
 		switch (opt){
 			case 'i':
