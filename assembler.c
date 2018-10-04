@@ -63,6 +63,9 @@ int main(int argc, char **argv)
 				printf("inFileName: %s\n", inFileName);
 				break;
 			case 'o':
+				printf("arg: %s\n", argv[(optind-1)]);
+				printf("arg: %s\n", argv[(optind)]);
+				printf("arg: %s\n", argv[(optind+1)]);
 				outFileName = argv[(optind)];
 				printf("outFileName: %s\n", outFileName);
 				break;
