@@ -74,73 +74,87 @@ int main(int argc, char **argv)
        }
 	}
 
-	// Process in File
-     inFile = fopen(inFileName, "r");
-			int lineAddress = 0;
-			while (fgets(line, 50, inFile) !=NULL)
-        		{
-
-				if (line[0] == ' ' | line[0] == '\t'){}
-
-				else{
-					labelCount = labelCount + 1;
-					char * label;
-                                        label = strtok (line," \t");
-					g_hash_table_insert(hash, label, GINT_TO_POINTER(lineAddress));
-					
-					int myVal = GPOINTER_TO_INT(g_hash_table_lookup(hash, label));
-					printf ("label: %s | address: %d\n",label, myVal);                                                  
-				}//else
-			lineAddress++;
-			}
+	// Process inFile
+	/*		FIRST PASS		*/
+	inFile = fopen(inFileName, "r");
+	int lineAddress = 0;
+	while (fgets(line, 50, inFile) !=NULL){
+		if (line[0] != ' ' && line[0] != '\t'){
+			labelCount = labelCount + 1;
+			char * label;
+                                label = strtok (line," \t");
+			g_hash_table_insert(hash, label, GINT_TO_POINTER(lineAddress));
 			
-			fclose(inFile);
-
+			int myVal = GPOINTER_TO_INT(g_hash_table_lookup(hash, label));
+			printf ("label: %s | address: %d\n",label, myVal);                                                  
+		}//if
+	lineAddress++;
+	}
+	fclose(inFile);
 
 /*		SECOND PASS		*/
+	inFile = fopen(inFileName, "r");
 
+	char *lineArr[4];
 
-			inFile = fopen(inFileName, "r");
-
-			char *lineArr[6];
-
-			while (fgets(line, 50, inFile) !=NULL)
-                        {
+	while (fgets(line, 50, inFile) !=NULL)
+                {
+	
+		//Cond: Line has no label	
+		if (line[0] == ' ' | line[0] == '\t' && lineArr[0] != NULL){
 			
-				//Cond: Line has no label	
-				if (line[0] == ' ' | line[0] == '\t' && lineArr[0] != NULL){
-					
-					lineArr[0] = strtok (line," \t");//Opp Code
-						
-					lineArr[1] = strtok (NULL," \t"); //First Element
+			lineArr[0] = strtok (line," \t");//0th Element Opp Code
+				
+			lineArr[1] = strtok (NULL," \t"); //First Element
 
-					lineArr[2] = strtok (NULL," \t"); //Second Element
+			lineArr[2] = strtok (NULL," \t"); //Second Element
 
-					lineArr[3] = strtok (NULL," \t"); //Third Element
+			lineArr[3] = strtok (NULL," \t"); //Third Element
 
-					printf ("Opp Code: %d | string: %s\n", findOppCode(lineArr[0]), lineArr[0]);
+			printf ("Opp Code: %d | string: %s\n", findOppCode(lineArr[0]), lineArr[0]);
 
-				}
-    				
-				//Cond: Line has a label
-                else{
-					lineArr[0] = strtok (line," \t"); //Label
+		}
+			
+		//Cond: Line has a label
+        else{
+			strtok (line," \t"); //Label
 
-					lineArr[1] = strtok (NULL," \t"); //Opp Code
-	
-					lineArr[2] = strtok (NULL," \t"); //First Element
+			lineArr[0] = strtok (NULL," \t"); //0th Element Opp Code
 
-					lineArr[3] = strtok (NULL," \t"); //Second Element
+			lineArr[1] = strtok (NULL," \t"); //First Element
 
-					lineArr[4] = strtok (NULL," \t"); //Third Element
-	
-					printf ("Opp Code: %d | string: %s\n", findOppCode(lineArr[1]), lineArr[1]);
+			lineArr[2] = strtok (NULL," \t"); //Second Element
 
-                                }//else
-                            	
-                       	}
+			lineArr[3] = strtok (NULL," \t"); //Third Element
 
-			fclose(inFile);
+			printf ("Opp Code: %d | string: %s\n", findOppCode(lineArr[0]), lineArr[0]);
+
+                        }//else
+                    	
+               	}
+
+        int optCode = findOppCode(lineArr[0])
+        // R type
+      	if(optCode == 0 || optCode == 1){
+
+      	}
+      	// I type
+      	else if(optCode == 2 || optCode == 3 || optCode == 4){
+
+      	}
+      	// J type
+      	else if(optCode == 5){
+
+      	}
+      	// O type
+      	else if(optCode == 6 || optCode == 7){
+
+      	}
+      	// Not found
+      	else{
+      		printf("Opt code was not found\n");
+      	}
+	fclose(inFile);
  
     return 0;
 }//main
