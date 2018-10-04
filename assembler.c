@@ -1,0 +1,157 @@
+/* 
+James Allender
+Mitchell Nelson
+CISC-340 
+Project 01
+*/
+
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <math.h>
+#include <glib.h>
+#include <string.h>
+
+
+int findOppCode ( char *name);
+
+int main(int argc, char **argv)
+{
+	char *argument = argv[2];
+
+    	char line[8];
+
+	char* pEnd;
+
+	int index;
+
+	index = 0;
+
+	int opt;
+
+	FILE* myFile;
+
+	int labelCount;
+
+	GHashTable* hash = g_hash_table_new(g_str_hash, g_str_equal);
+
+	while ((opt = getopt(argc, argv, "i:")) != -1)
+	{
+               switch (opt)
+		{
+               	case 'i':
+			myFile = fopen(argument, "r");
+			int lineAddress = 0;
+			while (fgets(line, 50, myFile) !=NULL)
+        		{
+
+				if (line[0] == ' ' | line[0] == '\t'){}
+
+				else{
+					labelCount = labelCount + 1;
+					char * label;
+                                        label = strtok (line," \t");
+					g_hash_table_insert(hash, label, GINT_TO_POINTER(lineAddress));
+					
+					int myVal = GPOINTER_TO_INT(g_hash_table_lookup(hash, label));
+					printf ("label: %s | address: %d\n",label, myVal);                                                  
+				}//else
+			lineAddress++;
+			}
+			
+			fclose(myFile);
+
+
+/*		SECOND PASS		*/
+
+
+			myFile = fopen(argument, "r");
+
+			char *lineArr[6];
+
+			while (fgets(line, 50, myFile) !=NULL)
+                        {
+			
+				//Cond: Line has no label	
+				if (line[0] == ' ' | line[0] == '\t' && lineArr[0] != NULL){
+					
+					lineArr[0] = strtok (line," \t");//Opp Code
+						
+					lineArr[1] = strtok (NULL," \t"); //First Element
+
+					lineArr[2] = strtok (NULL," \t"); //Second Element
+
+					lineArr[3] = strtok (NULL," \t"); //Third Element
+
+					printf ("Opp Code: %d | string: %s\n", findOppCode(lineArr[0]), lineArr[0]);
+
+				}
+    				
+				//Cond: Line has a label
+                                else{
+					lineArr[0] = strtok (line," \t"); //Label
+
+					lineArr[1] = strtok (NULL," \t"); //Opp Code
+	
+					lineArr[2] = strtok (NULL," \t"); //First Element
+
+					lineArr[3] = strtok (NULL," \t"); //Second Element
+
+					lineArr[4] = strtok (NULL," \t"); //Third Element
+	
+					printf ("Opp Code: %d | string: %s\n", findOppCode(lineArr[1]), lineArr[1]);
+
+                                }//else
+                            	
+                       	}
+
+			fclose(myFile);
+
+                   	break;
+
+		default:
+                	fprintf(stderr, "Usage: %s [-i input file] \n",
+                        	argv[0]);
+                   	exit(EXIT_FAILURE);
+               }
+	}
+
+	if (argc == 1 ) {
+               fprintf(stderr, "Expected option -i\n");
+               exit(EXIT_FAILURE);
+        }
+        exit(EXIT_SUCCESS);
+ 
+    return 0;
+}//main
+
+int findOppCode ( char *name){
+
+	if ( strcmp( "add", name) == 0 ){
+		return 0;
+	}
+	if ( strcmp( "nand", name) == 0 ){
+		return 1;
+	}
+	if ( strcmp( "lw", name) == 0 ){
+		return 2;
+	}
+	if ( strcmp( "sw", name) == 0 ){
+		return 3;
+	}
+	if ( strcmp( "beq", name) == 0 ){
+		return 4;
+	}
+	if ( strcmp( "jalr", name) == 0 ){
+		return 5;
+	}
+	if ( strcmp( "halt", name) == 0 ){
+		return 6;
+	}
+	if ( strcmp( "noop", name) == 0 ){
+		return 7;
+	}
+	
+}//findOppCode
+
+
