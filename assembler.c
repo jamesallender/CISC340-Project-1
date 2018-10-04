@@ -55,7 +55,7 @@ int main(int argc, char **argv)
 			printf("top of switch");
 			case 'i':
 				//inFileName = optarg;
-				inFileName = argv[2]
+				inFileName = argv[2];
 				printf("inFileName: %s", inFileName);
 				break;
 			case 'o':
