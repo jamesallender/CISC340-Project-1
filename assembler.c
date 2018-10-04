@@ -29,6 +29,8 @@ int main(int argc, char **argv)
 
 	int opt;
 
+	char* inFileName;
+	char* outFileName;
 	FILE* inFile;
 	FILE* outFile;
 
@@ -49,11 +51,11 @@ int main(int argc, char **argv)
         exit(EXIT_SUCCESS);
 		switch (opt){
 			case 'i':
-				inFile = optarg;
+				inFileName = argv[opt];
+				printf("Num Args: %s", inFileName);
 				break;
 			case 'o':
-				outFile = optarg;
-
+				outFileName = argv[opt];
 				break;
 			default:
             	fprintf(stderr, "Usage: %s [-i input file] \n",
@@ -63,7 +65,7 @@ int main(int argc, char **argv)
 	}
 
 	// Process in File
-     inFile = fopen(inFile, "r");
+     inFile = fopen(inFileName, "r");
 			int lineAddress = 0;
 			while (fgets(line, 50, inFile) !=NULL)
         		{
