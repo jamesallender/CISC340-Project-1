@@ -50,9 +50,10 @@ int main(int argc, char **argv)
 	while ((opt = getopt(argc, argv, "io:")) != -1){
         exit(EXIT_SUCCESS);
 		switch (opt){
+			printf("inFileName: %s", opt);
 			case 'i':
 				inFileName = argv[opt];
-				printf("Num Args: %s", inFileName);
+				printf("inFileName: %s", inFileName);
 				break;
 			case 'o':
 				outFileName = argv[opt];
