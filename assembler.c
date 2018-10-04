@@ -49,10 +49,10 @@ int main(int argc, char **argv)
         }
 
     // go through the args and get options
-    printf("befor while")
+    printf("befor while");
 	while ((opt = getopt(argc, argv, "io:")) != -1){
 		switch (opt){
-			printf("inFileName: %s", opt);
+			printf("top of switch");
 			case 'i':
 				inFileName = optarg;
 				printf("inFileName: %s", inFileName);
