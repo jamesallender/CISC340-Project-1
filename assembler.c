@@ -28,17 +28,16 @@ int main(int argc, char **argv)
 	index = 0;
 
 	int opt;
-
 	FILE* inFile;
 	FILE* outFile;
 	char *inFileName;
-    char *outFileName;
-    // extern char *optarg;
-    // extern int optind, optopt;
+	char *outFileName;
+	// extern char *optarg;
+	// extern int optind, optopt;
 
 	int labelCount;
 
-	extern char * optarg;
+	//extern char * optarg;
 
 	GHashTable* hash = g_hash_table_new(g_str_hash, g_str_equal);
 
