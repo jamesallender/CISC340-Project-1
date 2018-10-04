@@ -32,8 +32,8 @@ int main(int argc, char **argv)
 	FILE* outFile;
 	char *inFileName;
 	char *outFileName;
-	// extern char *optarg;
-	// extern int optind, optopt;
+	extern char *optarg;
+	extern int optind, optopt;
 
 	int labelCount;
 
@@ -55,7 +55,7 @@ int main(int argc, char **argv)
 		switch (opt){
 			printf("top of switch");
 			case 'i':
-				printf("optarg: %s\n", optarg)
+				printf("optarg: %s\n", optarg);	
 				//inFileName = optarg;
 				inFileName = argv[2];
 				printf("inFileName: %s", inFileName);
