@@ -63,8 +63,8 @@ int main(int argc, char **argv)
 				printf("inFileName: %s\n", inFileName);
 				break;
 			case 'o':
-				outFileName = optarg;
-				printf("outFileName: %s\n", inFileName);
+				outFileName = argv[(optind)];
+				printf("outFileName: %s\n", outFileName);
 				break;
 			default:
             	fprintf(stderr, "Usage: %s [-i input file] \n",
