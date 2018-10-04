@@ -40,7 +40,7 @@ int main(int argc, char **argv)
 
 	printf("Num Args: %d", argc);
 
-	if (argc != 3 || argc != 5 ) {
+	if (argc != 3 && argc != 5 ) {
 	       fprintf(stderr, "Expected minimum option -i\n");
 	       exit(EXIT_FAILURE);
         }
