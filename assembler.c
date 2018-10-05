@@ -124,16 +124,16 @@ int main(int argc, char **argv)
 
 /*		CAST AND ASSIGN VALUES 	  */
         int optCode = findOppCode(lineArr[0]);
-	int regA;
-	int regB;
+	int element1;
+	int element2;
 	if (isNumber (lineArr[1]) == 1 ){
-		regA = toNum ( lineArr[1]);
+		element1 = toNum ( lineArr[1]);
 	}
 	else{
 		fprintf(stderr, "Invalid value for regA in input file");
 	}
 	if (isNumber (lineArr[2]) == 1 ){
-		regB = toNum ( lineArr[2]);
+		element2 = toNum ( lineArr[2]);
 	}
 	else{
 		fprintf(stderr, "Invalid value for regB in input file");
@@ -141,8 +141,8 @@ int main(int argc, char **argv)
 	if (1){
 		printf("");
 	}
-	printf("\n\nregA: %d | regB: %d\n\n", regA, regB);
-        int instruction;
+	printf("\n\nelement1: %d | element2: %d\n\n", element1, element2);
+        int instruction = 0;
 
 
 
@@ -151,8 +151,9 @@ int main(int argc, char **argv)
       	if(optCode == 0 || optCode == 1){
       		printf("Found R type Instruction\n");
       		optCode = optCode << 22;
-		//regA = regA << 19;
-      		//instruction = instruction | optCode | regA;
+		element1 = element1 << 19;
+		element2 = element2 << 16;
+      		instruction = instruction | optCode | element1 | element2;
 		
       		printf("instruction: %d | opCode: %d\n", instruction,optCode);
 
