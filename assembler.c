@@ -129,6 +129,8 @@ int main(int argc, char **argv)
         }//else
 
         int optCode = findOppCode(lineArr[0]);
+
+	if (isNumber(lineArr[1]))
 	//int regA = lineArr[1];
         int instruction;
         // R type
