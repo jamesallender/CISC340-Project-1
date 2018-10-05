@@ -135,6 +135,7 @@ int main(int argc, char **argv)
       		printf("Found R type Instruction\n");
       		optCode = optCode << 22;
       		instruction = instruction | optCode;
+      		printf("%d", instruction)
 
       	}
       	// I type
