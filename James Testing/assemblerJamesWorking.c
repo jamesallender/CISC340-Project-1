@@ -35,7 +35,7 @@ int main(int argc, char **argv)
 
     // go through the args and get options
     printf("befor while\n");
-	while ((opt = getopt(argc, argv, "io:")) != -1){
+	while ((opt = getopt(argc, argv, "i:o:")) != -1){
 		switch (opt){
 			printf("top of switch");
 			case 'i':
