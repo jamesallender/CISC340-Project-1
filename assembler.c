@@ -56,8 +56,7 @@ int main(int argc, char **argv)
 				printf("outFileName: %s\n", outFileName);
 				break;
 			default:
-            	fprintf(stderr, "Was given an unexpected argument.\n Expected -i [input file] -o [output file]\nExiting\n",
-                    	argv[0]);
+            	fprintf(stderr, "Was given an unexpected argument, was given %s.\n Expected -i [input file] -o [output file]\nExiting\n",opt);
                	exit(EXIT_FAILURE);
        }
 	}
