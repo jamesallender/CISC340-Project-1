@@ -127,8 +127,6 @@ int main(int argc, char **argv)
 			printf ("Opp Code: %d | string: %s\n", findOppCode(lineArr[0]), lineArr[0]);
 
         }//else
-                    	
-   	}
 
         int optCode = findOppCode(lineArr[0]);
         int instruction;
@@ -158,6 +156,7 @@ int main(int argc, char **argv)
       	else{
       		printf("Opt code was not found\n");
       	}
+    }
 	fclose(inFile);
  
     return 0;
