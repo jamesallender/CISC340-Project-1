@@ -148,7 +148,10 @@ int main(int argc, char **argv)
 	else{
 		fprintf(stderr, "Invalid value for regB in input file");
 	}
-	printf("\n\n\nregA: %d | regB: %d\n\n", regA, regB);
+	if ( ){
+
+	}
+	printf("\n\nregA: %d | regB: %d\n\n", regA, regB);
         int instruction;
 
 
