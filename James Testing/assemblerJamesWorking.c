@@ -39,12 +39,16 @@ int main(int argc, char **argv)
 		switch (opt){
 			printf("top of switch");
 			case 'i':
+				printf("arg: %s\n", argv[(optind-1)]);
 				printf("arg: %s\n", argv[(optind)]);
+				printf("arg: %s\n", argv[(optind+1)]);
 				inFileName = argv[(optind)];
 				printf("inFileName: %s\n", inFileName);
 				break;
 			case 'o':
 				printf("arg: %s\n", argv[(optind-1)]);
+				printf("arg: %s\n", argv[(optind)]);
+				printf("arg: %s\n", argv[(optind+1)]);
 				outFileName = argv[(optind-1)];
 				printf("outFileName: %s\n", outFileName);
 				break;
