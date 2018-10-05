@@ -97,9 +97,7 @@ int main(int argc, char **argv)
 
 	char *lineArr[4];
 
-	while (fgets(line, 50, inFile) !=NULL)
-                {
-	
+	while (fgets(line, 50, inFile) !=NULL){
 		//Cond: Line has no label	
 		if (line[0] == ' ' | line[0] == '\t' && lineArr[0] != NULL){
 			
@@ -113,8 +111,7 @@ int main(int argc, char **argv)
 
 			printf ("Opp Code: %d | string: %s\n", findOppCode(lineArr[0]), lineArr[0]);
 
-		}
-			
+		}// if
 		//Cond: Line has a label
         else{
 			strtok (line," \t"); //Label
@@ -129,25 +126,32 @@ int main(int argc, char **argv)
 
 			printf ("Opp Code: %d | string: %s\n", findOppCode(lineArr[0]), lineArr[0]);
 
-                        }//else
+        }//else
                     	
-               	}
+   	}
 
-        int optCode = findOppCode(lineArr[0])
+        int optCode = findOppCode(lineArr[0]);
+        int instruction;
         // R type
       	if(optCode == 0 || optCode == 1){
+      		printf("Found R type Instruction\n");
+      		optCode = optCode << 22;
+      		instruction = instruction | optCode;
 
       	}
       	// I type
       	else if(optCode == 2 || optCode == 3 || optCode == 4){
+      		printf("Found I type Instruction\n");
 
       	}
       	// J type
       	else if(optCode == 5){
+      		printf("Found J type Instruction\n");
 
       	}
       	// O type
       	else if(optCode == 6 || optCode == 7){
+      		printf("Found O type Instruction\n");
 
       	}
       	// Not found
