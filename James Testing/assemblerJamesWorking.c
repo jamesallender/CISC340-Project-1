@@ -17,27 +17,11 @@ int findOppCode ( char *name);
 
 int main(int argc, char **argv)
 {
-	char *argument = argv[2];
-
-    char line[8];
-
-	char* pEnd;
-
-	int index;
-
-	index = 0;
-
 	int opt;
 	FILE* inFile;
 	FILE* outFile;
 	char *inFileName;
 	char *outFileName;
-	//extern char *optarg;
-	//extern int optind, optopt;
-
-	int labelCount;
-
-	//extern char * optarg;
 
 	GHashTable* hash = g_hash_table_new(g_str_hash, g_str_equal);
 
@@ -55,9 +39,6 @@ int main(int argc, char **argv)
 		switch (opt){
 			printf("top of switch");
 			case 'i':
-				printf("optarg: %s\n", optarg);	
-				//inFileName = optarg;
-				//inFileName = argv[2];
 				printf("arg: %s\n", argv[(optind)]);
 				inFileName = argv[(optind)];
 				printf("inFileName: %s\n", inFileName);
@@ -78,6 +59,9 @@ int main(int argc, char **argv)
 	/*		FIRST PASS		*/
 	inFile = fopen(inFileName, "r");
 	int lineAddress = 0;
+	char line[5];
+	int labelCount;
+
 	while (fgets(line, 50, inFile) !=NULL){
 		if (line[0] != ' ' && line[0] != '\t'){
 			labelCount = labelCount + 1;
