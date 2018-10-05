@@ -129,13 +129,16 @@ int main(int argc, char **argv)
         }//else
 
         int optCode = findOppCode(lineArr[0]);
+	//int regA = lineArr[1];
         int instruction;
         // R type
       	if(optCode == 0 || optCode == 1){
       		printf("Found R type Instruction\n");
       		optCode = optCode << 22;
-      		instruction = instruction | optCode;
-      		printf("%d", instruction);
+		//regA = regA << 19;
+      		//instruction = instruction | optCode | regA;
+		
+      		printf("instruction: %d | opCode: %d\n", instruction,optCode);
 
       	}
       	// I type
@@ -193,4 +196,22 @@ int findOppCode ( char *name){
 	
 }//findOppCode
 
+int isNumber ( char *string){
+	char *refBuf;
+	strtol (string, &refBuf, 8);
+	if ( refBuf[0] != '\0' ){
+		return -1;
+	}
+	else {
+		return 1;
+	}
+}//findNumValue 5x67
 
+int toNum ( char *string){
+
+	char *refBuf;
+	int result;
+	result = strtol (string, &refBuf, 8);
+	return result;
+
+}
