@@ -15,6 +15,10 @@ Project 01
 
 int findOppCode ( char *name);
 
+int isNumber ( char *string);
+
+int toNum ( char *string);
+
 int main(int argc, char **argv)
 {
 	char *argument = argv[2];
@@ -128,11 +132,28 @@ int main(int argc, char **argv)
 
         }//else
 
+/*		CAST AND ASSIGN VALUES 	  */
         int optCode = findOppCode(lineArr[0]);
-
-	if (isNumber(lineArr[1]))
-	//int regA = lineArr[1];
+	int regA;
+	int regB;
+	if (isNumber (lineArr[1]) == 1 ){
+		regA = toNum ( lineArr[1]);
+	}
+	else{
+		fprintf(stderr, "Invalid value for regA in input file");
+	}
+	if (isNumber (lineArr[2]) == 1 ){
+		regB = toNum ( lineArr[2]);
+	}
+	else{
+		fprintf(stderr, "Invalid value for regB in input file");
+	}
+	printf("\n\n\nregA: %d | regB: %d\n\n", regA, regB);
         int instruction;
+
+
+
+/*              PACK VALUES INTO INTEGERS    */
         // R type
       	if(optCode == 0 || optCode == 1){
       		printf("Found R type Instruction\n");
@@ -202,7 +223,7 @@ int isNumber ( char *string){
 	char *refBuf;
 	strtol (string, &refBuf, 8);
 	if ( refBuf[0] != '\0' ){
-		return -1;
+		return 0;
 	}
 	else {
 		return 1;
