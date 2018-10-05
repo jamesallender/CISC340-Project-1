@@ -21,27 +21,15 @@ int toNum ( char *string);
 
 int main(int argc, char **argv)
 {
-	char *argument = argv[2];
+	int opt; // the value of the opt form getopt
+	FILE* inFile; // our input File
+	FILE* outFile; // our output File
+	char *inFileName; // our input file name
+	char *outFileName; // our output file name
+	bool iFlag = 0; // Flag to tell us if an i option (requiered) has been given
 
-    char line[8];
-
-	char* pEnd;
-
-	int index;
-
-	index = 0;
-
-	int opt;
-	FILE* inFile;
-	FILE* outFile;
-	char *inFileName;
-	char *outFileName;
-	//extern char *optarg;
-	//extern int optind, optopt;
-
-	int labelCount;
-
-	//extern char * optarg;
+	extern char *optarg; 
+	extern int optind;
 
 	GHashTable* hash = g_hash_table_new(g_str_hash, g_str_equal);
 
@@ -49,39 +37,42 @@ int main(int argc, char **argv)
 
 	// Verify correct # of args given
 	if (argc != 3 && argc != 5 ) {
-	       fprintf(stderr, "Expected minimum option -i\n");
+	       fprintf(stderr, "Was not given either 1 or 2 sets of input arguments.\nShould be: -i [input file] -o [output file]\nExiting\n");
 	       exit(EXIT_FAILURE);
         }
 
     // go through the args and get options
     printf("befor while\n");
-	while ((opt = getopt(argc, argv, "io:")) != -1){
+	while ((opt = getopt(argc, argv, "i:o:")) != -1){
 		switch (opt){
 			printf("top of switch");
 			case 'i':
-				printf("optarg: %s\n", optarg);	
-				//inFileName = optarg;
-				//inFileName = argv[2];
-				printf("arg: %s\n", argv[(optind)]);
-				inFileName = argv[(optind)];
+				inFileName = optarg;
 				printf("inFileName: %s\n", inFileName);
+				iFlag = 1;
 				break;
 			case 'o':
-				printf("arg: %s\n", argv[(optind-1)]);
-				outFileName = argv[(optind-1)];
+				outFileName = optarg;
 				printf("outFileName: %s\n", outFileName);
 				break;
 			default:
-            	fprintf(stderr, "Usage: %s [-i input file] \n",
+            	fprintf(stderr, "Was given an unexpected argument.\n Expected -i [input file] -o [output file]\nExiting\n",
                     	argv[0]);
                	exit(EXIT_FAILURE);
        }
 	}
+	// Check to make sure we were given an input file
+	if (iFlag == 0) {
+       fprintf(stderr, "Expected minimum option -i\nNot Provided\nExiting\n");
+       exit(EXIT_FAILURE);
+    }
 
 	// Process inFile
 	/*		FIRST PASS		*/
 	inFile = fopen(inFileName, "r");
 	int lineAddress = 0;
+	char line[5];
+	int labelCount;
 	while (fgets(line, 50, inFile) !=NULL){
 		if (line[0] != ' ' && line[0] != '\t'){
 			labelCount = labelCount + 1;
@@ -148,8 +139,8 @@ int main(int argc, char **argv)
 	else{
 		fprintf(stderr, "Invalid value for regB in input file");
 	}
-	if ( ){
-
+	if (1){
+		printf("");
 	}
 	printf("\n\nregA: %d | regB: %d\n\n", regA, regB);
         int instruction;

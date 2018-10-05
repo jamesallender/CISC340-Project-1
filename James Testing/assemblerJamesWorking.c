@@ -17,11 +17,12 @@ int findOppCode ( char *name);
 
 int main(int argc, char **argv)
 {
-	int opt;
-	FILE* inFile;
-	FILE* outFile;
-	char *inFileName;
-	char *outFileName;
+	int opt; // the value of the opt form getopt
+	FILE* inFile; // our input File
+	FILE* outFile; // our output File
+	char *inFileName; // our input file name
+	char *outFileName; // our output file name
+	bool iFlag = 0; // Flag to tell us if an i option (requiered) has been given
 
 	extern char *optarg; 
 	extern int optind;
@@ -32,7 +33,7 @@ int main(int argc, char **argv)
 
 	// Verify correct # of args given
 	if (argc != 3 && argc != 5 ) {
-	       fprintf(stderr, "Expected minimum option -i\n");
+	       fprintf(stderr, "Was not given either 1 or 2 sets of input arguments.\nShould be: -i [input file] -o [output file]\nExiting\n");
 	       exit(EXIT_FAILURE);
         }
 
@@ -42,21 +43,25 @@ int main(int argc, char **argv)
 		switch (opt){
 			printf("top of switch");
 			case 'i':
-				printf("optarg: %s\n", optarg);
 				inFileName = optarg;
 				printf("inFileName: %s\n", inFileName);
+				iFlag = 1;
 				break;
 			case 'o':
-				printf("optarg: %s\n", optarg);
 				outFileName = optarg;
 				printf("outFileName: %s\n", outFileName);
 				break;
 			default:
-            	fprintf(stderr, "Usage: %s [-i input file] \n",
+            	fprintf(stderr, "Was given an unexpected argument.\n Expected -i [input file] -o [output file]\nExiting\n",
                     	argv[0]);
                	exit(EXIT_FAILURE);
        }
 	}
+	// Check to make sure we were given an input file
+	if (iFlag == 0) {
+       fprintf(stderr, "Expected minimum option -i\nNot Provided\nExiting\n");
+       exit(EXIT_FAILURE);
+    }
 
 	// Process inFile
 	/*		FIRST PASS		*/
