@@ -23,6 +23,9 @@ int main(int argc, char **argv)
 	char *inFileName;
 	char *outFileName;
 
+	extern char *optarg; 
+	extern int optind;
+
 	GHashTable* hash = g_hash_table_new(g_str_hash, g_str_equal);
 
 	printf("\nNum Args: %d\n", argc);
@@ -39,16 +42,18 @@ int main(int argc, char **argv)
 		switch (opt){
 			printf("top of switch");
 			case 'i':
-				printf("arg: %s\n", argv[(optind-1)]);
+				printf("optarg: %s\n", optarg);
+				printf("arg-1: %s\n", argv[(optind-1)]);
 				printf("arg: %s\n", argv[(optind)]);
-				printf("arg: %s\n", argv[(optind+1)]);
+				printf("arg+1: %s\n", argv[(optind+1)]);
 				inFileName = argv[(optind)];
 				printf("inFileName: %s\n", inFileName);
 				break;
 			case 'o':
-				printf("arg: %s\n", argv[(optind-1)]);
+				printf("optarg: %s\n", optarg);
+				printf("arg-1: %s\n", argv[(optind-1)]);
 				printf("arg: %s\n", argv[(optind)]);
-				printf("arg: %s\n", argv[(optind+1)]);
+				printf("arg+1: %s\n", argv[(optind+1)]);
 				outFileName = argv[(optind-1)];
 				printf("outFileName: %s\n", outFileName);
 				break;
