@@ -26,7 +26,7 @@ int main(int argc, char **argv)
 	FILE* outFile; // our output File
 	char *inFileName; // our input file name
 	char *outFileName; // our output file name
-	bool iFlag = 0; // Flag to tell us if an i option (requiered) has been given
+	int iFlag = 0; // Flag to tell us if an i option (requiered) has been given
 
 	extern char *optarg; 
 	extern int optind;
