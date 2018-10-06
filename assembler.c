@@ -131,13 +131,15 @@ int main(int argc, char **argv){
 
 
 /*              PACK VALUES INTO INTEGERS    */
+
+        int optCode = findOppCode(lineArr[0]);
         // R type
       	if(optCode == 0 || optCode == 1){
       		printf("Found R type Instruction\n");
       		optCode = optCode << 22;
-			element1 = element1 << 19;
-			element2 = element2 << 16;
-      		instruction = instruction | optCode | element1 | element2;
+			//element1 = element1 << 19;
+			//element2 = element2 << 16;
+      		//instruction = instruction | optCode | element1 | element2;
 		
       		printf("instruction: %d | opCode: %d\n", instruction,optCode);
 
