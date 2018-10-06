@@ -147,7 +147,7 @@ int main(int argc, char **argv){
 	  	int regA;
 	  	int regB;
 	  	int offset;
-	  	int instruction;
+	  	int instruction = 0;
 
 	  	int optCodeOffset = 22;
 		int regAOffset = 19;
