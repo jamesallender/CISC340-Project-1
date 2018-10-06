@@ -39,13 +39,14 @@ int main(int argc, char **argv){
 
 	// Verify correct # of args given either 3 or 5 for 1 or 2 options (i,o)
 	if (argc != 3 && argc != 5 ) {
-	       fprintf(stderr, "Was not given either 1 or 2 sets of input arguments.\nShould be: -i [input file] -o [output file]\nExiting\n");
+	       fprintf(stderr, "Was not given either 1 or 2 sets of input arguments.\nShould be: -i [input file] -o [output file]\nOr: -i [input file]\nExiting\n");
 	       exit(EXIT_FAILURE);
         }
 
     // go through the args and get options
 	while ((opt = getopt(argc, argv, "i:o:")) != -1){
 		switch (opt){
+			printf("in switch")
 			case 'i':
 				inFileName = optarg;
 				printf("inFileName: %s\n", inFileName);
@@ -57,6 +58,7 @@ int main(int argc, char **argv){
 				writeToFileFlag = 1;
 				break;
 			default:
+				printf("in default")
             	fprintf(stderr, "Was given an unexpected argument, was given %s.\n Expected -i [input file] -o [output file]\nExiting\n", opt);
                	exit(EXIT_FAILURE);
        }
