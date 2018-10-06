@@ -112,13 +112,15 @@ int main(int argc, char **argv){
 	inFile = fopen(inFileName, "r");
 	outFile = fopen(outFileName, "w");
 
-	//int testPrint = GPOINTER_TO_INT(g_hash_table_lookup(hash, "start"));
-	//		printf ("\n\n\n\naddress: %d\n\n\n\n"testPrint);  
-
 	char *lineArr[4]; // array to hold the split elements of our line
 	int lineNum = 0;
+	int loopStarted = 0;
 
 	while (fgets(lineBuffer, 100, inFile) !=NULL){
+		if(loopStarted == 1){
+			fprintf(outFile, "\n"); // write to file
+		}
+		loopStarted = 1;
 		// If Line has no label	
 		if (lineBuffer[0] == ' ' | lineBuffer[0] == '\t'){
 			lineArr[0] = strtok (lineBuffer," \t\n");//0th Element Opp Code
@@ -262,7 +264,7 @@ int main(int argc, char **argv){
       	if(writeToFileFlag == 0){
       		printf("%d\n", instruction);
       	}else{
-      		fprintf(outFile, "%d\n", instruction); // write to file
+      		fprintf(outFile, "%d", instruction); // write to file
       	}
       	lineNum++;
     }
