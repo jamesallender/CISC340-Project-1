@@ -112,13 +112,15 @@ int main(int argc, char **argv){
 	inFile = fopen(inFileName, "r");
 	outFile = fopen(outFileName, "w");
 
-	//int testPrint = GPOINTER_TO_INT(g_hash_table_lookup(hash, "start"));
-	//		printf ("\n\n\n\naddress: %d\n\n\n\n"testPrint);  
-
 	char *lineArr[4]; // array to hold the split elements of our line
 	int lineNum = 0;
+	int loopStarted = 0;
 
 	while (fgets(lineBuffer, 100, inFile) !=NULL){
+		if(loopStarted == 1){
+			fprintf(outFile, "\n"); // write to file
+		}
+		loopStarted = 1;
 		// If Line has no label	
 		if (lineBuffer[0] == ' ' | lineBuffer[0] == '\t'){
 			lineArr[0] = strtok (lineBuffer," \t\n");//0th Element Opp Code
@@ -186,9 +188,6 @@ int main(int argc, char **argv){
       		instruction = instruction | regA;
       		instruction = instruction | regB;
       		instruction = instruction | destReg;
-
-      		// printf("R instruction: %d\n", instruction);
-      		printf("%d\n", instruction);
       	}
       	// I type
       	else if(optCode == 2 || optCode == 3 || optCode == 4){
@@ -220,9 +219,6 @@ int main(int argc, char **argv){
       		instruction = instruction | regA;
       		instruction = instruction | regB;
       		instruction = instruction | offset;
-
-      		// printf("I instruction: %d\n", instruction);
-      		printf("%d\n", instruction);
       	}
       	// J type
       	else if(optCode == 5){
@@ -244,9 +240,6 @@ int main(int argc, char **argv){
       		instruction = instruction | optCode;
       		instruction = instruction | regA;
       		instruction = instruction | regB;
-
-      		// printf("J instruction: %d\n", instruction);
-      		printf("%d\n", instruction);
       	}
       	// O type
       	else if(optCode == 6 || optCode == 7){
@@ -258,26 +251,27 @@ int main(int argc, char **argv){
 
       		// Or instruction together
       		instruction = instruction | optCode;
-
-      		// printf("O instruction: %d\n", instruction);
-      		printf("%d\n", instruction);
       	}
 		// .fill directive
       	else if(optCode == -1 && strcmp( ".fill", lineArr[0]) == 0){
       		// printf("Found .fill directive\n");
 			instruction = handleParams(lineArr[1], hash);
-
-      		// printf(".fill directive: %d\n", instruction);
-      		printf("%d\n", instruction);
       	}
       	// opt codeNot found
       	else{
       		printf("Opt code '%d' was not found\n", optCode);
       	}
+      	if(writeToFileFlag == 0){
+      		printf("%d\n", instruction);
+      	}else{
+      		fprintf(outFile, "%d", instruction); // write to file
+      	}
       	lineNum++;
     }
 	fclose(inFile);
- 
+	if(writeToFileFlag == 1){
+		fclose(outFile);
+	}
     return 0;
 }//main
 
