@@ -22,6 +22,7 @@ int toNum (char *string); // returns the the decimal representation of a number 
 int handleParams (char *string, GHashTable* hash); // process the params from a assembly instructions
 
 int main(int argc, char **argv){
+	printf("Top of main");
 	// Variables
 	int opt; // the value of the opt form getopt
 	FILE* inFile; // our input File
