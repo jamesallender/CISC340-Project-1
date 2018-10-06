@@ -62,7 +62,7 @@ int main(int argc, char **argv){
 			default:
 				// this dosent do anything, if an invalid option is given get opt will exit the program
 				printf("in default");
-            	fprintf(stderr, "Was given an unexpected argument, was given %s.\n Expected -i [input file] -o [output file]\nExiting\n", opt);
+            	fprintf(stderr, "Was given an unexpected argument, was given %d.\n Expected -i [input file] -o [output file]\nExiting\n", opt);
                	exit(EXIT_FAILURE);
        }
 	}
@@ -244,7 +244,7 @@ int main(int argc, char **argv){
       	}
       	// opt codeNot found
       	else{
-      		printf("Opt code '%s' was not found\n", optCode);
+      		printf("Opt code '%d' was not found\n", optCode);
       	}
     }
 	fclose(inFile);
