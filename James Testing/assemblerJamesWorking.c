@@ -93,7 +93,7 @@ int main(int argc, char **argv){
 		if (lineBuffer[0] != ' ' && lineBuffer[0] != '\t'){
 			
 			// get lable string
-			label = g_strdup(strtok (lineBuffer," \t"));
+			label = g_strdup(strtok (lineBuffer," \t\n"));
 
 			// store the lable string and corisponding line value in the hash table
 			g_hash_table_insert(hash, label, GINT_TO_POINTER(lineAddress));
@@ -124,22 +124,26 @@ int main(int argc, char **argv){
 		// If Line has no label	
 		if (lineBuffer[0] == ' ' | lineBuffer[0] == '\t'){
 			lineArr[0] = strtok (lineBuffer," \t");//0th Element Opp Code
-			lineArr[1] = strtok (NULL," \t"); //First Element
-			lineArr[2] = strtok (NULL," \t"); //Second Element
-			lineArr[3] = strtok (NULL," \t"); //Third Element
+			lineArr[1] = strtok (NULL," \t\n"); //First Element
+			lineArr[2] = strtok (NULL," \t\n"); //Second Element
+			lineArr[3] = strtok (NULL," \t\n"); //Third Element
 			//printf ("Opp Code: %d | string: %s\n", findOppCode(lineArr[0]), lineArr[0]);
 
 		}// If Line has a label
         else{
 			strtok (lineBuffer," \t"); //Label
-			lineArr[0] = strtok (NULL," \t"); //0th Element Opp Code
-			lineArr[1] = strtok (NULL," \t"); //First Element
-			lineArr[2] = strtok (NULL," \t"); //Second Element
-			lineArr[3] = strtok (NULL," \t"); //Third Element
+			lineArr[0] = strtok (NULL," \t\n"); //0th Element Opp Code
+			lineArr[1] = strtok (NULL," \t\n"); //First Element
+			lineArr[2] = strtok (NULL," \t\n"); //Second Element
+			lineArr[3] = strtok (NULL," \t\n"); //Third Element
 			//printf ("Opp Code: %d | string: %s\n", findOppCode(lineArr[0]), lineArr[0]);
 
         }//else
 		printf("--------------------\n");
+		printf("lineArr[0]:%s\n", lineArr[0]);
+	    printf("lineArr[1]:%s\n", lineArr[1]);
+	    printf("lineArr[2]:%s\n", lineArr[2]);
+	    printf("lineArr[3]:%s\n", lineArr[3]);
 
 		/*	PACK VALUES INTO INTEGERS    */
 	    int optCode = findOppCode(lineArr[0]);
@@ -308,11 +312,11 @@ int findOppCode (char *optCode){
 int isNumber (char *string){
 	char *refBuf;
 	strtol (string, &refBuf, 8);
-	if ( refBuf[0] != '\0' ){
-		return 0;
+	if ( *refBuf == '\0' ){
+		return 1;
 	}
 	else {
-		return 1;
+		return 0;
 	}
 }//findNumValue
 
@@ -331,17 +335,18 @@ int handleParams (char *paramString, GHashTable* hash){
 /*		CAST AND ASSIGN VALUES 	  */
     
 	int retVal;
+	retVal = 0;
 	if (isNumber (paramString) == 1 ){
-		retVal = toNum ( paramString);
+		retVal = toNum ( paramString );
 	}
 	else if ( g_hash_table_contains (hash, g_strdup(paramString)) == 1 ){ // check if in hash table then look up
-
+		retVal = GPOINTER_TO_INT(g_hash_table_lookup (hash, g_strdup(paramString)));
 		printf("\n\n\n found a label!!!!\n\n");
 
 	}else{
-		fprintf(stderr, "Invalid value for regA in input fil\n");
+		fprintf(stderr, "Invalid value for regA in input file");
 	}
 	
-    	retVal = 0;
+
     	return retVal;
 }

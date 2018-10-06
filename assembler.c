@@ -139,17 +139,23 @@ int main(int argc, char **argv){
 			//printf ("Opp Code: %d | string: %s\n", findOppCode(lineArr[0]), lineArr[0]);
 
         }//else
+		printf("--------------------\n");
+		printf("lineArr[0]:%s\n", lineArr[0]);
+	    printf("lineArr[1]:%s\n", lineArr[1]);
+	    printf("lineArr[2]:%s\n", lineArr[2]);
+	    printf("lineArr[3]:%s\n", lineArr[3]);
 
-	/*	PACK VALUES INTO INTEGERS    */
-    	int optCode = findOppCode(lineArr[0]);
-    	int destReg;
-  	int regA;
-  	int regB;
-  	int offset;
-  	int instruction;
-  	int optCodeOffset = 22;
-	int regAOffset = 19;
-  	int regBOffset = 16;
+		/*	PACK VALUES INTO INTEGERS    */
+	    int optCode = findOppCode(lineArr[0]);
+	    int destReg;
+	  	int regA;
+	  	int regB;
+	  	int offset;
+	  	int instruction = 0;
+
+	  	int optCodeOffset = 22;
+		int regAOffset = 19;
+	  	int regBOffset = 16;
 
       	// 31-25 unused
       	// 24-22 optCode
@@ -157,85 +163,102 @@ int main(int argc, char **argv){
       	// 18-16 regB
       	// 2-0 destReg or 15-0 offset/immidiate
 
-   //    		lineArr[0]
-			// lineArr[1]
-			// lineArr[2]
-			// lineArr[3]
-
-			// regA = 
-   //    		regB = 
-   //    		destReg = 
-   //    		offset = 
-
-			// regA
-   //    		regB
-   //    		destReg
-   //    		offset
-
         // R type
       	if(optCode == 0 || optCode == 1){
       		printf("Found R type Instruction\n");
-      		// // Get instruction params
-      		regA = handleParams(lineArr[2],hash);
-      		regB = handleParams(lineArr[3],hash);
-      		destReg = handleParams(lineArr[1],hash);
+      		// Get instruction params
+      		regA = handleParams(lineArr[2], hash);
+      		regB = handleParams(lineArr[3], hash);
+      		destReg = handleParams(lineArr[1], hash);
 
       		printf("optcode: %d\n", optCode);
-      		printf("regA: %d | lineArr value: %s\n", regA, lineArr[2]);
-      		printf("regB: %d | lineArr value: %s\n", regB, lineArr[3]);
+      		printf("regA: %d\n", regA);
+      		printf("regB: %d\n", regB);
       		printf("destReg: %d\n", destReg);
 
-      		// // Do shifting
-      		// optCode = optCode << optCodeOffset;
-      		// regA = regA << regAOffset;
-      		// regB = regB << regBOffset;
+      		// Do shifting
+      		optCode = optCode << optCodeOffset;
+      		regA = regA << regAOffset;
+      		regB = regB << regBOffset;
 
-      		// // Or instruction together
-      		// //instruction = instruction | optCode | regA | regB | destReg;
-      		// instruction = instruction | optCode;
-      		// instruction = instruction | regA;
-      		// instruction = instruction | regB;
-      		// instruction = instruction | destReg;
+      		// Or instruction together
+      		//instruction = instruction | optCode | regA | regB | destReg;
+      		instruction = instruction | optCode;
+      		instruction = instruction | regA;
+      		instruction = instruction | regB;
+      		instruction = instruction | destReg;
 
-      		printf("instruction: %d\n", instruction);
+      		printf("R instruction: %d\n", instruction);
       	}
       	// I type
       	else if(optCode == 2 || optCode == 3 || optCode == 4){
       		printf("Found I type Instruction\n");
-      		// // Get instruction params
-      		// regA = handleParams(lineArr[1]);
-      		// regB = handleParams(lineArr[2]);
+      		// Get instruction params
+      		regA = handleParams(lineArr[1], hash);
+      		regB = handleParams(lineArr[2], hash);
       		offset = handleParams(lineArr[3], hash);
 
-      		// printf("optcode: %d\n", optcode);
-      		// printf("regA: %d\n", regA);
-      		// printf("regB: %d\n", regB);
+      		printf("optcode: %d\n", optCode);
+      		printf("regA: %d\n", regA);
+      		printf("regB: %d\n", regB);
       		printf("offset: %d\n", offset);
 
-      		// // Do shifting
-      		// optCode = optCode << optCodeOffset;
-      		// regA = regA << regAOffset;
-      		// regB = regB << regBOffset;
+      		// Do shifting
+      		optCode = optCode << optCodeOffset;
+      		regA = regA << regAOffset;
+      		regB = regB << regBOffset;
 
-      		// // Or instruction together
-      		// //instruction = instruction | optCode | regA | regB | destReg;
-      		// instruction = instruction | optCode;
-      		// instruction = instruction | regA;
-      		// instruction = instruction | regB;
-      		// instruction = instruction | offset;
+      		// Or instruction together
+      		instruction = instruction | optCode;
+      		instruction = instruction | regA;
+      		instruction = instruction | regB;
+      		instruction = instruction | offset;
 
-      		printf("instruction: %d\n", instruction);
+      		printf("I instruction: %d\n", instruction);
 
       	}
       	// J type
       	else if(optCode == 5){
       		printf("Found J type Instruction\n");
+      		// Get instruction params
+      		regA = handleParams(lineArr[2], hash);
+      		regB = handleParams(lineArr[3], hash);
 
+      		printf("optcode: %d\n", optCode);
+      		printf("regA: %d\n", regA);
+      		printf("regB: %d\n", regB);
+
+      		// Do shifting
+      		optCode = optCode << optCodeOffset;
+      		regA = regA << regAOffset;
+      		regB = regB << regBOffset;
+
+      		// Or instruction together
+      		instruction = instruction | optCode;
+      		instruction = instruction | regA;
+      		instruction = instruction | regB;
+
+      		printf("J instruction: %d\n", instruction);
       	}
       	// O type
       	else if(optCode == 6 || optCode == 7){
-      		printf("Found O type Instruction\n");
+      		printf("Found O type Instruction\n");\
+      		printf("optcode: %d\n", optCode);
 
+      		// Do shifting
+      		optCode = optCode << optCodeOffset;
+
+      		// Or instruction together
+      		instruction = instruction | optCode;
+
+      		printf("J instruction: %d\n", instruction);
+      	}
+		// .fill directive
+      	else if(optCode == -1 && strcmp( ".fill", lineArr[0]) == 0){
+      		printf("Found .fill directive\n");
+			instruction = handleParams(lineArr[1], hash);
+
+      		printf(".fill directive: %d\n", instruction);
       	}
       	// opt codeNot found
       	else{
