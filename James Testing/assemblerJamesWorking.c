@@ -258,7 +258,7 @@ int main(int argc, char **argv){
       		// Or instruction together
       		instruction = instruction | optCode;
 
-      		printf("J instruction: %d\n", instruction);
+      		printf("O instruction: %d\n", instruction);
       		// printf("%d\n", instruction);
       	}
 		// .fill directive
@@ -285,6 +285,8 @@ int main(int argc, char **argv){
 int findOppCode (char *optCode){
 	//printf("in findOppCode, optcode: %s\n", optCode);
 	int optCodeInt;
+
+	printf("optCode: %s", optCode);
 
 	if ( strcmp( "add", optCode) == 0 ){
 		optCodeInt = 0;
