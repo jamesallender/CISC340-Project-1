@@ -19,7 +19,7 @@ int isNumber (char *string); // returns 1 if it was given a number and -1 if not
 
 int toNum (char *string); // returns the the decimal representation of a number respresented as a string
 
-int handleParams (char *string); // process the params from a assembly instructions
+int handleParams (char *string, GHashTable* hash); // process the params from a assembly instructions
 
 int main(int argc, char **argv){
 	// Variables
@@ -107,6 +107,9 @@ int main(int argc, char **argv){
 	/*		SECOND PASS	OVER FILE 	*/
 	inFile = fopen(inFileName, "r");
 
+	int testPrint = GPOINTER_TO_INT(g_hash_table_lookup(hash, "start"));
+			printf ("\n\n\n\naddress: %d\n\n\n\n"testPrint);  
+
 	char *lineArr[4]; // array to hold the split elements of our line
 
 	while (fgets(lineBuffer, 50, inFile) !=NULL){
@@ -131,15 +134,17 @@ int main(int argc, char **argv){
 
 
 /*              PACK VALUES INTO INTEGERS    */
+
+        int optCode = findOppCode(lineArr[0]);
         // R type
       	if(optCode == 0 || optCode == 1){
       		printf("Found R type Instruction\n");
       		optCode = optCode << 22;
-			element1 = element1 << 19;
-			element2 = element2 << 16;
-      		instruction = instruction | optCode | element1 | element2;
+			//element1 = element1 << 19;
+			//element2 = element2 << 16;
+      		//instruction = instruction | optCode | element1 | element2;
 		
-      		printf("instruction: %d | opCode: %d\n", instruction,optCode);
+      		//printf("instruction: %d | opCode: %d\n",optCode);
 
       	}
       	// I type
@@ -228,28 +233,24 @@ int toNum (char *string){
 }
 
 // process the params from a assembly instructions and returns the int value
-int handleParams (char *string){
+int handleParams (char *paramString, GHashTable* hash){
 /*		CAST AND ASSIGN VALUES 	  */
-    int optCode = findOppCode(lineArr[0]);
+    int optCode = findOppCode(paramString);
 	int element1;
 	int element2;
-	if (isNumber (lineArr[1]) == 1 ){
-		element1 = toNum ( lineArr[1]);
+	if (isNumber (paramString) == 1 ){
+		element1 = toNum ( paramString);
 	}
-	else{
+	else if(1){ // check if in hash table then look up
+		int test = GPOINTER_TO_INT(g_hash_table_lookup(hash, paramString));
+	}else{
 		fprintf(stderr, "Invalid value for regA in input file");
-	}
-	if (isNumber (lineArr[2]) == 1 ){
-		element2 = toNum ( lineArr[2]);
-	}
-	else{
-		fprintf(stderr, "Invalid value for regB in input file");
 	}
 //	if ( g_hash_table_contains (hash, lineArr[3]) == 1 ){
 			
-		int test = GPOINTER_TO_INT(g_hash_table_lookup(hash, lineArr[3]));
-		printf("\n\n\nret value: %d\n\n",test );
+		
+		//printf("\n\n\nret value: %d\n\n",test );
 //	}
-	printf("\n\nelement1: %d | element2: %d\n\n", element1, element2);
+	//printf("\n\nelement1: %d | element2: %d\n\n", element1, element2);
         int instruction = 0;
-
+    }
