@@ -107,6 +107,8 @@ int main(int argc, char **argv){
 	/*		SECOND PASS	OVER FILE 	*/
 	inFile = fopen(inFileName, "r");
 
+	 printf("\n\n\nThe capital of Texas is %s\n\n\n\n", g_hash_table_lookup(hash, "start"));
+
 	char *lineArr[4]; // array to hold the split elements of our line
 
 	while (fgets(lineBuffer, 50, inFile) !=NULL){
