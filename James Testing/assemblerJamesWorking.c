@@ -216,12 +216,12 @@ int main(int argc, char **argv){
       		offset = offset << 16;
       		offset = offset >> 16;
       		printf("offset: %d\n", offset);
-      		
+
       		// Or instruction together
       		instruction = instruction | optCode;
       		instruction = instruction | regA;
       		instruction = instruction | regB;
-      		instruction = instruction | offset - lineNum + 1;
+      		instruction = instruction | offset;
 
       		printf("I instruction: %d\n", instruction);
 
