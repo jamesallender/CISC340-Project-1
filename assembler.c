@@ -341,7 +341,7 @@ int handleParams (char *paramString, GHashTable* hash){
 	}
 	else if ( g_hash_table_contains (hash, g_strdup(paramString)) == 1 ){ // check if in hash table then look up
 		retVal = GPOINTER_TO_INT(g_hash_table_lookup (hash, g_strdup(paramString)));
-		printf("\n\n\n found a label!!!!\n\n");
+		printf("found a label!!!!\n");
 
 	}else{
 		fprintf(stderr, "Invalid value for regA in input file");
