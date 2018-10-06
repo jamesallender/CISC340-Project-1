@@ -39,7 +39,7 @@ int main(int argc, char **argv){
 
 	// Verify correct # of args given either 3 or 5 for 1 or 2 options (i,o)
 	if (argc != 3 && argc != 5 ) {
-	       fprintf(stderr, "Was not given either 1 or 2 sets of input arguments.\nShould be: -i [input file] -o [output file]\nOr: -i [input file]\nExiting\n");
+	       fprintf(stderr, "Was not given either 1 or 2 sets of input arguments.\nShould be:\t-i [input file] -o [output file]\nOr:\t\t-i [input file]\nExiting\n");
 	       exit(EXIT_FAILURE);
         }
 
@@ -77,7 +77,7 @@ int main(int argc, char **argv){
 	// Verify in file
     if(inFile == NULL)
 	{
-		fprintf(stderr, "\"%s\" File NOT FOUND!\n", inFileName);
+		fprintf(stderr, "\"%s\" File not found!\nExiting\n", inFileName);
 		exit(EXIT_FAILURE);
 	}
 	int lineAddress = 0; // The current line of the file we are on
