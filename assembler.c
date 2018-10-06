@@ -119,6 +119,7 @@ int main(int argc, char **argv){
 	//		printf ("\n\n\n\naddress: %d\n\n\n\n"testPrint);  
 
 	char *lineArr[4]; // array to hold the split elements of our line
+	int lineNum = 0;
 
 	while (fgets(lineBuffer, 100, inFile) !=NULL){
 		// If Line has no label	
@@ -201,18 +202,22 @@ int main(int argc, char **argv){
       		printf("optcode: %d\n", optCode);
       		printf("regA: %d\n", regA);
       		printf("regB: %d\n", regB);
-      		printf("offset: %d\n", offset);
+      		printf("offset: %d\n", offset - lineNum + 1);
 
       		// Do shifting
       		optCode = optCode << optCodeOffset;
       		regA = regA << regAOffset;
       		regB = regB << regBOffset;
 
+      		offset = offset - lineNum + 1;
+      		offset = offset << 16;
+      		offset = offset >> 16;
+
       		// Or instruction together
       		instruction = instruction | optCode;
       		instruction = instruction | regA;
       		instruction = instruction | regB;
-      		instruction = instruction | offset;
+      		instruction = instruction | offset - lineNum + 1;
 
       		printf("I instruction: %d\n", instruction);
 
@@ -264,6 +269,7 @@ int main(int argc, char **argv){
       	else{
       		printf("Opt code '%d' was not found\n", optCode);
       	}
+      	lineNum++;
     }
 	fclose(inFile);
  
