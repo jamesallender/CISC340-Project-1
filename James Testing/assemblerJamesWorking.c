@@ -180,7 +180,7 @@ int main(int argc, char **argv) // Main
       	}
       	// Not found
       	else{
-      		printf("Opt code was not found\n");
+      		printf("Opt code '%s' was not found\n", optCode);
       	}
     }
 	fclose(inFile);
@@ -191,9 +191,7 @@ int main(int argc, char **argv) // Main
 
 // Retruns the integer value of an optcode string. If an invalid opt code is given returns -1
 int findOppCode ( char *optCode){
-
-	printf("in findOppCode, optcode: %s\n", optCode);
-
+	//printf("in findOppCode, optcode: %s\n", optCode);
 	int optCodeInt;
 
 	if ( strcmp( "add", optCode) == 0 ){
@@ -228,6 +226,7 @@ int findOppCode ( char *optCode){
 	
 }//findOppCode
 
+// function returns 0 if the given string was not a number otherwise returns 1 if string was a number
 int isNumber ( char *string){
 	char *refBuf;
 	strtol (string, &refBuf, 8);
@@ -237,8 +236,9 @@ int isNumber ( char *string){
 	else {
 		return 1;
 	}
-}//findNumValue 5x67
+}//findNumValue
 
+// Function converts a number in string form into its integer form
 int toNum ( char *string){
 
 	char *refBuf;
