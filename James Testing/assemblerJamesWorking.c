@@ -157,6 +157,7 @@ int main(int argc, char **argv){
 	  	int optCodeOffset = 22;
 		int regAOffset = 19;
 	  	int regBOffset = 16;
+	  	int negMask = 65535;
 
       	// 31-25 unused
       	// 24-22 optCode
@@ -214,8 +215,7 @@ int main(int argc, char **argv){
       		 	offset = offset - lineNum - 1;
       		 }
 			printf("offset: %d\n", offset);
-      		offset = offset << 16;
-      		offset = offset >> 16;
+      		offset = offset & negMask;
       		printf("offset: %d\n", offset);
 
       		// Or instruction together
