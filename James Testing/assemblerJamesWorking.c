@@ -193,67 +193,39 @@ int main(int argc, char **argv) // Main
 // Retruns the integer value of an optcode string. If an invalid opt code is given returns -1
 int findOppCode ( char *optCode){
 
+	printf("in findOppCode, optcode: %s", optCode);
+
 	int optCodeInt;
 
-	switch (optCode){
-		case "add":
-			optCodeInt = 0;
-			break;
-		case "nand":
-			optCodeInt = 1;
-			break;
-		case "lw":
-			optCodeInt = 2;
-			break;
-		case "sw":
-			optCodeInt = 3;
-			break;
-		case "beq":
-			optCodeInt = 4;
-			break;
-		case "jalr":
-			optCodeInt = 5;
-			break;
-		case "halt":
-			optCodeInt = 6;
-			break;
-		case "noop":
-			optCodeInt = 7;
-			break;
-		default:
-			optCodeInt = -1;
-			break;
-			// fprintf(stderr, "findOppCode function was given an invalid opt code string %s\n", optCode);
-   //         	exit(EXIT_FAILURE);
-       }
-       return optCodeInt;
-
-/*
 	if ( strcmp( "add", optCode) == 0 ){
-		return 0;
+		optCodeInt = 0;
 	}
 	else if ( strcmp( "nand", optCode) == 0 ){
-		return 1;
+		optCodeInt = 1;
 	}
 	else if ( strcmp( "lw", optCode) == 0 ){
-		return 2;
+		optCodeInt = 2;
 	}
 	else if ( strcmp( "sw", optCode) == 0 ){
-		return 3;
+		optCodeInt = 3;
 	}
 	else if ( strcmp( "beq", optCode) == 0 ){
-		return 4;
+		optCodeInt = 4;
 	}
 	else if ( strcmp( "jalr", optCode) == 0 ){
-		return 5;
+		optCodeInt = 5;
 	}
 	else if ( strcmp( "halt", optCode) == 0 ){
-		return 6;
+		optCodeInt = 6;
 	}
 	else if ( strcmp( "noop", optCode) == 0 ){
-		return 7;
+		optCodeInt = 7;
 	}
-	*/
+	else{
+		optCodeInt = -1;
+	}
+
+	return optCodeInt;
 	
 }//findOppCode
 
