@@ -163,9 +163,9 @@ int main(int argc, char **argv){
       	if(optCode == 0 || optCode == 1){
       		printf("Found R type Instruction\n");
       		// Get instruction params
-      		regA = handleParams(lineArr[2]);
-      		regB = handleParams(lineArr[3]);
-      		destReg = handleParams(lineArr[1]);
+      		regA = handleParams(lineArr[2], hash);
+      		regB = handleParams(lineArr[3], hash);
+      		destReg = handleParams(lineArr[1], hash);
 
       		printf("optcode: %d\n", optcode);
       		printf("regA: %d\n", regA);
@@ -190,9 +190,9 @@ int main(int argc, char **argv){
       	else if(optCode == 2 || optCode == 3 || optCode == 4){
       		printf("Found I type Instruction\n");
       		// Get instruction params
-      		regA = handleParams(lineArr[1]);
-      		regB = handleParams(lineArr[2]);
-      		offset = handleParams(lineArr[3]);
+      		regA = handleParams(lineArr[1], hash);
+      		regB = handleParams(lineArr[2], hash);
+      		offset = handleParams(lineArr[3], hash);
 
       		printf("optcode: %d\n", optcode);
       		printf("regA: %d\n", regA);
@@ -217,8 +217,8 @@ int main(int argc, char **argv){
       	else if(optCode == 5){
       		printf("Found J type Instruction\n");
       		// Get instruction params
-      		regA = handleParams(lineArr[2]);
-      		regB = handleParams(lineArr[3]);
+      		regA = handleParams(lineArr[2], hash);
+      		regB = handleParams(lineArr[3], hash);
 
       		printf("optcode: %d\n", optcode);
       		printf("regA: %d\n", regA);
@@ -252,7 +252,7 @@ int main(int argc, char **argv){
 		// .fill directive
       	else if(optCode == -1 && strcmp( ".fill", lineArr[0]) == 0){
       		printf("Found .fill directive\n");
-			instruction = handleParams(lineArr[1]);
+			instruction = handleParams(lineArr[1], hash);
 
       		printf(".fill directive: %d\n", instruction);
       	}
