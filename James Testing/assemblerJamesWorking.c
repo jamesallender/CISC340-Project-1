@@ -167,7 +167,7 @@ int main(int argc, char **argv){
       		regB = handleParams(lineArr[3], hash);
       		destReg = handleParams(lineArr[1], hash);
 
-      		printf("optcode: %d\n", optcode);
+      		printf("optcode: %d\n", optCode);
       		printf("regA: %d\n", regA);
       		printf("regB: %d\n", regB);
       		printf("destReg: %d\n", destReg);
@@ -194,7 +194,7 @@ int main(int argc, char **argv){
       		regB = handleParams(lineArr[2], hash);
       		offset = handleParams(lineArr[3], hash);
 
-      		printf("optcode: %d\n", optcode);
+      		printf("optcode: %d\n", optCode);
       		printf("regA: %d\n", regA);
       		printf("regB: %d\n", regB);
       		printf("offset: %d\n", offset);
@@ -220,7 +220,7 @@ int main(int argc, char **argv){
       		regA = handleParams(lineArr[2], hash);
       		regB = handleParams(lineArr[3], hash);
 
-      		printf("optcode: %d\n", optcode);
+      		printf("optcode: %d\n", optCode);
       		printf("regA: %d\n", regA);
       		printf("regB: %d\n", regB);
 
@@ -239,7 +239,7 @@ int main(int argc, char **argv){
       	// O type
       	else if(optCode == 6 || optCode == 7){
       		printf("Found O type Instruction\n");\
-      		printf("optcode: %d\n", optcode);
+      		printf("optcode: %d\n", optCode);
 
       		// Do shifting
       		optCode = optCode << optCodeOffset;
