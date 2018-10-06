@@ -100,7 +100,7 @@ int main(int argc, char **argv){
 			
 			// Testing //
 			int myVal = GPOINTER_TO_INT(g_hash_table_lookup(hash, label));
-			printf ("label: %s | address: %d\n",label, myVal);           
+			// printf ("label: %s | address: %d\n",label, myVal);           
 			// Testing //
 
 		}//if
@@ -140,11 +140,11 @@ int main(int argc, char **argv){
 			//printf ("Opp Code: %d | string: %s\n", findOppCode(lineArr[0]), lineArr[0]);
 
         }//else
-		printf("--------------------\n");
-		printf("lineArr[0]:%s\n", lineArr[0]);
-	    printf("lineArr[1]:%s\n", lineArr[1]);
-	    printf("lineArr[2]:%s\n", lineArr[2]);
-	    printf("lineArr[3]:%s\n", lineArr[3]);
+		// printf("--------------------\n");
+		// printf("lineArr[0]:%s\n", lineArr[0]);
+	 //    printf("lineArr[1]:%s\n", lineArr[1]);
+	 //    printf("lineArr[2]:%s\n", lineArr[2]);
+	 //    printf("lineArr[3]:%s\n", lineArr[3]);
 
 		/*	PACK VALUES INTO INTEGERS    */
 	    int optCode = findOppCode(lineArr[0]);
@@ -167,16 +167,16 @@ int main(int argc, char **argv){
 
         // R type
       	if(optCode == 0 || optCode == 1){
-      		printf("Found R type Instruction\n");
+      		// printf("Found R type Instruction\n");
       		// Get instruction params
       		regA = handleParams(lineArr[2], hash);
       		regB = handleParams(lineArr[3], hash);
       		destReg = handleParams(lineArr[1], hash);
 
-      		printf("optcode: %d\n", optCode);
-      		printf("regA: %d\n", regA);
-      		printf("regB: %d\n", regB);
-      		printf("destReg: %d\n", destReg);
+      		// printf("optcode: %d\n", optCode);
+      		// printf("regA: %d\n", regA);
+      		// printf("regB: %d\n", regB);
+      		// printf("destReg: %d\n", destReg);
 
       		// Do shifting
       		optCode = optCode << optCodeOffset;
@@ -190,19 +190,20 @@ int main(int argc, char **argv){
       		instruction = instruction | regB;
       		instruction = instruction | destReg;
 
-      		printf("R instruction: %d\n", instruction);
+      		// printf("R instruction: %d\n", instruction);
+      		printf("%d\n", instruction);
       	}
       	// I type
       	else if(optCode == 2 || optCode == 3 || optCode == 4){
-      		printf("Found I type Instruction\n");
+      		// printf("Found I type Instruction\n");
       		// Get instruction params
       		regA = handleParams(lineArr[1], hash);
       		regB = handleParams(lineArr[2], hash);
       		offset = handleParams(lineArr[3], hash);
 
-      		printf("optcode: %d\n", optCode);
-      		printf("regA: %d\n", regA);
-      		printf("regB: %d\n", regB);
+      		// printf("optcode: %d\n", optCode);
+      		// printf("regA: %d\n", regA);
+      		// printf("regB: %d\n", regB);
       		
 
       		// Do shifting
@@ -211,12 +212,11 @@ int main(int argc, char **argv){
       		regB = regB << regBOffset;
 
       		 if (g_hash_table_contains (hash, g_strdup(lineArr[3])) == 1){
-      		 	printf("Hit a label\n");
       		 	offset = offset - lineNum - 1;
       		 }
-			printf("offset: %d\n", offset);
+			//printf("offset: %d\n", offset);
       		offset = offset & negMask;
-      		printf("offset: %d\n", offset);
+
 
       		// Or instruction together
       		instruction = instruction | optCode;
@@ -224,19 +224,19 @@ int main(int argc, char **argv){
       		instruction = instruction | regB;
       		instruction = instruction | offset;
 
-      		printf("I instruction: %d\n", instruction);
-
+      		// printf("I instruction: %d\n", instruction);
+      		printf("%d\n", instruction);
       	}
       	// J type
       	else if(optCode == 5){
-      		printf("Found J type Instruction\n");
+      		// printf("Found J type Instruction\n");
       		// Get instruction params
       		regA = handleParams(lineArr[2], hash);
       		regB = handleParams(lineArr[3], hash);
 
-      		printf("optcode: %d\n", optCode);
-      		printf("regA: %d\n", regA);
-      		printf("regB: %d\n", regB);
+      		// printf("optcode: %d\n", optCode);
+      		// printf("regA: %d\n", regA);
+      		// printf("regB: %d\n", regB);
 
       		// Do shifting
       		optCode = optCode << optCodeOffset;
@@ -248,12 +248,13 @@ int main(int argc, char **argv){
       		instruction = instruction | regA;
       		instruction = instruction | regB;
 
-      		printf("J instruction: %d\n", instruction);
+      		// printf("J instruction: %d\n", instruction);
+      		printf("%d\n", instruction);
       	}
       	// O type
       	else if(optCode == 6 || optCode == 7){
-      		printf("Found O type Instruction\n");\
-      		printf("optcode: %d\n", optCode);
+      		// printf("Found O type Instruction\n");\
+      		// printf("optcode: %d\n", optCode);
 
       		// Do shifting
       		optCode = optCode << optCodeOffset;
@@ -261,14 +262,16 @@ int main(int argc, char **argv){
       		// Or instruction together
       		instruction = instruction | optCode;
 
-      		printf("J instruction: %d\n", instruction);
+      		// printf("J instruction: %d\n", instruction);
+      		printf("%d\n", instruction);
       	}
 		// .fill directive
       	else if(optCode == -1 && strcmp( ".fill", lineArr[0]) == 0){
-      		printf("Found .fill directive\n");
+      		// printf("Found .fill directive\n");
 			instruction = handleParams(lineArr[1], hash);
 
-      		printf(".fill directive: %d\n", instruction);
+      		// printf(".fill directive: %d\n", instruction);
+      		printf("%d\n", instruction);
       	}
       	// opt codeNot found
       	else{
@@ -352,7 +355,7 @@ int handleParams (char *paramString, GHashTable* hash){
 	}
 	else if ( g_hash_table_contains (hash, g_strdup(paramString)) == 1 ){ // check if in hash table then look up
 		retVal = GPOINTER_TO_INT(g_hash_table_lookup (hash, g_strdup(paramString)));
-		printf("found a label!!!!\n");
+		// printf("found a label!!!!\n");
 
 	}else{
 		fprintf(stderr, "Invalid value for regA in input file");
