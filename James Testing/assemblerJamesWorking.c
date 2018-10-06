@@ -210,7 +210,8 @@ int main(int argc, char **argv){
       		regB = regB << regBOffset;
 
       		 if (g_hash_table_contains (hash, g_strdup(lineArr[3])) == 1){
-      		 	offset = offset - lineNum + 1;
+      		 	printf("Hit a label");
+      		 	offset = offset - lineNum - 1;
       		 }
 			printf("offset: %d\n", offset);
       		offset = offset << 16;
