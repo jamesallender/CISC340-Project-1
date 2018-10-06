@@ -138,9 +138,11 @@ int main(int argc, char **argv)
 	else{
 		fprintf(stderr, "Invalid value for regB in input file");
 	}
-	if (1){
-		printf("");
-	}
+//	if ( g_hash_table_contains (hash, lineArr[3]) == 1 ){
+			
+		int test = GPOINTER_TO_INT(g_hash_table_lookup(hash, lineArr[3]));
+		printf("\n\n\nret value: %d\n\n",test );
+//	}
 	printf("\n\nelement1: %d | element2: %d\n\n", element1, element2);
         int instruction = 0;
 
