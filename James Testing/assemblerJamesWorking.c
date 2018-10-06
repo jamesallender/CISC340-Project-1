@@ -339,7 +339,7 @@ int handleParams (char *paramString, GHashTable* hash){
 		printf("\n\n\n found a label!!!!\n\n");
 
 	}else{
-		fprintf(stderr, "Invalid value for regA in input file");
+		fprintf(stderr, "Invalid value for regA in input fil\n");
 	}
 	
     	retVal = 0;
