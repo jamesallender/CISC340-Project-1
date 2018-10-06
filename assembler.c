@@ -157,6 +157,7 @@ int main(int argc, char **argv){
 	  	int optCodeOffset = 22;
 		int regAOffset = 19;
 	  	int regBOffset = 16;
+	  	int negMask = 65535;
 
       	// 31-25 unused
       	// 24-22 optCode
@@ -202,22 +203,26 @@ int main(int argc, char **argv){
       		printf("optcode: %d\n", optCode);
       		printf("regA: %d\n", regA);
       		printf("regB: %d\n", regB);
-      		printf("offset: %d\n", offset - lineNum + 1);
+      		
 
       		// Do shifting
       		optCode = optCode << optCodeOffset;
       		regA = regA << regAOffset;
       		regB = regB << regBOffset;
 
-      		offset = offset - lineNum + 1;
-      		offset = offset << 16;
-      		offset = offset >> 16;
+      		 if (g_hash_table_contains (hash, g_strdup(lineArr[3])) == 1){
+      		 	printf("Hit a label\n");
+      		 	offset = offset - lineNum - 1;
+      		 }
+			printf("offset: %d\n", offset);
+      		offset = offset & negMask;
+      		printf("offset: %d\n", offset);
 
       		// Or instruction together
       		instruction = instruction | optCode;
       		instruction = instruction | regA;
       		instruction = instruction | regB;
-      		instruction = instruction | offset - lineNum + 1;
+      		instruction = instruction | offset;
 
       		printf("I instruction: %d\n", instruction);
 
