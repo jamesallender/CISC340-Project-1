@@ -238,7 +238,7 @@ int handleParams (char *paramString, GHashTable* hash){
 	if (isNumber (paramString) == 1 ){
 		element1 = toNum ( paramString);
 	}
-	else if(1){
+	else if(1){ // check if in hash table then look up
 		int test = GPOINTER_TO_INT(g_hash_table_lookup(hash, paramString));
 	}else{
 		fprintf(stderr, "Invalid value for regA in input file");
