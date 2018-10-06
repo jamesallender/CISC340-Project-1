@@ -13,14 +13,15 @@ Project 01
 #include <string.h>
 
 
-int findOppCode ( char *name); // Function for find the opcode decimal value for a string
+int findOppCode (char *name); // Function for find the opcode decimal value for a string
 
-int isNumber ( char *string); // returns 1 if it was given a number and -1 if not
+int isNumber (char *string); // returns 1 if it was given a number and -1 if not
 
-int toNum ( char *string); // returns the the decimal representation of a number respresented as a string
+int toNum (char *string); // returns the the decimal representation of a number respresented as a string
 
-int main(int argc, char **argv) // Main
-{
+int handleParams (char *string); // process the params from a assembly instructions
+
+int main(int argc, char **argv){
 	// Variables
 	int opt; // the value of the opt form getopt
 	FILE* inFile; // our input File
@@ -115,7 +116,7 @@ int main(int argc, char **argv) // Main
 			lineArr[1] = strtok (NULL," \t"); //First Element
 			lineArr[2] = strtok (NULL," \t"); //Second Element
 			lineArr[3] = strtok (NULL," \t"); //Third Element
-			printf ("Opp Code: %d | string: %s\n", findOppCode(lineArr[0]), lineArr[0]);
+			//printf ("Opp Code: %d | string: %s\n", findOppCode(lineArr[0]), lineArr[0]);
 
 		}// If Line has a label
         else{
@@ -124,32 +125,9 @@ int main(int argc, char **argv) // Main
 			lineArr[1] = strtok (NULL," \t"); //First Element
 			lineArr[2] = strtok (NULL," \t"); //Second Element
 			lineArr[3] = strtok (NULL," \t"); //Third Element
-			printf ("Opp Code: %d | string: %s\n", findOppCode(lineArr[0]), lineArr[0]);
+			//printf ("Opp Code: %d | string: %s\n", findOppCode(lineArr[0]), lineArr[0]);
 
         }//else
-
-/*		CAST AND ASSIGN VALUES 	  */
-        int optCode = findOppCode(lineArr[0]);
-	int regA;
-	int regB;
-	if (isNumber (lineArr[1]) == 1 ){
-		regA = toNum ( lineArr[1]);
-	}
-	else{
-		fprintf(stderr, "Invalid value for regA in input file");
-	}
-	if (isNumber (lineArr[2]) == 1 ){
-		regB = toNum ( lineArr[2]);
-	}
-	else{
-		fprintf(stderr, "Invalid value for regB in input file");
-	}
-	if (1){
-		printf("");
-	}
-	printf("\n\nregA: %d | regB: %d\n\n", regA, regB);
-        int instruction;
-
 
 
 /*              PACK VALUES INTO INTEGERS    */
@@ -157,8 +135,9 @@ int main(int argc, char **argv) // Main
       	if(optCode == 0 || optCode == 1){
       		printf("Found R type Instruction\n");
       		optCode = optCode << 22;
-		//regA = regA << 19;
-      		//instruction = instruction | optCode | regA;
+			element1 = element1 << 19;
+			element2 = element2 << 16;
+      		instruction = instruction | optCode | element1 | element2;
 		
       		printf("instruction: %d | opCode: %d\n", instruction,optCode);
 
@@ -178,7 +157,7 @@ int main(int argc, char **argv) // Main
       		printf("Found O type Instruction\n");
 
       	}
-      	// Not found
+      	// opt codeNot found
       	else{
       		printf("Opt code '%s' was not found\n", optCode);
       	}
@@ -190,7 +169,7 @@ int main(int argc, char **argv) // Main
 
 
 // Retruns the integer value of an optcode string. If an invalid opt code is given returns -1
-int findOppCode ( char *optCode){
+int findOppCode (char *optCode){
 	//printf("in findOppCode, optcode: %s\n", optCode);
 	int optCodeInt;
 
@@ -227,7 +206,7 @@ int findOppCode ( char *optCode){
 }//findOppCode
 
 // function returns 0 if the given string was not a number otherwise returns 1 if string was a number
-int isNumber ( char *string){
+int isNumber (char *string){
 	char *refBuf;
 	strtol (string, &refBuf, 8);
 	if ( refBuf[0] != '\0' ){
@@ -239,7 +218,7 @@ int isNumber ( char *string){
 }//findNumValue
 
 // Function converts a number in string form into its integer form
-int toNum ( char *string){
+int toNum (char *string){
 
 	char *refBuf;
 	int result;
@@ -247,3 +226,30 @@ int toNum ( char *string){
 	return result;
 
 }
+
+// process the params from a assembly instructions and returns the int value
+int handleParams (char *string){
+/*		CAST AND ASSIGN VALUES 	  */
+    int optCode = findOppCode(lineArr[0]);
+	int element1;
+	int element2;
+	if (isNumber (lineArr[1]) == 1 ){
+		element1 = toNum ( lineArr[1]);
+	}
+	else{
+		fprintf(stderr, "Invalid value for regA in input file");
+	}
+	if (isNumber (lineArr[2]) == 1 ){
+		element2 = toNum ( lineArr[2]);
+	}
+	else{
+		fprintf(stderr, "Invalid value for regB in input file");
+	}
+//	if ( g_hash_table_contains (hash, lineArr[3]) == 1 ){
+			
+		int test = GPOINTER_TO_INT(g_hash_table_lookup(hash, lineArr[3]));
+		printf("\n\n\nret value: %d\n\n",test );
+//	}
+	printf("\n\nelement1: %d | element2: %d\n\n", element1, element2);
+        int instruction = 0;
+
