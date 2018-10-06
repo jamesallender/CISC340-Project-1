@@ -209,7 +209,9 @@ int main(int argc, char **argv){
       		regA = regA << regAOffset;
       		regB = regB << regBOffset;
 
-      		offset = offset - lineNum + 1;
+      		 if (g_hash_table_contains (hash, g_strdup(lineArr[3])) == 1){
+      		 	offset = offset - lineNum + 1;
+      		 } 
       		offset = offset << 16;
       		offset = offset >> 16;
 
