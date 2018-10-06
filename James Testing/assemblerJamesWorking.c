@@ -43,6 +43,7 @@ int main(int argc, char **argv){
 	       exit(EXIT_FAILURE);
         }
 
+    printf("befor While switch");
     // go through the args and get options
 	while ((opt = getopt(argc, argv, "i:o:")) != -1){
 		switch (opt){
@@ -63,6 +64,7 @@ int main(int argc, char **argv){
                	exit(EXIT_FAILURE);
        }
 	}
+	printf("After While switch");
 	// Check to make sure we were given an input file
 	if (iFlag == 0) {
        fprintf(stderr, "Expected minimum option -i\nNot Provided\nExiting\n");
