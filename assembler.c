@@ -22,6 +22,7 @@ int toNum (char *string); // returns the the decimal representation of a number 
 int handleParams (char *string, GHashTable* hash); // process the params from a assembly instructions
 
 int main(int argc, char **argv){
+	printf("Top of main\n");
 	// Variables
 	int opt; // the value of the opt form getopt
 	FILE* inFile; // our input File
@@ -39,13 +40,15 @@ int main(int argc, char **argv){
 
 	// Verify correct # of args given either 3 or 5 for 1 or 2 options (i,o)
 	if (argc != 3 && argc != 5 ) {
-	       fprintf(stderr, "Was not given either 1 or 2 sets of input arguments.\nShould be: -i [input file] -o [output file]\nExiting\n");
+	       fprintf(stderr, "Was not given either 1 or 2 sets of input arguments.\nShould be:\t-i [input file] -o [output file]\nOr:\t\t-i [input file]\nExiting\n");
 	       exit(EXIT_FAILURE);
         }
 
+    printf("befor While switch\n");
     // go through the args and get options
 	while ((opt = getopt(argc, argv, "i:o:")) != -1){
 		switch (opt){
+			printf("in switch");
 			case 'i':
 				inFileName = optarg;
 				printf("inFileName: %s\n", inFileName);
@@ -57,10 +60,13 @@ int main(int argc, char **argv){
 				writeToFileFlag = 1;
 				break;
 			default:
-            	fprintf(stderr, "Was given an unexpected argument, was given %s.\n Expected -i [input file] -o [output file]\nExiting\n", opt);
+				// this dosent do anything, if an invalid option is given get opt will exit the program
+				printf("in default");
+            	fprintf(stderr, "Was given an unexpected argument, was given %d.\n Expected -i [input file] -o [output file]\nExiting\n", opt);
                	exit(EXIT_FAILURE);
        }
 	}
+	printf("After While switch\n");
 	// Check to make sure we were given an input file
 	if (iFlag == 0) {
        fprintf(stderr, "Expected minimum option -i\nNot Provided\nExiting\n");
@@ -70,10 +76,11 @@ int main(int argc, char **argv){
 	// Process inFile
 	/*		FIRST PASS OVER FILE	*/
 	inFile = fopen(inFileName, "r");
+
 	// Verify in file
     if(inFile == NULL)
 	{
-		fprintf(stderr, "\"%s\" File NOT FOUND!\n", inFileName);
+		fprintf(stderr, "\"%s\" File not found!\nExiting\n", inFileName);
 		exit(EXIT_FAILURE);
 	}
 	int lineAddress = 0; // The current line of the file we are on
@@ -98,6 +105,7 @@ int main(int argc, char **argv){
 
 		}//if
 		
+		
 		//increment line number
 		lineAddress++;
 	}
@@ -107,16 +115,19 @@ int main(int argc, char **argv){
 	/*		SECOND PASS	OVER FILE 	*/
 	inFile = fopen(inFileName, "r");
 
+	//int testPrint = GPOINTER_TO_INT(g_hash_table_lookup(hash, "start"));
+	//		printf ("\n\n\n\naddress: %d\n\n\n\n"testPrint);  
+
 	char *lineArr[4]; // array to hold the split elements of our line
 
-	while (fgets(lineBuffer, 50, inFile) !=NULL){
+	while (fgets(lineBuffer, 100, inFile) !=NULL){
 		// If Line has no label	
-		if (lineBuffer[0] == ' ' | lineBuffer[0] == '\t' && lineArr[0] != NULL){
+		if (lineBuffer[0] == ' ' | lineBuffer[0] == '\t'){
 			lineArr[0] = strtok (lineBuffer," \t");//0th Element Opp Code
 			lineArr[1] = strtok (NULL," \t"); //First Element
 			lineArr[2] = strtok (NULL," \t"); //Second Element
 			lineArr[3] = strtok (NULL," \t"); //Third Element
-			printf ("Opp Code: %d | string: %s\n", findOppCode(lineArr[0]), lineArr[0]);
+			//printf ("Opp Code: %d | string: %s\n", findOppCode(lineArr[0]), lineArr[0]);
 
 		}// If Line has a label
         else{
@@ -125,22 +136,103 @@ int main(int argc, char **argv){
 			lineArr[1] = strtok (NULL," \t"); //First Element
 			lineArr[2] = strtok (NULL," \t"); //Second Element
 			lineArr[3] = strtok (NULL," \t"); //Third Element
-			printf ("Opp Code: %d | string: %s\n", findOppCode(lineArr[0]), lineArr[0]);
+			//printf ("Opp Code: %d | string: %s\n", findOppCode(lineArr[0]), lineArr[0]);
 
         }//else
+	// printf("--------------------\n");
+ //    printf("lineArr[0]:%s\n", lineArr[0]);
+ //    printf("lineArr[1]:%s\n", lineArr[1]);
+ //    printf("lineArr[2]:%s\n", lineArr[2]);
+ //    printf("lineArr[3]:%s\n", lineArr[3]);
 
+	/*	PACK VALUES INTO INTEGERS    */
+    int optCode = findOppCode(lineArr[0]);
+    // printf("optcode:%d\n", optCode);
+    // printf("--------------------\n");
+    int destReg;
+  	int regA;
+  	int regB;
+  	int offset;
+  	int instruction;
 
-/*              PACK VALUES INTO INTEGERS    */
+  	int optCodeOffset = 22;
+	int regAOffset = 19;
+  	int regBOffset = 16;
 
-        int optCode = findOppCode(lineArr[0]);
+      	// 31-25 unused
+      	// 24-22 optCode
+      	// 21-19 regA
+      	// 18-16 regB
+      	// 2-0 destReg or 15-0 offset/immidiate
+
+   //    		lineArr[0]
+			// lineArr[1]
+			// lineArr[2]
+			// lineArr[3]
+
+			// regA = 
+   //    		regB = 
+   //    		destReg = 
+   //    		offset = 
+
+			// regA
+   //    		regB
+   //    		destReg
+   //    		offset
+
         // R type
       	if(optCode == 0 || optCode == 1){
       		printf("Found R type Instruction\n");
-      		optCode = optCode << 22;
+      		// // Get instruction params
+      		// regA = handleParams(lineArr[2]);
+      		// regB = handleParams(lineArr[3]);
+      		// destReg = handleParams(lineArr[1]);
+
+      		// printf("optcode: %d\n", optcode);
+      		// printf("regA: %d\n", regA);
+      		// printf("regB: %d\n", regB);
+      		// printf("destReg: %d\n", destReg);
+
+      		// // Do shifting
+      		// optCode = optCode << optCodeOffset;
+      		// regA = regA << regAOffset;
+      		// regB = regB << regBOffset;
+
+      		// // Or instruction together
+      		// //instruction = instruction | optCode | regA | regB | destReg;
+      		// instruction = instruction | optCode;
+      		// instruction = instruction | regA;
+      		// instruction = instruction | regB;
+      		// instruction = instruction | destReg;
+
+      		printf("instruction: %d\n", instruction);
       	}
       	// I type
       	else if(optCode == 2 || optCode == 3 || optCode == 4){
       		printf("Found I type Instruction\n");
+      		// // Get instruction params
+      		// regA = handleParams(lineArr[1]);
+      		// regB = handleParams(lineArr[2]);
+      		// offset = handleParams(lineArr[3]);
+
+      		// printf("optcode: %d\n", optcode);
+      		// printf("regA: %d\n", regA);
+      		// printf("regB: %d\n", regB);
+      		// printf("offset: %d\n", offset);
+
+      		// // Do shifting
+      		// optCode = optCode << optCodeOffset;
+      		// regA = regA << regAOffset;
+      		// regB = regB << regBOffset;
+
+      		// // Or instruction together
+      		// //instruction = instruction | optCode | regA | regB | destReg;
+      		// instruction = instruction | optCode;
+      		// instruction = instruction | regA;
+      		// instruction = instruction | regB;
+      		// instruction = instruction | offset;
+
+      		printf("instruction: %d\n", instruction);
 
       	}
       	// J type
@@ -155,7 +247,7 @@ int main(int argc, char **argv){
       	}
       	// opt codeNot found
       	else{
-      		printf("Opt code '%s' was not found\n", optCode);
+      		printf("Opt code '%d' was not found\n", optCode);
       	}
     }
 	fclose(inFile);

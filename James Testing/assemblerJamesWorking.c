@@ -93,7 +93,7 @@ int main(int argc, char **argv){
 		if (lineBuffer[0] != ' ' && lineBuffer[0] != '\t'){
 			
 			// get lable string
-			label = strtok (lineBuffer," \t");
+			label = g_strdup(strtok (lineBuffer," \t"));
 
 			// store the lable string and corisponding line value in the hash table
 			g_hash_table_insert(hash, label, GINT_TO_POINTER(lineAddress));
@@ -104,6 +104,7 @@ int main(int argc, char **argv){
 			// Testing //
 
 		}//if
+		
 		
 		//increment line number
 		lineAddress++;
@@ -138,7 +139,7 @@ int main(int argc, char **argv){
 			//printf ("Opp Code: %d | string: %s\n", findOppCode(lineArr[0]), lineArr[0]);
 
         }//else
-
+	printf("--------------------\n");
     printf("lineArr[0]:%s\n", lineArr[0]);
     printf("lineArr[1]:%s\n", lineArr[1]);
     printf("lineArr[2]:%s\n", lineArr[2]);
@@ -147,6 +148,7 @@ int main(int argc, char **argv){
 	/*	PACK VALUES INTO INTEGERS    */
     int optCode = findOppCode(lineArr[0]);
     printf("optcode:%d\n", optCode);
+    printf("--------------------\n");
     int destReg;
   	int regA;
   	int regB;
@@ -316,22 +318,19 @@ int toNum (char *string){
 // process the params from a assembly instructions and returns the int value
 int handleParams (char *paramString, GHashTable* hash){
 /*		CAST AND ASSIGN VALUES 	  */
-    int optCode = findOppCode(paramString);
-	int element1;
-	int element2;
+    
+	int retVal;
 	if (isNumber (paramString) == 1 ){
-		element1 = toNum ( paramString);
+		retVal = toNum ( paramString);
 	}
-	else if(1){ // check if in hash table then look up
-		int test = GPOINTER_TO_INT(g_hash_table_lookup(hash, paramString));
+	else if ( g_hash_table_contains (hash, g_strdup(paramString)) == 1 ){ // check if in hash table then look up
+
+		printf("\n\n\n found a label!!!!\n\n");
+
 	}else{
 		fprintf(stderr, "Invalid value for regA in input file");
 	}
-//	if ( g_hash_table_contains (hash, lineArr[3]) == 1 ){
-			
-		
-		//printf("\n\n\nret value: %d\n\n",test );
-//	}
-	//printf("\n\nelement1: %d | element2: %d\n\n", element1, element2);
-        int instruction = 0;
-    }
+	
+    	retVal = 0;
+    	return retVal;
+}
