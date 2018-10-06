@@ -19,7 +19,7 @@ int isNumber (char *string); // returns 1 if it was given a number and -1 if not
 
 int toNum (char *string); // returns the the decimal representation of a number respresented as a string
 
-int handleParams (char *string); // process the params from a assembly instructions
+int handleParams (char *string, GHashTable* hash); // process the params from a assembly instructions
 
 int main(int argc, char **argv){
 	// Variables
@@ -230,7 +230,7 @@ int toNum (char *string){
 }
 
 // process the params from a assembly instructions and returns the int value
-int handleParams (char *paramString){
+int handleParams (char *paramString, GHashTable* hash){
 /*		CAST AND ASSIGN VALUES 	  */
     int optCode = findOppCode(paramString);
 	int element1;
