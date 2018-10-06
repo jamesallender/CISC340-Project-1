@@ -43,7 +43,6 @@ int main(int argc, char **argv) // Main
         }
 
     // go through the args and get options
-    printf("befor while\n");
 	while ((opt = getopt(argc, argv, "i:o:")) != -1){
 		switch (opt){
 			case 'i':
@@ -193,7 +192,7 @@ int main(int argc, char **argv) // Main
 // Retruns the integer value of an optcode string. If an invalid opt code is given returns -1
 int findOppCode ( char *optCode){
 
-	printf("in findOppCode, optcode: %s", optCode);
+	printf("in findOppCode, optcode: %s\n", optCode);
 
 	int optCodeInt;
 
