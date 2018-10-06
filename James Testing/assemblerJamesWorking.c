@@ -146,7 +146,7 @@ int main(int argc, char **argv){
 
 	/*	PACK VALUES INTO INTEGERS    */
     int optCode = findOppCode(lineArr[0]);
-    printf("optcode:%d\n", optcode);
+    printf("optcode:%d\n", optCode);
     int destReg;
   	int regA;
   	int regB;
