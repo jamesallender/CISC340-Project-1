@@ -202,7 +202,7 @@ int main(int argc, char **argv){
       		printf("optcode: %d\n", optCode);
       		printf("regA: %d\n", regA);
       		printf("regB: %d\n", regB);
-      		printf("offset: %d\n", offset - lineNum - 1);
+      		
 
       		// Do shifting
       		optCode = optCode << optCodeOffset;
@@ -211,7 +211,8 @@ int main(int argc, char **argv){
 
       		 if (g_hash_table_contains (hash, g_strdup(lineArr[3])) == 1){
       		 	offset = offset - lineNum + 1;
-      		 } 
+      		 }
+			printf("offset: %d\n", offset);
       		offset = offset << 16;
       		offset = offset >> 16;
 
