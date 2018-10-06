@@ -249,8 +249,8 @@ int main(int argc, char **argv){
       	}
       	// O type
       	else if(optCode == 6 || optCode == 7){
-      		printf("Found O type Instruction\n");\
-      		printf("optcode: %d\n", optCode);
+      		// printf("Found O type Instruction\n");
+      		// printf("optcode: %d\n", optCode);
 
       		// Do shifting
       		optCode = optCode << optCodeOffset;
@@ -258,8 +258,8 @@ int main(int argc, char **argv){
       		// Or instruction together
       		instruction = instruction | optCode;
 
-      		printf("O instruction: %d\n", instruction);
-      		// printf("%d\n", instruction);
+      		// printf("O instruction: %d\n", instruction);
+      		printf("%d\n", instruction);
       	}
 		// .fill directive
       	else if(optCode == -1 && strcmp( ".fill", lineArr[0]) == 0){
@@ -286,7 +286,7 @@ int findOppCode (char *optCode){
 	//printf("in findOppCode, optcode: %s\n", optCode);
 	int optCodeInt;
 
-	printf("optCode: %s\n", optCode);
+	// printf("optCode: %s\n", optCode);
 
 	if ( strcmp( "add", optCode) == 0 ){
 		optCodeInt = 0;

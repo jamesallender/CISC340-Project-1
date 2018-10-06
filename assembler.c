@@ -120,7 +120,7 @@ int main(int argc, char **argv){
 	while (fgets(lineBuffer, 100, inFile) !=NULL){
 		// If Line has no label	
 		if (lineBuffer[0] == ' ' | lineBuffer[0] == '\t'){
-			lineArr[0] = strtok (lineBuffer," \t");//0th Element Opp Code
+			lineArr[0] = strtok (lineBuffer," \t\n");//0th Element Opp Code
 			lineArr[1] = strtok (NULL," \t\n"); //First Element
 			lineArr[2] = strtok (NULL," \t\n"); //Second Element
 			lineArr[3] = strtok (NULL," \t\n"); //Third Element
@@ -249,7 +249,7 @@ int main(int argc, char **argv){
       	}
       	// O type
       	else if(optCode == 6 || optCode == 7){
-      		// printf("Found O type Instruction\n");\
+      		// printf("Found O type Instruction\n");
       		// printf("optcode: %d\n", optCode);
 
       		// Do shifting
@@ -258,7 +258,7 @@ int main(int argc, char **argv){
       		// Or instruction together
       		instruction = instruction | optCode;
 
-      		// printf("J instruction: %d\n", instruction);
+      		// printf("O instruction: %d\n", instruction);
       		printf("%d\n", instruction);
       	}
 		// .fill directive
@@ -285,6 +285,8 @@ int main(int argc, char **argv){
 int findOppCode (char *optCode){
 	//printf("in findOppCode, optcode: %s\n", optCode);
 	int optCodeInt;
+
+	// printf("optCode: %s\n", optCode);
 
 	if ( strcmp( "add", optCode) == 0 ){
 		optCodeInt = 0;
