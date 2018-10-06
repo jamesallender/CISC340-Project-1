@@ -110,6 +110,7 @@ int main(int argc, char **argv){
 
 	/*		SECOND PASS	OVER FILE 	*/
 	inFile = fopen(inFileName, "r");
+	outFile = fopen(outFileName, "w");
 
 	//int testPrint = GPOINTER_TO_INT(g_hash_table_lookup(hash, "start"));
 	//		printf ("\n\n\n\naddress: %d\n\n\n\n"testPrint);  
