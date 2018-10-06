@@ -46,7 +46,7 @@ int main(int argc, char **argv){
     // go through the args and get options
 	while ((opt = getopt(argc, argv, "i:o:")) != -1){
 		switch (opt){
-			printf("in switch")
+			printf("in switch");
 			case 'i':
 				inFileName = optarg;
 				printf("inFileName: %s\n", inFileName);
@@ -58,7 +58,7 @@ int main(int argc, char **argv){
 				writeToFileFlag = 1;
 				break;
 			default:
-				printf("in default")
+				printf("in default");
             	fprintf(stderr, "Was given an unexpected argument, was given %s.\n Expected -i [input file] -o [output file]\nExiting\n", opt);
                	exit(EXIT_FAILURE);
        }
