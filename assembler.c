@@ -141,7 +141,7 @@ int main(int argc, char **argv){
 			//element2 = element2 << 16;
       		//instruction = instruction | optCode | element1 | element2;
 		
-      		printf("instruction: %d | opCode: %d\n", instruction,optCode);
+      		//printf("instruction: %d | opCode: %d\n",optCode);
 
       	}
       	// I type
