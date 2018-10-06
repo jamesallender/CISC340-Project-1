@@ -22,7 +22,6 @@ int toNum (char *string); // returns the the decimal representation of a number 
 int handleParams (char *string, GHashTable* hash); // process the params from a assembly instructions
 
 int main(int argc, char **argv){
-	printf("Top of main\n");
 	// Variables
 	int opt; // the value of the opt form getopt
 	FILE* inFile; // our input File
@@ -44,29 +43,26 @@ int main(int argc, char **argv){
 	       exit(EXIT_FAILURE);
         }
 
-    printf("befor While switch\n");
     // go through the args and get options
 	while ((opt = getopt(argc, argv, "i:o:")) != -1){
 		switch (opt){
-			printf("in switch");
 			case 'i':
 				inFileName = optarg;
-				printf("inFileName: %s\n", inFileName);
+				// printf("inFileName: %s\n", inFileName);
 				iFlag = 1;
 				break;
 			case 'o':
 				outFileName = optarg;
-				printf("outFileName: %s\n", outFileName);
+				// printf("outFileName: %s\n", outFileName);
 				writeToFileFlag = 1;
 				break;
 			default:
 				// this dosent do anything, if an invalid option is given get opt will exit the program
-				printf("in default");
+				// printf("in default");
             	fprintf(stderr, "Was given an unexpected argument, was given %d.\n Expected -i [input file] -o [output file]\nExiting\n", opt);
                	exit(EXIT_FAILURE);
        }
 	}
-	printf("After While switch\n");
 	// Check to make sure we were given an input file
 	if (iFlag == 0) {
        fprintf(stderr, "Expected minimum option -i\nNot Provided\nExiting\n");
