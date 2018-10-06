@@ -116,7 +116,7 @@ int main(int argc, char **argv){
 			lineArr[1] = strtok (NULL," \t"); //First Element
 			lineArr[2] = strtok (NULL," \t"); //Second Element
 			lineArr[3] = strtok (NULL," \t"); //Third Element
-			//printf ("Opp Code: %d | string: %s\n", findOppCode(lineArr[0]), lineArr[0]);
+			printf ("Opp Code: %d | string: %s\n", findOppCode(lineArr[0]), lineArr[0]);
 
 		}// If Line has a label
         else{
@@ -125,7 +125,7 @@ int main(int argc, char **argv){
 			lineArr[1] = strtok (NULL," \t"); //First Element
 			lineArr[2] = strtok (NULL," \t"); //Second Element
 			lineArr[3] = strtok (NULL," \t"); //Third Element
-			//printf ("Opp Code: %d | string: %s\n", findOppCode(lineArr[0]), lineArr[0]);
+			printf ("Opp Code: %d | string: %s\n", findOppCode(lineArr[0]), lineArr[0]);
 
         }//else
 
@@ -231,7 +231,7 @@ int handleParams (char *paramString, GHashTable* hash){
 	if (isNumber (paramString) == 1 ){
 		retVal = toNum ( paramString);
 	}
-	else if ( g_hash_table_contains (hash, g_strdup(lineArr[3])) == 1 ){ // check if in hash table then look up
+	else if ( g_hash_table_contains (hash, g_strdup(paramString)) == 1 ){ // check if in hash table then look up
 
 		printf("\n\n\n found a label!!!!\n\n");
 
@@ -239,6 +239,6 @@ int handleParams (char *paramString, GHashTable* hash){
 		fprintf(stderr, "Invalid value for regA in input file");
 	}
 	
-    int retVal = 0;
-    return retVal;
+    	retVal = 0;
+    	return retVal;
 }
