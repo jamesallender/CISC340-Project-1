@@ -215,7 +215,8 @@ int main(int argc, char **argv){
 			printf("offset: %d\n", offset);
       		offset = offset << 16;
       		offset = offset >> 16;
-
+      		printf("offset: %d\n", offset);
+      		
       		// Or instruction together
       		instruction = instruction | optCode;
       		instruction = instruction | regA;
