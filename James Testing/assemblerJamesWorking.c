@@ -107,8 +107,8 @@ int main(int argc, char **argv){
 	/*		SECOND PASS	OVER FILE 	*/
 	inFile = fopen(inFileName, "r");
 
-	int testPrint = GPOINTER_TO_INT(g_hash_table_lookup(hash, "start"));
-			printf ("\n\n\n\naddress: %d\n\n\n\n"testPrint);  
+	//int testPrint = GPOINTER_TO_INT(g_hash_table_lookup(hash, "start"));
+	//		printf ("\n\n\n\naddress: %d\n\n\n\n"testPrint);  
 
 	char *lineArr[4]; // array to hold the split elements of our line
 
