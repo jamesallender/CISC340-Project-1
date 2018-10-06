@@ -245,6 +245,11 @@ int main(int argc, char **argv){
       		printf("Found O type Instruction\n");
 
       	}
+		// .fill directive
+      	else if(optCode == -1 && strcmp( ".fill", lineArr[0]) == 0){
+      		printf("Found .fill directive\n");
+
+      	}
       	// opt codeNot found
       	else{
       		printf("Opt code '%d' was not found\n", optCode);
