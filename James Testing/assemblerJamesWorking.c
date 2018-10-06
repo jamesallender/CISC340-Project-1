@@ -121,7 +121,7 @@ int main(int argc, char **argv){
 
 	while (fgets(lineBuffer, 100, inFile) !=NULL){
 		// If Line has no label	
-		if (lineBuffer[0] == ' ' | lineBuffer[0] == '\t' && lineArr[0] != NULL){
+		if (lineBuffer[0] == ' ' | lineBuffer[0] == '\t'){
 			lineArr[0] = strtok (lineBuffer," \t");//0th Element Opp Code
 			lineArr[1] = strtok (NULL," \t"); //First Element
 			lineArr[2] = strtok (NULL," \t"); //Second Element
@@ -146,6 +146,7 @@ int main(int argc, char **argv){
 
 	/*	PACK VALUES INTO INTEGERS    */
     int optCode = findOppCode(lineArr[0]);
+    printf("optcode:%d\n", optcode);
     int destReg;
   	int regA;
   	int regB;
