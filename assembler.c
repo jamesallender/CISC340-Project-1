@@ -238,7 +238,7 @@ int handleParams (char *paramString){
 	if (isNumber (paramString) == 1 ){
 		element1 = toNum ( paramString);
 	}
-	if else(1){
+	else if(1){
 		printf("");
 	}else{
 		fprintf(stderr, "Invalid value for regA in input file");
