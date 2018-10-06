@@ -228,27 +228,23 @@ int toNum (char *string){
 }
 
 // process the params from a assembly instructions and returns the int value
-int handleParams (char *string){
+int handleParams (char *paramString){
 /*		CAST AND ASSIGN VALUES 	  */
-    int optCode = findOppCode(lineArr[0]);
+    int optCode = findOppCode(paramString);
 	int element1;
 	int element2;
-	if (isNumber (lineArr[1]) == 1 ){
-		element1 = toNum ( lineArr[1]);
+	if (isNumber (paramString) == 1 ){
+		element1 = toNum ( paramString);
 	}
-	else{
+	if else(1){
+		printf("");
+	}else{
 		fprintf(stderr, "Invalid value for regA in input file");
-	}
-	if (isNumber (lineArr[2]) == 1 ){
-		element2 = toNum ( lineArr[2]);
-	}
-	else{
-		fprintf(stderr, "Invalid value for regB in input file");
 	}
 //	if ( g_hash_table_contains (hash, lineArr[3]) == 1 ){
 			
 		int test = GPOINTER_TO_INT(g_hash_table_lookup(hash, lineArr[3]));
-		printf("\n\n\nret value: %d\n\n",test );
+		//printf("\n\n\nret value: %d\n\n",test );
 //	}
-	printf("\n\nelement1: %d | element2: %d\n\n", element1, element2);
+	//printf("\n\nelement1: %d | element2: %d\n\n", element1, element2);
         int instruction = 0;
