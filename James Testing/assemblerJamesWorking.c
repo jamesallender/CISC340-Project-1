@@ -264,14 +264,12 @@ int main(int argc, char **argv){
       	}else{
       		fprintf(outFile, "%d\n", instruction); // write to file
       	}
-      	
-
-
       	lineNum++;
     }
 	fclose(inFile);
-	fclose(outFile);
- 
+	if(writeToFileFlag == 1){
+		fclose(outFile);
+	}
     return 0;
 }//main
 
