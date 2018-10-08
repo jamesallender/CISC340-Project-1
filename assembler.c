@@ -394,7 +394,8 @@ int handleParams (char *paramString, GHashTable* hash, int lineNumber, int param
 
 	}//else if
 	else{
-		fprintf(stderr, "Invalid value '%s' on line %d, param %d ", paramString, lineNumber, paramNum);
+		fprintf(stderr, "Invalid value '%s' on line %d, param %d\nExiting\n", paramString, lineNumber, paramNum);
+		exit(EXIT_FAILURE);
 	}//esle
     	return retVal;
 }
