@@ -222,6 +222,7 @@ int main(int argc, char **argv){
       		instruction = instruction | regA;
       		instruction = instruction | regB;
       		instruction = instruction | offset;
+      		printf("end i tyoe\n")
       	}
       	// J type
       	else if(optCode == 5){
@@ -270,6 +271,7 @@ int main(int argc, char **argv){
       		fprintf(outFile, "%d", instruction); // write to file
       	}
       	lineNum++;
+      	printf("bottom of while\n");
     }
 	fclose(inFile);
 	if(writeToFileFlag == 1){
