@@ -169,16 +169,16 @@ int main(int argc, char **argv){
 
         // R type
       	if(optCode == 0 || optCode == 1){
-      		// printf("Found R type Instruction\n");
+      		printf("Found R type Instruction\n");
       		// Get instruction params
       		regA = handleParams(lineArr[2], hash);
       		regB = handleParams(lineArr[3], hash);
       		destReg = handleParams(lineArr[1], hash);
 
-      		// printf("optcode: %d\n", optCode);
-      		// printf("regA: %d\n", regA);
-      		// printf("regB: %d\n", regB);
-      		// printf("destReg: %d\n", destReg);
+      		printf("optcode: %d\n", optCode);
+      		printf("regA: %d\n", regA);
+      		printf("regB: %d\n", regB);
+      		printf("destReg: %d\n", destReg);
 
       		// Do shifting
       		optCode = optCode << optCodeOffset;
@@ -194,15 +194,15 @@ int main(int argc, char **argv){
       	}
       	// I type
       	else if(optCode == 2 || optCode == 3 || optCode == 4){
-      		// printf("Found I type Instruction\n");
+      		printf("Found I type Instruction\n");
       		// Get instruction params
       		regA = handleParams(lineArr[1], hash);
       		regB = handleParams(lineArr[2], hash);
       		offset = handleParams(lineArr[3], hash);
 
-      		// printf("optcode: %d\n", optCode);
-      		// printf("regA: %d\n", regA);
-      		// printf("regB: %d\n", regB);
+      		printf("optcode: %d\n", optCode);
+      		printf("regA: %d\n", regA);
+      		printf("regB: %d\n", regB);
       		
 
       		// Do shifting
@@ -225,14 +225,14 @@ int main(int argc, char **argv){
       	}
       	// J type
       	else if(optCode == 5){
-      		// printf("Found J type Instruction\n");
+      		printf("Found J type Instruction\n");
       		// Get instruction params
       		regA = handleParams(lineArr[2], hash);
       		regB = handleParams(lineArr[3], hash);
 
-      		// printf("optcode: %d\n", optCode);
-      		// printf("regA: %d\n", regA);
-      		// printf("regB: %d\n", regB);
+      		printf("optcode: %d\n", optCode);
+      		printf("regA: %d\n", regA);
+      		printf("regB: %d\n", regB);
 
       		// Do shifting
       		optCode = optCode << optCodeOffset;
@@ -246,8 +246,8 @@ int main(int argc, char **argv){
       	}
       	// O type
       	else if(optCode == 6 || optCode == 7){
-      		// printf("Found O type Instruction\n");
-      		// printf("optcode: %d\n", optCode);
+      		printf("Found O type Instruction\n");
+      		printf("optcode: %d\n", optCode);
 
       		// Do shifting
       		optCode = optCode << optCodeOffset;
@@ -257,7 +257,7 @@ int main(int argc, char **argv){
       	}
 		// .fill directive
       	else if(optCode == -1 && strcmp( ".fill", lineArr[0]) == 0){
-      		// printf("Found .fill directive\n");
+      		printf("Found .fill directive\n");
 			instruction = handleParams(lineArr[1], hash);
       	}
       	// opt codeNot found
