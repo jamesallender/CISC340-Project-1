@@ -73,7 +73,7 @@ int main(int argc, char **argv){
     } // if
 
 	// Process inFile
-	/*		FIRST PASS OVER FILE	*/
+	/*-------------------------FIRST PASS OVER FILE------------------------------*/
 	inFile = fopen(inFileName, "r");
 
 	// Verify in file
@@ -86,7 +86,7 @@ int main(int argc, char **argv){
 	char lineBuffer[100]; // Array to hold our line
 	char * label; // label var
 
-	// Loop through our file
+	// Loop through the lines of the file
 	while (fgets(lineBuffer, 100, inFile) !=NULL){
 		// If we have found not white space at the begining of the line (i.e. a label)
 		if (lineBuffer[0] != ' ' && lineBuffer[0] != '\t'){
@@ -97,9 +97,11 @@ int main(int argc, char **argv){
 				fprintf(stderr, "Label '%s' is too long. Max 6 chars.\nExiting\n", label);
                	exit(EXIT_FAILURE);
 			} // if
-			
+			// Check that the lable starts with a letter
 			if(isalpha(label[0])){
+				// loop through the lable characters
 				for (int i = 0; i < strlen(label); i++){
+					//check that it is only letters and numbers are in the lable
 					if (!isalpha(label[i]) && !isdigit(label[i])){
 						fprintf(stderr, "Label '%s' contains invalid characters. Must contain only numbers and letterts.\nExiting\n", label);
                			exit(EXIT_FAILURE);
@@ -115,6 +117,7 @@ int main(int argc, char **argv){
 					g_hash_table_insert(hash, label, GINT_TO_POINTER(lineAddress));
 				} // else
 			} // if 
+			// if the lable started with an invalid character
 			else{
 				fprintf(stderr, "Label '%s' starts with an invalid characters. Must start with a letter.\nExiting\n", label);
                	exit(EXIT_FAILURE);
@@ -126,7 +129,7 @@ int main(int argc, char **argv){
 
 	fclose(inFile); // close the file
 
-	/*		SECOND PASS	OVER FILE 	*/
+	/*-------------------------SECOND PASS OVER FILE------------------------------*/
 	inFile = fopen(inFileName, "r");
 	outFile = fopen(outFileName, "w");
 
@@ -134,18 +137,19 @@ int main(int argc, char **argv){
 	int lineNum = 0;
 	int loopStarted = 0;
 
+	// Loop through the lines of the file a second time
 	while (fgets(lineBuffer, 100, inFile) !=NULL){
+		// This is used to ensure a new line isent te first or last thing in the output file
 		if(writeToFileFlag == 1 && loopStarted == 1){
 			fprintf(outFile, "\n"); // write to file
 		}
-		loopStarted = 1;
+		loopStarted = 1; // toggel flag
 		// If Line has no label	
 		if (lineBuffer[0] == ' ' | lineBuffer[0] == '\t'){
 			lineArr[0] = strtok (lineBuffer," \t\n");//0th Element Opp Code
 			lineArr[1] = strtok (NULL," \t\n"); //First Element
 			lineArr[2] = strtok (NULL," \t\n"); //Second Element
 			lineArr[3] = strtok (NULL," \t\n"); //Third Element
-			//printf ("Opp Code: %d | string: %s\n", findOppCode(lineArr[0]), lineArr[0]);
 
 		}// If Line has a label
         else{
@@ -154,7 +158,6 @@ int main(int argc, char **argv){
 			lineArr[1] = strtok (NULL," \t\n"); //First Element
 			lineArr[2] = strtok (NULL," \t\n"); //Second Element
 			lineArr[3] = strtok (NULL," \t\n"); //Third Element
-			//printf ("Opp Code: %d | string: %s\n", findOppCode(lineArr[0]), lineArr[0]);
 
         }//else
 		// printf("--------------------\n");
@@ -228,11 +231,11 @@ int main(int argc, char **argv){
       		 if (g_hash_table_contains (hash, g_strdup(lineArr[3])) == 1){
       		 	if (offset - lineNum < 0){
       		 		offset = offset - lineNum - 1;
-      		 	}
+      		 	}//if
       		 	else if (offset - lineNum >= 0){
       		 		offset = offset - lineNum;
-      		 	}
-      		 }
+      		 	}//else if
+      		 }//if
 			//printf("offset: %d\n", offset);
       		offset = offset & negMask;
 
@@ -242,7 +245,7 @@ int main(int argc, char **argv){
       		instruction = instruction | regA;
       		instruction = instruction | regB;
       		instruction = instruction | offset;
-      	}
+      	}//else if
       	// J type
       	else if(optCode == 5){
       		// printf("Found J type Instruction\n");
@@ -263,7 +266,7 @@ int main(int argc, char **argv){
       		instruction = instruction | optCode;
       		instruction = instruction | regA;
       		instruction = instruction | regB;
-      	}
+      	}//else if
       	// O type
       	else if(optCode == 6 || optCode == 7){
       		// printf("Found O type Instruction\n");
@@ -274,16 +277,17 @@ int main(int argc, char **argv){
 
       		// Or instruction together
       		instruction = instruction | optCode;
-      	}
+      	}//else if
 		// .fill directive
       	else if(optCode == -1 && strcmp( ".fill", lineArr[0]) == 0){
       		// printf("Found .fill directive\n");
 			instruction = handleParams(lineArr[1], hash);
-      	}
-      	// opt codeNot found
+      	}//else if
+      	// check if opcode is not valid
       	else{
-      		printf("Opt code '%d' was not found\n", optCode);
-      	}
+      		fprintf(stderr, "Opt code '%d' is invalid found\n", lineArr[0]);
+            exit(EXIT_FAILURE);
+      	}//else
       	if(writeToFileFlag == 0){
       		printf("%d\n", instruction);
       	}else{
