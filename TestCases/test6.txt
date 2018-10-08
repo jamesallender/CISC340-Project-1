@@ -1,5 +1,5 @@
-	lw	1		five     This tests to ensure a mussing instruction param is caught with a comment on the line
-	lw	2	1	3
+	lw	1	five     
+	lw	2	1	3	This tests to ensure a mussing instruction param is caught with a comment on the line
 start	add	1	2	1
 	beq	0	1	2
 	beq	0	0	start
