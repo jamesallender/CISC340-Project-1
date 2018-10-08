@@ -104,7 +104,7 @@ int main(int argc, char **argv){
 				for (int i = 0; i < strlen(label); i++){
 					//check that it is only letters and numbers are in the lable
 					if (!isalpha(label[i]) && !isdigit(label[i])){
-						fprintf(stderr, "Label '%s' on line %d contains invalid characters. Must contain only numbers and letterts.\nExiting\n", label, lineAddress);
+						fprintf(stderr, "Label '%s' on line %d contains invalid characters. Must contain only numbers and letters.\nExiting\n", label, lineAddress);
                			exit(EXIT_FAILURE);
 					} // if
 				} // for
