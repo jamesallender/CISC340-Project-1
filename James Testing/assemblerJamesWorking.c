@@ -250,8 +250,8 @@ int main(int argc, char **argv){
       	else if(optCode == 5){
       		printf("Found J type Instruction\n");
       		// Get instruction params
-      		regA = handleParams(lineArr[2], hash);
-      		regB = handleParams(lineArr[3], hash);
+      		regA = handleParams(lineArr[1], hash);
+      		regB = handleParams(lineArr[2], hash);
 
       		printf("optcode: %d\n", optCode);
       		printf("regA: %d\n", regA);
