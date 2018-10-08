@@ -106,7 +106,7 @@ int main(int argc, char **argv){
 					} // if
 				} // for
 				// Check if the lable is alredy in the hash map
-				if (g_hash_table_contains (hash, g_strdup(label) == 1){
+				if (g_hash_table_contains (hash, g_strdup(label)) == 1){
 					fprintf(stderr, "Label '%s' apeared more than once.\nExiting\n", label);
                		exit(EXIT_FAILURE);
 				}// if
