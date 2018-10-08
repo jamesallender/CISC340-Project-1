@@ -212,7 +212,7 @@ int main(int argc, char **argv){
       		 		offset = offset - lineNum - 1;
       		 	}
       		 	else if (offset - lineNum >= 0){
-      		 		offset = offset - lineNum + 1;
+      		 		offset = offset - lineNum;
       		 	}
       		 }
 			//printf("offset: %d\n", offset);
