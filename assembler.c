@@ -11,6 +11,7 @@ Project 01
 #include <math.h>
 #include <glib.h>
 #include <string.h>
+#include <ctype.h>
 
 
 int findOppCode (char *name); // Function for find the opcode decimal value for a string
@@ -30,6 +31,8 @@ int main(int argc, char **argv){
 	char *outFileName; // our output file name
 	int iFlag = 0; // Flag to tell us if an i option (requiered) has been given
 	int writeToFileFlag = 0; // Flag to indicate if we shuld write to file or write to screen
+	int offsetMin = -32768;
+	int offsetMax = 32767;
 
 	extern char *optarg; // The arguemnt to a opt - used by external
 	extern int optind; // the int id of the curent opt location - used by external
@@ -67,44 +70,59 @@ int main(int argc, char **argv){
 	if (iFlag == 0) {
        fprintf(stderr, "Expected minimum option -i\nNot Provided\nExiting\n");
        exit(EXIT_FAILURE);
-    }
+    } // if
 
 	// Process inFile
 	/*		FIRST PASS OVER FILE	*/
 	inFile = fopen(inFileName, "r");
 
 	// Verify in file
-    if(inFile == NULL)
-	{
-		fprintf(stderr, "\"%s\" File not found!\nExiting\n", inFileName);
+    if(inFile == NULL){
+		fprintf(stderr, "\"%s\" In file not found!\nExiting\n", inFileName);
 		exit(EXIT_FAILURE);
-	}
+	} // if
+
 	int lineAddress = 0; // The current line of the file we are on
 	char lineBuffer[100]; // Array to hold our line
-	char * label; // lable var
+	char * label; // label var
 
 	// Loop through our file
 	while (fgets(lineBuffer, 100, inFile) !=NULL){
-		// If we have found not white space at the begining of the line (i.e. a lable)
+		// If we have found not white space at the begining of the line (i.e. a label)
 		if (lineBuffer[0] != ' ' && lineBuffer[0] != '\t'){
-			
-			// get lable string
+			// get label string
 			label = g_strdup(strtok (lineBuffer," \t\n"));
 
-			// store the lable string and corisponding line value in the hash table
-			g_hash_table_insert(hash, label, GINT_TO_POINTER(lineAddress));
+			if(strlen(label) > 6){
+				fprintf(stderr, "Label '%s' is too long. Max 6 chars.\nExiting\n", label);
+               	exit(EXIT_FAILURE);
+			} // if
 			
-			// Testing //
-			int myVal = GPOINTER_TO_INT(g_hash_table_lookup(hash, label));
-			// printf ("label: %s | address: %d\n",label, myVal);           
-			// Testing //
-
-		}//if
-		
-		
+			if(isalpha(label[0])){
+				for (int i = 0; i < strlen(label); i++){
+					if (!isalpha(label[i]) && !isdigit(label[i])){
+						fprintf(stderr, "Label '%s' contains invalid characters. Must contain only numbers and letterts.\nExiting\n", label);
+               			exit(EXIT_FAILURE);
+					} // if
+				} // for
+				// Check if the lable is alredy in the hash map
+				if (g_hash_table_contains (hash, g_strdup(label)) == 1){
+					fprintf(stderr, "Label '%s' apeared more than once.\nExiting\n", label);
+               		exit(EXIT_FAILURE);
+				}// if
+				else{
+					// store the label string and corisponding line value in the hash table
+					g_hash_table_insert(hash, label, GINT_TO_POINTER(lineAddress));
+				} // else
+			} // if 
+			else{
+				fprintf(stderr, "Label '%s' starts with an invalid characters. Must start with a letter.\nExiting\n", label);
+               	exit(EXIT_FAILURE);
+			}// else
+		}// if
 		//increment line number
 		lineAddress++;
-	}
+	}// while
 
 	fclose(inFile); // close the file
 
