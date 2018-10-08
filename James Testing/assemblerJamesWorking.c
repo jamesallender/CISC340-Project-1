@@ -118,7 +118,7 @@ int main(int argc, char **argv){
 
 	while (fgets(lineBuffer, 100, inFile) !=NULL){
 		printf("top of while\n");
-		if(loopStarted == 1){
+		if(writeToFileFlag == 1 && loopStarted == 1){
 			printf("in out control if\n");
 			fprintf(outFile, "\n"); // write to file
 		}

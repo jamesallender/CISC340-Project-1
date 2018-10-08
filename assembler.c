@@ -117,7 +117,7 @@ int main(int argc, char **argv){
 	int loopStarted = 0;
 
 	while (fgets(lineBuffer, 100, inFile) !=NULL){
-		if(loopStarted == 1){
+		if(loopStarted == 1 && writeToFileFlag == 1){
 			fprintf(outFile, "\n"); // write to file
 		}
 		loopStarted = 1;
