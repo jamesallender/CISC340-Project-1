@@ -84,28 +84,28 @@ int main(int argc, char **argv){
 	}
 	int lineAddress = 0; // The current line of the file we are on
 	char lineBuffer[100]; // Array to hold our line
-	char * label; // lable var
+	char * label; // label var
 
 	// Loop through our file
 	while (fgets(lineBuffer, 100, inFile) !=NULL){
-		// If we have found not white space at the begining of the line (i.e. a lable)
+		// If we have found not white space at the begining of the line (i.e. a label)
 		if (lineBuffer[0] != ' ' && lineBuffer[0] != '\t'){
-			// get lable string
+			// get label string
 			label = g_strdup(strtok (lineBuffer," \t\n"));
 
 			if(strlen(label) > 6){
-				fprintf(stderr, "Label '%s' is too long. Max 6 chars.\nExiting\n", lable);
+				fprintf(stderr, "Label '%s' is too long. Max 6 chars.\nExiting\n", label);
                			exit(EXIT_FAILURE);
 			} // if
 			
 			if(isalpha(label[0])){
 				for (i = 0; i < strlen(label); i++){
-					if (!(isalpha(lable[i]) && isdigit(lable[i]))){
-						fprintf(stderr, "Label '%s' contains invalid characters. Must contain only numbers and letterts.\nExiting\n", lable);
+					if (!(isalpha(label[i]) && isdigit(label[i]))){
+						fprintf(stderr, "Label '%s' contains invalid characters. Must contain only numbers and letterts.\nExiting\n", label);
                			exit(EXIT_FAILURE);
 					} // if
 				} // for
-				// store the lable string and corisponding line value in the hash table
+				// store the label string and corisponding line value in the hash table
 				g_hash_table_insert(hash, label, GINT_TO_POINTER(lineAddress));
 				
 				// Testing //
@@ -114,7 +114,7 @@ int main(int argc, char **argv){
 				// Testing //
 			}// if
 			else{
-				fprintf(stderr, "Label '%s' starts with an invalid characters. Must start with a letter.\nExiting\n", lable);
+				fprintf(stderr, "Label '%s' starts with an invalid characters. Must start with a letter.\nExiting\n", label);
                			exit(EXIT_FAILURE);
 			}// else
 		}// if
