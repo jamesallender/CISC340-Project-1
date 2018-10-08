@@ -160,11 +160,11 @@ int main(int argc, char **argv){
 			lineArr[3] = strtok (NULL," \t\n"); //Third Element
 
         }//else
-		// printf("--------------------\n");
-		// printf("lineArr[0]:%s\n", lineArr[0]);
-	 //    printf("lineArr[1]:%s\n", lineArr[1]);
-	 //    printf("lineArr[2]:%s\n", lineArr[2]);
-	 //    printf("lineArr[3]:%s\n", lineArr[3]);
+		printf("--------------------\n");
+		printf("lineArr[0]:%s\n", lineArr[0]);
+	    printf("lineArr[1]:%s\n", lineArr[1]);
+	    printf("lineArr[2]:%s\n", lineArr[2]);
+	    printf("lineArr[3]:%s\n", lineArr[3]);
 
 		/*	PACK VALUES INTO INTEGERS    */
 	    int optCode = findOppCode(lineArr[0]);
@@ -248,14 +248,14 @@ int main(int argc, char **argv){
       	}//else if
       	// J type
       	else if(optCode == 5){
-      		// printf("Found J type Instruction\n");
+      		printf("Found J type Instruction\n");
       		// Get instruction params
       		regA = handleParams(lineArr[2], hash);
       		regB = handleParams(lineArr[3], hash);
 
-      		// printf("optcode: %d\n", optCode);
-      		// printf("regA: %d\n", regA);
-      		// printf("regB: %d\n", regB);
+      		printf("optcode: %d\n", optCode);
+      		printf("regA: %d\n", regA);
+      		printf("regB: %d\n", regB);
 
       		// Do shifting
       		optCode = optCode << optCodeOffset;
