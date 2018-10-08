@@ -117,17 +117,12 @@ int main(int argc, char **argv){
 	int loopStarted = 0;
 
 	while (fgets(lineBuffer, 100, inFile) !=NULL){
-		printf("top of while\n");
 		if(writeToFileFlag == 1 && loopStarted == 1){
-			printf("in out control if\n");
 			fprintf(outFile, "\n"); // write to file
 		}
-		printf("after if\n");
 		loopStarted = 1;
 		// If Line has no label	
-		printf("pre if\n");
 		if (lineBuffer[0] == ' ' | lineBuffer[0] == '\t'){
-			printf("no label\n");
 			lineArr[0] = strtok (lineBuffer," \t\n");//0th Element Opp Code
 			lineArr[1] = strtok (NULL," \t\n"); //First Element
 			lineArr[2] = strtok (NULL," \t\n"); //Second Element
@@ -135,8 +130,7 @@ int main(int argc, char **argv){
 			//printf ("Opp Code: %d | string: %s\n", findOppCode(lineArr[0]), lineArr[0]);
 
 		}// If Line has a label
-        else{
-        	printf("label\n");
+        else{	
 			strtok (lineBuffer," \t"); //Label
 			lineArr[0] = strtok (NULL," \t\n"); //0th Element Opp Code
 			lineArr[1] = strtok (NULL," \t\n"); //First Element
@@ -214,10 +208,17 @@ int main(int argc, char **argv){
       		regB = regB << regBOffset;
 
       		 if (g_hash_table_contains (hash, g_strdup(lineArr[3])) == 1){
-      		 	offset = offset - lineNum - 1;
+      		 	if (offset - lineNum < 0){
+      		 		offset = offset - lineNum - 1;
+      		 	}
+      		 	else if (offset - lineNum >= 0){
+      		 		offset = offset - lineNum + 1;
+      		 	}
       		 }
 			//printf("offset: %d\n", offset);
       		offset = offset & negMask;
+
+      		printf("offset: %d\n", offset);
 
 
       		// Or instruction together
