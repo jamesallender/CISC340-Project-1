@@ -253,9 +253,9 @@ int main(int argc, char **argv){
       		regA = handleParams(lineArr[2], hash);
       		regB = handleParams(lineArr[3], hash);
 
-      		// printf("optcode: %d\n", optCode);
-      		// printf("regA: %d\n", regA);
-      		// printf("regB: %d\n", regB);
+      		printf("optcode: %d\n", optCode);
+      		printf("regA: %d\n", regA);
+      		printf("regB: %d\n", regB);
 
       		// Do shifting
       		optCode = optCode << optCodeOffset;

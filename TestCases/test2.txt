@@ -1,0 +1,1 @@
+		add	4	4	4	add 4 plus 4 and store it in register 4
