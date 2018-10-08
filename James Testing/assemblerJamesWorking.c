@@ -70,18 +70,18 @@ int main(int argc, char **argv){
 	if (iFlag == 0) {
        fprintf(stderr, "Expected minimum option -i\nNot Provided\nExiting\n");
        exit(EXIT_FAILURE);
-    }
+    } // if
 
 	// Process inFile
 	/*		FIRST PASS OVER FILE	*/
 	inFile = fopen(inFileName, "r");
 
 	// Verify in file
-    if(inFile == NULL)
-	{
+    if(inFile == NULL){
 		fprintf(stderr, "\"%s\" In file not found!\nExiting\n", inFileName);
 		exit(EXIT_FAILURE);
-	}
+	} // if
+
 	int lineAddress = 0; // The current line of the file we are on
 	char lineBuffer[100]; // Array to hold our line
 	char * label; // label var
@@ -95,7 +95,7 @@ int main(int argc, char **argv){
 
 			if(strlen(label) > 6){
 				fprintf(stderr, "Label '%s' is too long. Max 6 chars.\nExiting\n", label);
-               			exit(EXIT_FAILURE);
+               	exit(EXIT_FAILURE);
 			} // if
 			
 			if(isalpha(label[0])){
@@ -105,21 +105,21 @@ int main(int argc, char **argv){
                			exit(EXIT_FAILURE);
 					} // if
 				} // for
-				// store the label string and corisponding line value in the hash table
-				g_hash_table_insert(hash, label, GINT_TO_POINTER(lineAddress));
-				
-				// Testing //
-				int myVal = GPOINTER_TO_INT(g_hash_table_lookup(hash, label));
-				// printf ("label: %s | address: %d\n",label, myVal);           
-				// Testing //
-			}// if
+				// Check if the lable is alredy in the hash map
+				if (g_hash_table_contains (hash, g_strdup(label) == 1){
+					fprintf(stderr, "Label '%s' apeared more than once.\nExiting\n", label);
+               		exit(EXIT_FAILURE);
+				}// if
+				else{
+					// store the label string and corisponding line value in the hash table
+					g_hash_table_insert(hash, label, GINT_TO_POINTER(lineAddress));
+				} // else
+			} // if 
 			else{
 				fprintf(stderr, "Label '%s' starts with an invalid characters. Must start with a letter.\nExiting\n", label);
-               			exit(EXIT_FAILURE);
+               	exit(EXIT_FAILURE);
 			}// else
 		}// if
-		
-		
 		//increment line number
 		lineAddress++;
 	}// while
