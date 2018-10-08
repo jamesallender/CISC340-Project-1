@@ -139,11 +139,11 @@ int main(int argc, char **argv){
 			//printf ("Opp Code: %d | string: %s\n", findOppCode(lineArr[0]), lineArr[0]);
 
         }//else
-		// printf("--------------------\n");
-		// printf("lineArr[0]:%s\n", lineArr[0]);
-	 //    printf("lineArr[1]:%s\n", lineArr[1]);
-	 //    printf("lineArr[2]:%s\n", lineArr[2]);
-	 //    printf("lineArr[3]:%s\n", lineArr[3]);
+		printf("--------------------\n");
+		printf("lineArr[0]:%s\n", lineArr[0]);
+	    printf("lineArr[1]:%s\n", lineArr[1]);
+	    printf("lineArr[2]:%s\n", lineArr[2]);
+	    printf("lineArr[3]:%s\n", lineArr[3]);
 
 		/*	PACK VALUES INTO INTEGERS    */
 	    int optCode = findOppCode(lineArr[0]);
