@@ -285,7 +285,7 @@ int main(int argc, char **argv){
       	}//else if
       	// check if opcode is not valid
       	else{
-      		fprintf(stderr, "Opt code '%d' is invalid found\n", lineArr[0]);
+      		fprintf(stderr, "Opt code '%s' is invalid found\n", lineArr[0]);
             exit(EXIT_FAILURE);
       	}//else
       	if(writeToFileFlag == 0){
