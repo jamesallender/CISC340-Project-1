@@ -378,7 +378,7 @@ int toNum (char *string){
 
 // process the params from a assembly instructions and returns the int value
 int handleParams (char *paramString, GHashTable* hash, int lineNumber, int paramNum){
-	if (lineArr[0] == NULL || strcmp( "\n", lineArr[0]) == 0){
+	if (paramString == NULL || strcmp( "\n", paramString) == 1 || strcmp( "\t", paramString) == 1 || strcmp( " ", paramString) == 1){
   			fprintf(stderr, "Instruction on line number %d is invalid, error in param %d\nExiting\n", lineNumber, paramNum);
            	exit(EXIT_FAILURE);
   		}
