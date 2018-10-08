@@ -168,7 +168,7 @@ int main(int argc, char **argv){
 	 //    printf("lineArr[3]:%s\n", lineArr[3]);
 
 		/*	PACK VALUES INTO INTEGERS    */
-		// if (lineArr[0] == null || strcmp( "\n", lineArr[0]) == 0){
+		// if (lineArr[0] == NULL || strcmp( "\n", lineArr[0]) == 0){
   //     			fprintf(stderr, "Opt Code '%s' not given\nExiting\n");
   //              	exit(EXIT_FAILURE);
   //     		}
@@ -309,7 +309,7 @@ int main(int argc, char **argv){
 
 
 // void checkParam(char *param, int lineNumber, int paramNum){
-// 	if (lineArr[0] == null || strcmp( "\n", lineArr[0]) == 0){
+// 	if (lineArr[0] == NULL || strcmp( "\n", lineArr[0]) == 0){
 //   			fprintf(stderr, "Instruction on line number %d is invalid, error in param %d\nExiting\n");
 //            	exit(EXIT_FAILURE);
 //   		}
@@ -378,7 +378,7 @@ int toNum (char *string){
 
 // process the params from a assembly instructions and returns the int value
 int handleParams (char *paramString, GHashTable* hash, int lineNumber, int paramNum){
-	if (lineArr[0] == null || strcmp( "\n", lineArr[0]) == 0){
+	if (lineArr[0] == NULL || strcmp( "\n", lineArr[0]) == 0){
   			fprintf(stderr, "Instruction on line number %d is invalid, error in param %d\nExiting\n", lineNumber, paramNum);
            	exit(EXIT_FAILURE);
   		}
