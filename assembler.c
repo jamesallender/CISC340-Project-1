@@ -117,7 +117,7 @@ int main(int argc, char **argv){
 	int loopStarted = 0;
 
 	while (fgets(lineBuffer, 100, inFile) !=NULL){
-		if(loopStarted == 1 && writeToFileFlag == 1){
+		if(writeToFileFlag == 1 && loopStarted == 1){
 			fprintf(outFile, "\n"); // write to file
 		}
 		loopStarted = 1;
@@ -208,7 +208,12 @@ int main(int argc, char **argv){
       		regB = regB << regBOffset;
 
       		 if (g_hash_table_contains (hash, g_strdup(lineArr[3])) == 1){
-      		 	offset = offset - lineNum - 1;
+      		 	if (offset - lineNum < 0){
+      		 		offset = offset - lineNum - 1;
+      		 	}
+      		 	else if (offset - lineNum >= 0){
+      		 		offset = offset - lineNum + 1;
+      		 	}
       		 }
 			//printf("offset: %d\n", offset);
       		offset = offset & negMask;
