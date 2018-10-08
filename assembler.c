@@ -104,13 +104,13 @@ int main(int argc, char **argv){
 				for (int i = 0; i < strlen(label); i++){
 					//check that it is only letters and numbers are in the lable
 					if (!isalpha(label[i]) && !isdigit(label[i])){
-						fprintf(stderr, "Label '%s' contains invalid characters. Must contain only numbers and letterts.\nExiting\n", label);
+						fprintf(stderr, "Label '%s' on line %d contains invalid characters. Must contain only numbers and letterts.\nExiting\n", label, lineAddress);
                			exit(EXIT_FAILURE);
 					} // if
 				} // for
 				// Check if the lable is alredy in the hash map
 				if (g_hash_table_contains (hash, g_strdup(label)) == 1){
-					fprintf(stderr, "Label '%s' apeared more than once.\nExiting\n", label);
+					fprintf(stderr, "Label '%s' on line %dapeared more than once.\nExiting\n", label, lineAddress);
                		exit(EXIT_FAILURE);
 				}// if
 				else{
@@ -120,7 +120,7 @@ int main(int argc, char **argv){
 			} // if 
 			// if the lable started with an invalid character
 			else{
-				fprintf(stderr, "Label '%s' starts with an invalid characters. Must start with a letter.\nExiting\n", label);
+				fprintf(stderr, "Label '%s' on line %d starts with an invalid characters. Must start with a letter.\nExiting\n", label, lineAddress);
                	exit(EXIT_FAILURE);
 			}// else
 		}// if
