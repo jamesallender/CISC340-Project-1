@@ -13,6 +13,7 @@ Project 01
 #include <string.h>
 #include <ctype.h>
 
+// void checkParam(char *param, int lineNumber, int paramNum); // checks the given param string to ensure it is valid
 
 int findOppCode (char *name); // Function for find the opcode decimal value for a string
 
@@ -167,6 +168,10 @@ int main(int argc, char **argv){
 	 //    printf("lineArr[3]:%s\n", lineArr[3]);
 
 		/*	PACK VALUES INTO INTEGERS    */
+		// if (lineArr[0] == null || strcmp( "\n", lineArr[0]) == 0){
+  //     			fprintf(stderr, "Opt Code '%s' not given\nExiting\n");
+  //              	exit(EXIT_FAILURE);
+  //     		}
 	    int optCode = findOppCode(lineArr[0]);
 	    int destReg;
 	  	int regA;
@@ -189,9 +194,9 @@ int main(int argc, char **argv){
       	if(optCode == 0 || optCode == 1){
       		// printf("Found R type Instruction\n");
       		// Get instruction params
-      		regA = handleParams(lineArr[2], hash);
-      		regB = handleParams(lineArr[3], hash);
-      		destReg = handleParams(lineArr[1], hash);
+      		regA = handleParams(lineArr[2], hash, lineNum, 2);
+      		regB = handleParams(lineArr[3], hash, lineNum, 3);
+      		destReg = handleParams(lineArr[1], hash, lineNum, 1);
 
       		// printf("optcode: %d\n", optCode);
       		// printf("regA: %d\n", regA);
@@ -214,9 +219,9 @@ int main(int argc, char **argv){
       	else if(optCode == 2 || optCode == 3 || optCode == 4){
       		// printf("Found I type Instruction\n");
       		// Get instruction params
-      		regA = handleParams(lineArr[1], hash);
-      		regB = handleParams(lineArr[2], hash);
-      		offset = handleParams(lineArr[3], hash);
+      		regA = handleParams(lineArr[1], hash, lineNum, 1);
+      		regB = handleParams(lineArr[2], hash, lineNum, 2);
+      		offset = handleParams(lineArr[3], hash, lineNum, 3);
 
       		// printf("optcode: %d\n", optCode);
       		// printf("regA: %d\n", regA);
@@ -250,8 +255,8 @@ int main(int argc, char **argv){
       	else if(optCode == 5){
       		// printf("Found J type Instruction\n");
       		// Get instruction params
-      		regA = handleParams(lineArr[1], hash);
-      		regB = handleParams(lineArr[2], hash);
+      		regA = handleParams(lineArr[1], hash, lineNum, 1);
+      		regB = handleParams(lineArr[2], hash, lineNum, 2);
 
       		// printf("optcode: %d\n", optCode);
       		// printf("regA: %d\n", regA);
@@ -281,7 +286,7 @@ int main(int argc, char **argv){
 		// .fill directive
       	else if(optCode == -1 && strcmp( ".fill", lineArr[0]) == 0){
       		// printf("Found .fill directive\n");
-			instruction = handleParams(lineArr[1], hash);
+			instruction = handleParams(lineArr[1], hash, lineNum, 1);
       	}//else if
       	// check if opcode is not valid
       	else{
@@ -302,6 +307,13 @@ int main(int argc, char **argv){
     return 0;
 }//main
 
+
+// void checkParam(char *param, int lineNumber, int paramNum){
+// 	if (lineArr[0] == null || strcmp( "\n", lineArr[0]) == 0){
+//   			fprintf(stderr, "Instruction on line number %d is invalid, error in param %d\nExiting\n");
+//            	exit(EXIT_FAILURE);
+//   		}
+// }
 
 // Retruns the integer value of an optcode string. If an invalid opt code is given returns -1
 int findOppCode (char *optCode){
@@ -365,8 +377,11 @@ int toNum (char *string){
 }
 
 // process the params from a assembly instructions and returns the int value
-int handleParams (char *paramString, GHashTable* hash){
-/*		CAST AND ASSIGN VALUES 	  */
+int handleParams (char *paramString, GHashTable* hash, int lineNumber, int paramNum){
+	if (lineArr[0] == null || strcmp( "\n", lineArr[0]) == 0){
+  			fprintf(stderr, "Instruction on line number %d is invalid, error in param %d\nExiting\n", lineNumber, paramNum);
+           	exit(EXIT_FAILURE);
+  		}
     
 	int retVal;
 	retVal = 0;
