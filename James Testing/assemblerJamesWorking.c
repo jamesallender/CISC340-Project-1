@@ -387,15 +387,14 @@ int handleParams (char *paramString, GHashTable* hash, int lineNumber, int param
 	retVal = 0;
 	if (isNumber (paramString) == 1 ){
 		retVal = toNum ( paramString );
-	}
+	}// if
 	else if ( g_hash_table_contains (hash, g_strdup(paramString)) == 1 ){ // check if in hash table then look up
 		retVal = GPOINTER_TO_INT(g_hash_table_lookup (hash, g_strdup(paramString)));
 		// printf("found a label!!!!\n");
 
-	}else{
-		fprintf(stderr, "Invalid value for regA in input file");
-	}
-	
-
+	}//else if
+	else{
+		fprintf(stderr, "Invalid value '%s' on line %d, param %d ", paramString, lineNumber, paramNum);
+	}//esle
     	return retVal;
 }
