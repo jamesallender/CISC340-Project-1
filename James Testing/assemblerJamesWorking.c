@@ -117,6 +117,7 @@ int main(int argc, char **argv){
 	int loopStarted = 0;
 
 	while (fgets(lineBuffer, 100, inFile) !=NULL){
+		printf("top of while\n");
 		if(loopStarted == 1){
 			fprintf(outFile, "\n"); // write to file
 		}
