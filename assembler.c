@@ -232,7 +232,7 @@ int main(int argc, char **argv){
       		optCode = optCode << optCodeOffset;
       		regA = regA << regAOffset;
       		regB = regB << regBOffset;
-
+		printf("offset: %d\n", offset);
       		 if (g_hash_table_contains (hash, g_strdup(lineArr[3])) == 1){
       		 	if (offset - lineNum < 0){
       		 		offset = offset - lineNum - 1;
@@ -241,7 +241,7 @@ int main(int argc, char **argv){
       		 		offset = offset - lineNum;
       		 	}//else if
       		 }//if
-			//printf("offset: %d\n", offset);
+			printf("offset: %d\n", offset);
       		offset = offset & negMask;
 
 
@@ -357,7 +357,7 @@ int findOppCode (char *optCode){
 // function returns 0 if the given string was not a number otherwise returns 1 if string was a number
 int isNumber (char *string){
 	char *refBuf;
-	strtol (string, &refBuf, 8);
+	strtol (string, &refBuf, 10);
 	if ( *refBuf == '\0' ){
 		return 1;
 	}
@@ -371,7 +371,7 @@ int toNum (char *string){
 
 	char *refBuf;
 	int result;
-	result = strtol (string, &refBuf, 8);
+	result = strtol (string, &refBuf, 10);
 	return result;
 
 }
