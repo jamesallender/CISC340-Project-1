@@ -100,7 +100,7 @@ int main(int argc, char **argv){
 			
 			if(isalpha(label[0])){
 				for (int i = 0; i < strlen(label); i++){
-					if (!(isalpha(label[i]) && isdigit(label[i]))){
+					if (!isalpha(label[i]) && !isdigit(label[i])){
 						fprintf(stderr, "Label '%s' contains invalid characters. Must contain only numbers and letterts.\nExiting\n", label);
                			exit(EXIT_FAILURE);
 					} // if
