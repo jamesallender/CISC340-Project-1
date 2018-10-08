@@ -1,7 +1,8 @@
 	jalr	3	4		jumps to the address in reg 3
-	lw	5	2	myLabel load reg5 with myLabel 
+	lw	5	2	label load reg5 with myLabel 
 	noop	
 	noop	
 loop	add	3	2	1	add
 	noop
 	beq	0	0	loop	go back to start of loop
+label	.fill	4
