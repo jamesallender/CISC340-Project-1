@@ -122,7 +122,9 @@ int main(int argc, char **argv){
 		}
 		loopStarted = 1;
 		// If Line has no label	
+		printf("pre if")
 		if (lineBuffer[0] == ' ' | lineBuffer[0] == '\t'){
+			printf("no label")
 			lineArr[0] = strtok (lineBuffer," \t\n");//0th Element Opp Code
 			lineArr[1] = strtok (NULL," \t\n"); //First Element
 			lineArr[2] = strtok (NULL," \t\n"); //Second Element
@@ -131,6 +133,7 @@ int main(int argc, char **argv){
 
 		}// If Line has a label
         else{
+        	printf("label")
 			strtok (lineBuffer," \t"); //Label
 			lineArr[0] = strtok (NULL," \t\n"); //0th Element Opp Code
 			lineArr[1] = strtok (NULL," \t\n"); //First Element
