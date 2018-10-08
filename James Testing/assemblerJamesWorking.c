@@ -222,7 +222,7 @@ int main(int argc, char **argv){
       		instruction = instruction | regA;
       		instruction = instruction | regB;
       		instruction = instruction | offset;
-      		printf("end i tyoe\n")
+      		printf("end i tyoe\n");
       	}
       	// J type
       	else if(optCode == 5){
