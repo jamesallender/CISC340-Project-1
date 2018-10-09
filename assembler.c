@@ -198,6 +198,11 @@ int main(int argc, char **argv){
       		regB = handleParams(lineArr[3], hash, lineNum, 3);
       		destReg = handleParams(lineArr[1], hash, lineNum, 1);
 
+		if (regA>7 || regA<0 || regB>7 || regB<0 || destReg>7 || destReg<0){
+			fprintf(stderr, "Register value on line number %d is invalid\nExiting\n", lineNum);
+			exit(EXIT_FAILURE);
+		}
+
       		// printf("optcode: %d\n", optCode);
       		// printf("regA: %d\n", regA);
       		// printf("regB: %d\n", regB);
@@ -222,6 +227,11 @@ int main(int argc, char **argv){
       		regA = handleParams(lineArr[1], hash, lineNum, 1);
       		regB = handleParams(lineArr[2], hash, lineNum, 2);
       		offset = handleParams(lineArr[3], hash, lineNum, 3);
+
+		if (regA>7 || regA<0 || regB>7 || regB<0){
+			fprintf(stderr, "Register value on line number %d is invalid\nExiting\n", lineNum);
+			exit(EXIT_FAILURE);
+		}
 
       		// printf("optcode: %d\n", optCode);
       		// printf("regA: %d\n", regA);
@@ -258,6 +268,12 @@ int main(int argc, char **argv){
       		regA = handleParams(lineArr[1], hash, lineNum, 1);
       		regB = handleParams(lineArr[2], hash, lineNum, 2);
 
+
+
+		if (regA>7 || regA<0 || regB>7 || regB<0){
+			fprintf(stderr, "Register value on line number %d is invalid\nExiting\n", lineNum);
+			exit(EXIT_FAILURE);
+		}
       		// printf("optcode: %d\n", optCode);
       		// printf("regA: %d\n", regA);
       		// printf("regB: %d\n", regB);
@@ -266,6 +282,7 @@ int main(int argc, char **argv){
       		optCode = optCode << optCodeOffset;
       		regA = regA << regAOffset;
       		regB = regB << regBOffset;
+
 
       		// Or instruction together
       		instruction = instruction | optCode;
