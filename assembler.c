@@ -232,7 +232,7 @@ int main(int argc, char **argv){
       		optCode = optCode << optCodeOffset;
       		regA = regA << regAOffset;
       		regB = regB << regBOffset;
-		printf("offset: %d\n", offset);
+		//printf("offset: %d\n", offset);
       		 if (g_hash_table_contains (hash, g_strdup(lineArr[3])) == 1){
       		 	if (offset - lineNum < 0){
       		 		offset = offset - lineNum - 1;
@@ -241,7 +241,7 @@ int main(int argc, char **argv){
       		 		offset = offset - lineNum;
       		 	}//else if
       		 }//if
-			printf("offset: %d\n", offset);
+		//	printf("offset: %d\n", offset);
       		offset = offset & negMask;
 
 
