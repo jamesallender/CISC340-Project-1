@@ -13,8 +13,6 @@ Project 01
 #include <string.h>
 #include <ctype.h>
 
-// void checkParam(char *param, int lineNumber, int paramNum); // checks the given param string to ensure it is valid
-
 int findOppCode (char *name); // Function for find the opcode decimal value for a string
 
 int isNumber (char *string); // returns 1 if it was given a number and -1 if not
@@ -32,8 +30,8 @@ int main(int argc, char **argv){
 	char *outFileName; // our output file name
 	int iFlag = 0; // Flag to tell us if an i option (requiered) has been given
 	int writeToFileFlag = 0; // Flag to indicate if we shuld write to file or write to screen
-	int offsetMin = -32768;
-	int offsetMax = 32767;
+	int offsetMin = -32768; // min 2's complement # in 16 bits
+	int offsetMax = 32767;// Max 2's complement # in 16 bits
 
 	extern char *optarg; // The arguemnt to a opt - used by external
 	extern int optind; // the int id of the curent opt location - used by external
@@ -52,17 +50,13 @@ int main(int argc, char **argv){
 		switch (opt){
 			case 'i':
 				inFileName = optarg;
-				// printf("inFileName: %s\n", inFileName);
 				iFlag = 1;
 				break;
 			case 'o':
 				outFileName = optarg;
-				// printf("outFileName: %s\n", outFileName);
 				writeToFileFlag = 1;
 				break;
 			default:
-				// this dosent do anything, if an invalid option is given get opt will exit the program
-				// printf("in default");
             	fprintf(stderr, "Was given an unexpected argument, was given %d.\n Expected -i [input file] -o [output file]\nExiting\n", opt);
                	exit(EXIT_FAILURE);
        }
@@ -135,8 +129,8 @@ int main(int argc, char **argv){
 	outFile = fopen(outFileName, "w");
 
 	char *lineArr[4]; // array to hold the split elements of our line
-	int lineNum = 0;
-	int loopStarted = 0;
+	int lineNum = 0; // hold the line number we're on in the second pass
+	int loopStarted = 0; // flag to indicate if the loop has started for printing to a file
 
 	// Loop through the lines of the file a second time
 	while (fgets(lineBuffer, 100, inFile) !=NULL){
@@ -161,17 +155,7 @@ int main(int argc, char **argv){
 			lineArr[3] = strtok (NULL," \t\n"); //Third Element
 
         }//else
-		// printf("--------------------\n");
-		// printf("lineArr[0]:%s\n", lineArr[0]);
-	 //    printf("lineArr[1]:%s\n", lineArr[1]);
-	 //    printf("lineArr[2]:%s\n", lineArr[2]);
-	 //    printf("lineArr[3]:%s\n", lineArr[3]);
 
-		/*	PACK VALUES INTO INTEGERS    */
-		// if (lineArr[0] == NULL || strcmp( "\n", lineArr[0]) == 0){
-  //     			fprintf(stderr, "Opt Code '%s' not given\nExiting\n");
-  //              	exit(EXIT_FAILURE);
-  //     		}
 	    int optCode = findOppCode(lineArr[0]);
 	    int destReg;
 	  	int regA;
@@ -184,55 +168,45 @@ int main(int argc, char **argv){
 	  	int regBOffset = 16;
 	  	int negMask = 65535;
 
-      	// 31-25 unused
-      	// 24-22 optCode
-      	// 21-19 regA
-      	// 18-16 regB
-      	// 2-0 destReg or 15-0 offset/immidiate
-
         // R type
       	if(optCode == 0 || optCode == 1){
-      		// printf("Found R type Instruction\n");
       		// Get instruction params
       		regA = handleParams(lineArr[2], hash, lineNum, 2);
       		regB = handleParams(lineArr[3], hash, lineNum, 3);
       		destReg = handleParams(lineArr[1], hash, lineNum, 1);
 
-      		// printf("optcode: %d\n", optCode);
-      		// printf("regA: %d\n", regA);
-      		// printf("regB: %d\n", regB);
-      		// printf("destReg: %d\n", destReg);
-
+		  	// Ensure register value is in range 
+			if (regA>7 || regA<0 || regB>7 || regB<0 || destReg>7 || destReg<0){
+				fprintf(stderr, "Register value on line number %d is invalid\nExiting\n", lineNum);
+				exit(EXIT_FAILURE);
+			}
       		// Do shifting
       		optCode = optCode << optCodeOffset;
       		regA = regA << regAOffset;
       		regB = regB << regBOffset;
 
       		// Or instruction together
-      		//instruction = instruction | optCode | regA | regB | destReg;
       		instruction = instruction | optCode;
       		instruction = instruction | regA;
       		instruction = instruction | regB;
       		instruction = instruction | destReg;
       	}
+
       	// I type
       	else if(optCode == 2 || optCode == 3 || optCode == 4){
-      		// printf("Found I type Instruction\n");
       		// Get instruction params
       		regA = handleParams(lineArr[1], hash, lineNum, 1);
       		regB = handleParams(lineArr[2], hash, lineNum, 2);
       		offset = handleParams(lineArr[3], hash, lineNum, 3);
 
-      		// printf("optcode: %d\n", optCode);
-      		// printf("regA: %d\n", regA);
-      		// printf("regB: %d\n", regB);
-      		
-
+		if (regA>7 || regA<0 || regB>7 || regB<0){
+			fprintf(stderr, "Register value on line number %d is invalid\nExiting\n", lineNum);
+			exit(EXIT_FAILURE);
+		}
       		// Do shifting
       		optCode = optCode << optCodeOffset;
       		regA = regA << regAOffset;
       		regB = regB << regBOffset;
-
       		 if (g_hash_table_contains (hash, g_strdup(lineArr[3])) == 1){
       		 	if (offset - lineNum < 0){
       		 		offset = offset - lineNum - 1;
@@ -241,65 +215,70 @@ int main(int argc, char **argv){
       		 		offset = offset - lineNum;
       		 	}//else if
       		 }//if
-			//printf("offset: %d\n", offset);
       		offset = offset & negMask;
-
-
       		// Or instruction together
       		instruction = instruction | optCode;
       		instruction = instruction | regA;
       		instruction = instruction | regB;
       		instruction = instruction | offset;
       	}//else if
+
       	// J type
       	else if(optCode == 5){
-      		// printf("Found J type Instruction\n");
       		// Get instruction params
       		regA = handleParams(lineArr[1], hash, lineNum, 1);
       		regB = handleParams(lineArr[2], hash, lineNum, 2);
 
-      		// printf("optcode: %d\n", optCode);
-      		// printf("regA: %d\n", regA);
-      		// printf("regB: %d\n", regB);
 
+      		// Ensure register value is in range 
+			if (regA>7 || regA<0 || regB>7 || regB<0){
+				fprintf(stderr, "Register value on line number %d is invalid\nExiting\n", lineNum);
+				exit(EXIT_FAILURE);
+			}
       		// Do shifting
       		optCode = optCode << optCodeOffset;
       		regA = regA << regAOffset;
       		regB = regB << regBOffset;
-
       		// Or instruction together
       		instruction = instruction | optCode;
       		instruction = instruction | regA;
       		instruction = instruction | regB;
       	}//else if
+
       	// O type
       	else if(optCode == 6 || optCode == 7){
-      		// printf("Found O type Instruction\n");
-      		// printf("optcode: %d\n", optCode);
-
       		// Do shifting
       		optCode = optCode << optCodeOffset;
 
       		// Or instruction together
       		instruction = instruction | optCode;
       	}//else if
+
 		// .fill directive
       	else if(optCode == -1 && strcmp( ".fill", lineArr[0]) == 0){
       		// printf("Found .fill directive\n");
 			instruction = handleParams(lineArr[1], hash, lineNum, 1);
       	}//else if
+
       	// check if opcode is not valid
       	else{
       		fprintf(stderr, "Opt code '%s' is invalid found\n", lineArr[0]);
             exit(EXIT_FAILURE);
       	}//else
+
+      	// Handle writing to file
       	if(writeToFileFlag == 0){
       		printf("%d\n", instruction);
-      	}else{
+      	}
+      	// or printing to scree
+      	else{
       		fprintf(outFile, "%d", instruction); // write to file
       	}
+
+      	// increment line #
       	lineNum++;
     }
+    // Close files as apropriate
 	fclose(inFile);
 	if(writeToFileFlag == 1){
 		fclose(outFile);
@@ -308,19 +287,9 @@ int main(int argc, char **argv){
 }//main
 
 
-// void checkParam(char *param, int lineNumber, int paramNum){
-// 	if (lineArr[0] == NULL || strcmp( "\n", lineArr[0]) == 0){
-//   			fprintf(stderr, "Instruction on line number %d is invalid, error in param %d\nExiting\n");
-//            	exit(EXIT_FAILURE);
-//   		}
-// }
-
 // Retruns the integer value of an optcode string. If an invalid opt code is given returns -1
 int findOppCode (char *optCode){
-	//printf("in findOppCode, optcode: %s\n", optCode);
 	int optCodeInt;
-
-	// printf("optCode: %s\n", optCode);
 
 	if ( strcmp( "add", optCode) == 0 ){
 		optCodeInt = 0;
@@ -349,15 +318,13 @@ int findOppCode (char *optCode){
 	else{
 		optCodeInt = -1;
 	}
-
 	return optCodeInt;
-	
 }//findOppCode
 
 // function returns 0 if the given string was not a number otherwise returns 1 if string was a number
 int isNumber (char *string){
 	char *refBuf;
-	strtol (string, &refBuf, 8);
+	strtol (string, &refBuf, 10);
 	if ( *refBuf == '\0' ){
 		return 1;
 	}
@@ -371,13 +338,13 @@ int toNum (char *string){
 
 	char *refBuf;
 	int result;
-	result = strtol (string, &refBuf, 8);
+	result = strtol (string, &refBuf, 10);
 	return result;
-
 }
 
 // process the params from a assembly instructions and returns the int value
 int handleParams (char *paramString, GHashTable* hash, int lineNumber, int paramNum){
+	// Check if the passed param is a valid one for interpritation
 	if (paramString == NULL || strcmp( "\n", paramString) == 1 || strcmp( "\t", paramString) == 1 || strcmp( " ", paramString) == 1){
   			fprintf(stderr, "Instruction on line number %d is invalid, error in param %d\nExiting\n", lineNumber, paramNum);
            	exit(EXIT_FAILURE);
@@ -385,14 +352,17 @@ int handleParams (char *paramString, GHashTable* hash, int lineNumber, int param
     
 	int retVal;
 	retVal = 0;
+
+	// Check if the passed param is a number
 	if (isNumber (paramString) == 1 ){
 		retVal = toNum ( paramString );
 	}// if
+	// Check if the passed param is a lable
 	else if ( g_hash_table_contains (hash, g_strdup(paramString)) == 1 ){ // check if in hash table then look up
 		retVal = GPOINTER_TO_INT(g_hash_table_lookup (hash, g_strdup(paramString)));
-		// printf("found a label!!!!\n");
 
 	}//else if
+	// If nither fail out
 	else{
 		fprintf(stderr, "Invalid value '%s' on line %d, param %d\nExiting\n", paramString, lineNumber, paramNum);
 		exit(EXIT_FAILURE);
