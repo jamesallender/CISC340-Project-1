@@ -7,7 +7,7 @@ all: assembler.o
 	$(CC) $(CFLAGS) assembler.o -o assembler $(LDFLAGS)
 
 assembler.o: assembler.c
-	$(CC) $(CFLAGS) -c assembler.c -ggdb
+	$(CC) $(CFLAGS) -c assembler.c
 
 clean:
 	rm assembler *.o *.*~ *~
