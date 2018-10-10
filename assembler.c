@@ -79,14 +79,20 @@ int main(int argc, char **argv){
 
 	int lineAddress = 0; // The current line of the file we are on
 	char lineBuffer[100]; // Array to hold our line
-	char * label; // label var
+	char * label; // label vari
+
 
 	// Loop through the lines of the file
 	while (fgets(lineBuffer, 100, inFile) !=NULL){
+		if (lineAddress ==0 && strtok (lineBuffer," \t \n")==NULL ){
+			 fprintf(stderr, "No Instruction on first line\nExiting\n");
+			exit(EXIT_FAILURE);
+		}
 		// If we have found not white space at the begining of the line (i.e. a label)
 		if (lineBuffer[0] != ' ' && lineBuffer[0] != '\t'){
 			// get label string
-			label = g_strdup(strtok (lineBuffer," \t\n"));
+			label = g_strdup(strtok (lineBuffer," \t \n"));
+
 
 			if(strlen(label) > 6){
 				fprintf(stderr, "Label '%s' is too long. Max 6 chars.\nExiting\n", label);
@@ -142,17 +148,17 @@ int main(int argc, char **argv){
 		// If Line has no label	
 		if (lineBuffer[0] == ' ' | lineBuffer[0] == '\t'){
 			lineArr[0] = strtok (lineBuffer," \t\n");//0th Element Opp Code
-			lineArr[1] = strtok (NULL," \t\n"); //First Element
-			lineArr[2] = strtok (NULL," \t\n"); //Second Element
-			lineArr[3] = strtok (NULL," \t\n"); //Third Element
+			lineArr[1] = strtok (NULL," \t \n"); //First Element
+			lineArr[2] = strtok (NULL," \t \n"); //Second Element
+			lineArr[3] = strtok (NULL," \t \n"); //Third Element
 
 		}// If Line has a label
         else{
 			strtok (lineBuffer," \t"); //Label
-			lineArr[0] = strtok (NULL," \t\n"); //0th Element Opp Code
-			lineArr[1] = strtok (NULL," \t\n"); //First Element
-			lineArr[2] = strtok (NULL," \t\n"); //Second Element
-			lineArr[3] = strtok (NULL," \t\n"); //Third Element
+			lineArr[0] = strtok (NULL," \t \n"); //0th Element Opp Code
+			lineArr[1] = strtok (NULL," \t \n"); //First Element
+			lineArr[2] = strtok (NULL," \t \n"); //Second Element
+			lineArr[3] = strtok (NULL," \t \n"); //Third Element
 
         }//else
 
