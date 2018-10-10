@@ -85,7 +85,7 @@ int main(int argc, char **argv){
 	// Loop through the lines of the file
 	while (fgets(lineBuffer, 100, inFile) !=NULL){
 		if (strtok (lineBuffer," \t \n")==NULL ){
-			 fprintf(stderr, "No Instruction on first line\nExiting\n");
+			 fprintf(stderr, "Found line with no Instruction\nExiting\n");
 			exit(EXIT_FAILURE);
 		}
 		// If we have found not white space at the begining of the line (i.e. a label)
