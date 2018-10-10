@@ -13,14 +13,11 @@ Project 01
 #include <string.h>
 #include <ctype.h>
 
-int findOppCode (char *name); // Function for find the opcode decimal value for a string
+int convert_num(int num);
+void print_state(statetype *stateptr);
+void print_stats(int n_instrs);
 
-int isNumber (char *string); // returns 1 if it was given a number and -1 if not
-
-int toNum (char *string); // returns the the decimal representation of a number respresented as a string
-
-int handleParams (char *paramString, GHashTable* hash, int lineNumber, int paramNum); // process the params from a assembly instructions
-
+// Structure for
 typedef struct state_struct {
 	int pc;
 	int mem[NUMMEMORY];
@@ -32,17 +29,15 @@ int main(int argc, char **argv){
 	// Variables
 	int opt; // the value of the opt form getopt
 	FILE* inFile; // our input File
-	FILE* outFile; // our output File
 	char *inFileName; // our input file name
-	char *outFileName; // our output file name
 	int iFlag = 0; // Flag to tell us if an i option (requiered) has been given
 
 	extern char *optarg; // The arguemnt to a opt - used by external
 	extern int optind; // the int id of the curent opt location - used by external
 
 	// Verify correct # of args given either 3 or 5 for 1 or 2 options (i,o)
-	if (argc != 3 && argc != 5 ) {
-	       fprintf(stderr, "Was not given either 1 or 2 sets of input arguments.\nShould be:\t-i [input file] -o [output file]\nOr:\t\t-i [input file]\nExiting\n");
+	if (argc != 3) {
+	       fprintf(stderr, "Was not given either 1 or 2 sets of input arguments.\nShould be:\t-i [input file]\nExiting\n");
 	       exit(EXIT_FAILURE);
         }
 
@@ -53,12 +48,8 @@ int main(int argc, char **argv){
 				inFileName = optarg;
 				iFlag = 1;
 				break;
-			case 'o':
-				outFileName = optarg;
-				writeToFileFlag = 1;
-				break;
 			default:
-            	fprintf(stderr, "Was given an unexpected argument, was given %d.\n Expected -i [input file] -o [output file]\nExiting\n", opt);
+            	fprintf(stderr, "Was given an unexpected argument, was given %d.\n Expected -i [input file]\nExiting\n", opt);
                	exit(EXIT_FAILURE);
        }
 	}
@@ -71,11 +62,19 @@ int main(int argc, char **argv){
 
 	/*-------------------------PROCESS FILE------------------------------*/
 	inFile = fopen(inFileName, "r");
-	outFile = fopen(outFileName, "w");
 
 	// Loop through the lines of the file a second time
 	while (fgets(lineBuffer, 100, inFile) !=NULL){
 
+
+		// "add" 0
+		// "nand" 1
+		// "lw" 2
+		// "sw"  3
+		// "beq" 4
+		// "jalr" 5
+		// "halt" 6
+		// "noop" 7;
         // R type
       	if(optCode == 0 || optCode == 1){
 
@@ -116,40 +115,6 @@ int main(int argc, char **argv){
     return 0;
 }//main
 
-
-// Retruns the integer value of an optcode string. If an invalid opt code is given returns -1
-int findOppCode (char *optCode){
-	int optCodeInt;
-
-	if ( strcmp( "add", optCode) == 0 ){
-		optCodeInt = 0;
-	}
-	else if ( strcmp( "nand", optCode) == 0 ){
-		optCodeInt = 1;
-	}
-	else if ( strcmp( "lw", optCode) == 0 ){
-		optCodeInt = 2;
-	}
-	else if ( strcmp( "sw", optCode) == 0 ){
-		optCodeInt = 3;
-	}
-	else if ( strcmp( "beq", optCode) == 0 ){
-		optCodeInt = 4;
-	}
-	else if ( strcmp( "jalr", optCode) == 0 ){
-		optCodeInt = 5;
-	}
-	else if ( strcmp( "halt", optCode) == 0 ){
-		optCodeInt = 6;
-	}
-	else if ( strcmp( "noop", optCode) == 0 ){
-		optCodeInt = 7;
-	}
-	else{
-		optCodeInt = -1;
-	}
-	return optCodeInt;
-}//findOppCode
 
 int convert_num(int num){
 	if (num & (1<<15) ) {
