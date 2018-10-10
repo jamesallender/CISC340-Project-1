@@ -188,7 +188,7 @@ int main(int argc, char **argv){
 
 		  	// Ensure register value is in range 
 			if (regA>7 || regA<0 || regB>7 || regB<0 || destReg>7 || destReg<0){
-				fprintf(stderr, "Register value '%d' on line number %d is invalid\nExiting\n", regA, lineNum);
+				fprintf(stderr, "Register value '%d' on line number %d is invalid\nExiting\n", destReg, lineNum);
 				exit(EXIT_FAILURE);
 			}
       		// Do shifting
