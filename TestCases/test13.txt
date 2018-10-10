@@ -1,4 +1,0 @@
-	lw	1	0	32767
-	lw	1	0	-32768
-	lw	1	10	32767	tests for invalid registers
-	lw	1	10	-32768
