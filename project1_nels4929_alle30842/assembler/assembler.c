@@ -361,7 +361,7 @@ int handleParams (char *paramString, GHashTable* hash, int lineNumber, int param
            	exit(EXIT_FAILURE);
   		}
 
-  	printf("passed: %d", paramString);
+  	printf("passed: %s", paramString);
     
 	int retVal;
 	retVal = 0;
