@@ -1,4 +1,13 @@
-# CISC340-Project-1
+James Allender
+Mitchell Nelson
+CISC-340 
+Project 01
+README
+
+assembler.c - This file is the C source code for our assembler
+
+Makefile - This is a makefile to be used with Make to build our project
+
 Test Files:
 	Demonstrating functionality:
 	test1.txt - tests the assembler with a loop, lw using a label, comments, and jalr
@@ -20,4 +29,3 @@ Test Files:
 	test15.txt - test for handeling empty line
 	test16.txt - test handeling file contaning only empty white space
 	test17.txt - test handeling empty file
-
