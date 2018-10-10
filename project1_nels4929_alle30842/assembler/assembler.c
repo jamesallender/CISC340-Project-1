@@ -188,7 +188,7 @@ int main(int argc, char **argv){
 
 		  	// Ensure register value is in range 
 			if (regA>7 || regA<0 || regB>7 || regB<0 || destReg>7 || destReg<0){
-				fprintf(stderr, "Register value '%d' on line number %d is invalid\nExiting\n", destReg, lineNum);
+				fprintf(stderr, "Register value on line number %d is invalid\nExiting\n", lineNum);
 				exit(EXIT_FAILURE);
 			}
       		// Do shifting
@@ -360,8 +360,6 @@ int handleParams (char *paramString, GHashTable* hash, int lineNumber, int param
   			fprintf(stderr, "Instruction on line number %d is invalid, error in param %d\nExiting\n", lineNumber, paramNum);
            	exit(EXIT_FAILURE);
   		}
-
-  	printf("passed: %s", paramString);
     
 	int retVal;
 	retVal = 0;
@@ -380,6 +378,5 @@ int handleParams (char *paramString, GHashTable* hash, int lineNumber, int param
 		fprintf(stderr, "Invalid value '%s' on line %d, param %d\nExiting\n", paramString, lineNumber, paramNum);
 		exit(EXIT_FAILURE);
 	}//esle
-		printf("value: %d\n", retVal);
     	return retVal;
 }
