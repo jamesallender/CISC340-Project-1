@@ -84,6 +84,7 @@ int main(int argc, char **argv){
 
 	// Loop through the lines of the file
 	while (fgets(lineBuffer, 100, inFile) !=NULL){
+		// Checks if a line is only white space
 		if (strtok (lineBuffer," \t \n")==NULL ){
 			 fprintf(stderr, "Found line with no Instruction\nExiting\n");
 			exit(EXIT_FAILURE);
@@ -143,6 +144,10 @@ int main(int argc, char **argv){
 		// This is used to ensure a new line isent te first or last thing in the output file
 		if(writeToFileFlag == 1 && loopStarted == 1){
 			fprintf(outFile, "\n"); // write to file
+		}
+		// this hadeles the new line for printing to the console
+		if(writeToFileFlag == 0 && loopStarted == 1){
+			printf("\n"); // write to file
 		}
 		loopStarted = 1; // toggel flag
 		// If Line has no label	
@@ -274,7 +279,7 @@ int main(int argc, char **argv){
 
       	// Handle writing to file
       	if(writeToFileFlag == 0){
-      		printf("%d\n", instruction);
+      		printf("%d", instruction);
       	}
       	// or printing to scree
       	else{
