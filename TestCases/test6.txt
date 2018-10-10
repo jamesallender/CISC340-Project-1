@@ -1,5 +1,5 @@
 	lw	1	five     
-	lw	2	1	3	This tests to ensure a mussing instruction param is caught on the line above
+	lw	2	1	3	This tests to ensure a missing instruction param is caught on the line above
 start	add	1	2	1
 	beq	0	1	2
 	beq	0	0	start
