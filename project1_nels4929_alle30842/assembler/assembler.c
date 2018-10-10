@@ -360,6 +360,8 @@ int handleParams (char *paramString, GHashTable* hash, int lineNumber, int param
   			fprintf(stderr, "Instruction on line number %d is invalid, error in param %d\nExiting\n", lineNumber, paramNum);
            	exit(EXIT_FAILURE);
   		}
+
+  	printf("passed: %d", paramString);
     
 	int retVal;
 	retVal = 0;
