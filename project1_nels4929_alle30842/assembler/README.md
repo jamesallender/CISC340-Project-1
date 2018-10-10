@@ -7,7 +7,6 @@ test4.txt - tests the assembler with extra white space on the front of an instru
 test5.txt - test case given from Dr. Myre. Tests loops, label, several instruction types
 
 Demonstrating error checking:
-test5.txt - tests the assembler to ensure a missing instruction param is caught
 test6.txt - tests the assembler to ensure a missing instruction param is caught
 test7.txt - tests a valid label that has no corresponding value
 test8.txt - tests an invalid label that starts with a number
@@ -16,3 +15,4 @@ test10.txt - tests an invalid label with an "@"
 test11.txt - tests an invalid label that starts with "#"
 test12.txt - tests for exmpty parameters on instructions
 test13.txt - tests for invalid registers
+test14.txt - test for handeling epty line
