@@ -15,4 +15,4 @@ test10.txt - tests an invalid label with an "@"
 test11.txt - tests an invalid label that starts with "#"
 test12.txt - tests for exmpty parameters on instructions
 test13.txt - tests for invalid registers
-test14.txt - test for handeling epty line
+test14.txt - test for handeling empty line

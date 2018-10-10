@@ -84,7 +84,7 @@ int main(int argc, char **argv){
 
 	// Loop through the lines of the file
 	while (fgets(lineBuffer, 100, inFile) !=NULL){
-		if (lineAddress ==0 && strtok (lineBuffer," \t \n")==NULL ){
+		if (strtok (lineBuffer," \t \n")==NULL ){
 			 fprintf(stderr, "No Instruction on first line\nExiting\n");
 			exit(EXIT_FAILURE);
 		}
