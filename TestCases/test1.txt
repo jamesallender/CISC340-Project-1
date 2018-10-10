@@ -1,5 +1,5 @@
 loop	 jalr    	    4    		3		jumps to the address in reg 3
-        lw      5       2       label	load reg5 with myLabel
+        lw      label       2       label	load reg5 with myLabel
         noop
         noop
         noop
