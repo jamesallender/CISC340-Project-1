@@ -119,11 +119,11 @@ int main(int argc, char **argv){
 
 			state.reg[destR] = state.reg[regA] + state.reg[regB];
 	      	}
-		// AND
+		// NAND
 	      	else if(optCode == 1){
 			printf("found AND instruction!\n");
 
-			state.reg[destR] = state.reg[regA] & state.reg[regB];
+			state.reg[destR] =~( state.reg[regA] & state.reg[regB]);
 	      	}
 
 		// LW
