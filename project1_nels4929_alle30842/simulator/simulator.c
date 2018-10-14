@@ -13,17 +13,17 @@ Project 01
 #include <string.h>
 #include <ctype.h>
 
-int convert_num(int num);
-void print_state(statetype *stateptr);
-void print_stats(int n_instrs);
-
 // Structure for
 typedef struct state_struct {
 	int pc;
-	int mem[NUMMEMORY];
-	int reg[NUMREGS];
+	int mem[65536];
+	int reg[8];
 	int num_memory;
 } statetype;
+
+int convert_num(int num);
+void print_state(statetype *stateptr);
+void print_stats(int n_instrs);
 
 int main(int argc, char **argv){
 	// Variables
@@ -31,10 +31,10 @@ int main(int argc, char **argv){
 	FILE* inFile; // our input File
 	char *inFileName; // our input file name
 	int iFlag = 0; // Flag to tell us if an i option (requiered) has been given
-
+	int writeToFileFlag = 0;
 	extern char *optarg; // The arguemnt to a opt - used by external
 	extern int optind; // the int id of the curent opt location - used by external
-
+	int lineArr[4];
 	// Verify correct # of args given either 3 or 5 for 1 or 2 options (i,o)
 	if (argc != 3) {
 	       fprintf(stderr, "Was not given either 1 or 2 sets of input arguments.\nShould be:\t-i [input file]\nExiting\n");
@@ -62,7 +62,7 @@ int main(int argc, char **argv){
 
 	/*-------------------------PROCESS FILE------------------------------*/
 	inFile = fopen(inFileName, "r");
-
+	char lineBuffer[100]; // Array to hold our line
 	// Loop through the lines of the file a second time
 	while (fgets(lineBuffer, 100, inFile) !=NULL){
 
@@ -75,7 +75,36 @@ int main(int argc, char **argv){
 		// "jalr" 5
 		// "halt" 6
 		// "noop" 7;
-        // R type
+
+	int lineInt  = strtol(lineBuffer,NULL,10);
+	
+	printf("lineInt %d\n",lineInt);
+	
+	int optCode = lineInt & 0x1C00000;
+
+	optCode = optCode >> 22;
+	
+	printf("opt code: %d\n",optCode);
+	
+	int regA = lineInt & 0x380000;
+
+	regA = regA >> 19;
+
+	printf("regA: %d\n", regA);
+        
+	int regB = lineInt & 0x70000;
+
+	regB = regB >> 16;
+
+	printf("regB: %d\n", regB);
+ 
+	int imm = lineInt & 0xFFFF;
+
+	imm = convert_num(imm);
+
+	printf("imm: %d\n", imm);
+ 
+	// R type
       	if(optCode == 0 || optCode == 1){
 
       	}
@@ -96,22 +125,15 @@ int main(int argc, char **argv){
       	}//else if
 
 		// .fill directive
-      	else if(optCode == -1 && strcmp( ".fill", lineArr[0]) == 0){
+//      	else if(optCode == -1 && strcmp( ".fill", lineArr[0]) == 0){
 
-      	}//else if
+//      	}//else if
 
       	// check if opcode is not valid
-      	else{
-      		fprintf(stderr, "Invalid instruction\n", lineArr[0]);
-            exit(EXIT_FAILURE);
-      	}//else
 
     }
     // Close files as apropriate
 	fclose(inFile);
-	if(writeToFileFlag == 1){
-		fclose(outFile);
-	}
     return 0;
 }//main
 
@@ -128,11 +150,11 @@ void print_state(statetype *stateptr){
 	printf("\n@@@\nstate:\n");
 	printf("\tpc %d\n", stateptr->pc);
 	printf("\tmemory:\n");
-	for(i = 0; i < stateptr->nummemory; i++){
+	for(i = 0; i < stateptr->num_memory; i++){
 		printf("\t\tmem[%d]=%d\n", i, stateptr->mem[i]);
 	}
 	printf("\tregisters:\n");
-	for(i = 0; i < NUMREGS; i++){
+	for(i = 0; i < 8; i++){
 		printf("\t\treg[%d]=%d\n", i, stateptr->reg[i]);
 	}
 	printf("end state\n");
@@ -140,4 +162,6 @@ void print_state(statetype *stateptr){
 
 void print_stats(int n_instrs){
 	printf("INSTRUCTIONS: %d\n", n_instrs); // total executed instructions
-}	
+}
+
+	
