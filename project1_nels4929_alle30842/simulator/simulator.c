@@ -35,7 +35,9 @@ int main(int argc, char **argv){
 	int writeToFileFlag = 0;
 	extern char *optarg; // The arguemnt to a opt - used by external
 	extern int optind; // the int id of the curent opt location - used by external
+	int lineInt;
 	int lineArr[4];
+	int haltFlag =0;
 	// Verify correct # of args given either 3 or 5 for 1 or 2 options (i,o)
 	if (argc != 3) {
 	       fprintf(stderr, "Was not given either 1 or 2 sets of input arguments.\nShould be:\t-i [input file]\nExiting\n");
@@ -65,9 +67,21 @@ int main(int argc, char **argv){
 
 	inFile = fopen(inFileName, "r");
 	char lineBuffer[100]; // Array to hold our line
-	// Loop through the lines of the file a second time
+	// Loop through the lines of the file a second timei
+	int i = 0;
 	while (fgets(lineBuffer, 100, inFile) !=NULL){
+	
+		lineInt  = strtol(lineBuffer,NULL,10);
+		
+		state.mem[i] = lineInt;
+	
+		printf("mem[i]: %d\n",state.mem[i]);
 
+		i++;
+	}	
+	state.pc =0;
+
+	while (state.pc <= i && haltFlag == 0){
 		print_state(&state);
 
 		// "add" 0
@@ -79,65 +93,82 @@ int main(int argc, char **argv){
 		// "halt" 6
 		// "noop" 7;
 
-		int lineInt  = strtol(lineBuffer,NULL,10);
-		
-		printf("lineInt %d\n",lineInt);
-		
-		int optCode = lineInt & 0x1C00000;
+
+		int optCode = state.mem[state.pc] & 0x1C00000;
 
 		optCode = optCode >> 22;
 		
-		printf("opt code: %d\n",optCode);
-		
-		int regA = lineInt & 0x380000;
+		int regA = state.mem[state.pc] & 0x380000;
 
 		regA = regA >> 19;
-
-		printf("regA: %d\n", regA);
 	        
-		int regB = lineInt & 0x70000;
+		int regB = state.mem[state.pc] & 0x70000;
 
 		regB = regB >> 16;
-
-		printf("regB: %d\n", regB);
 	 
-		int imm = lineInt & 0xFFFF;
+		int imm = state.mem[state.pc] & 0xFFFF;
 
 		imm = convert_num(imm);
 
-		printf("imm: %d\n", imm);
-
-		int destR = lineInt & 7;
-
-		printf("destR: %d\n", destR);
+		int destR = state.mem[state.pc] & 7;
 	 
 	 
-		// R type
-	      	if(optCode == 0 || optCode == 1){
-			printf("found R type instruction!\n");
+		// ADD
+	      	if(optCode == 0){
+			printf("found ADD type instruction!\n");
 
 			state.reg[destR] = state.reg[regA] + state.reg[regB];
 	      	}
+		// AND
+	      	else if(optCode == 1){
+			printf("found AND instruction!\n");
 
-	      	// I type
-	      	else if(optCode == 2 || optCode == 3 || optCode == 4){
+			state.reg[destR] = state.reg[regA] & state.reg[regB];
+	      	}
 
-	      	}//else if
+		// LW
+	      	else if(optCode == 2){
+			printf("found LW instruction!\n");
 
-	      	// J type
+			state.reg[regA] = state.mem[state.reg[regB] + imm];
+	      	}
+		// SW
+	      	else if(optCode == 3){
+			printf("found SW instruction!\n");
+
+			state.mem[state.reg[regB] + imm] = state.reg[regA]; 
+	      	}
+		// BEQ
+	      	else if(optCode == 4){
+			printf("found BEQ instruction!\n");
+
+			if (state.reg[regA] == state.reg[regB]){
+				state.pc = state.pc +  imm;
+			}
+	      	}
+		// JALR
 	      	else if(optCode == 5){
+			printf("found JALR instruction!\n");
 
-	      	}//else if
+			state.reg[regA] = state.pc +1;
+			state.pc = regB;
+	      	}
+		// HALT
+	      	else if(optCode == 6){
+			printf("found HALT instruction!\n");
 
-	      	// O type
-	      	else if(optCode == 6 || optCode == 7){
-
-	      	}//else if
-
+			haltFlag = 1;
+	      	}
+		// NOOP
+	      	else if(optCode == 7){
+			printf("found NOOP instruction!\n");
+	      	}
+	state.pc = state.pc +1;
     }//while
     // Close files as apropriate
 	fclose(inFile);
-    return 0;
+    	print_state(&state);
+	return 0;
 }//main
 
 
