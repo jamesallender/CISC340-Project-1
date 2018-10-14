@@ -79,69 +79,62 @@ int main(int argc, char **argv){
 		// "halt" 6
 		// "noop" 7;
 
-	int lineInt  = strtol(lineBuffer,NULL,10);
-	
-	printf("lineInt %d\n",lineInt);
-	
-	int optCode = lineInt & 0x1C00000;
+		int lineInt  = strtol(lineBuffer,NULL,10);
+		
+		printf("lineInt %d\n",lineInt);
+		
+		int optCode = lineInt & 0x1C00000;
 
-	optCode = optCode >> 22;
-	
-	printf("opt code: %d\n",optCode);
-	
-	int regA = lineInt & 0x380000;
+		optCode = optCode >> 22;
+		
+		printf("opt code: %d\n",optCode);
+		
+		int regA = lineInt & 0x380000;
 
-	regA = regA >> 19;
+		regA = regA >> 19;
 
-	printf("regA: %d\n", regA);
-        
-	int regB = lineInt & 0x70000;
+		printf("regA: %d\n", regA);
+	        
+		int regB = lineInt & 0x70000;
 
-	regB = regB >> 16;
+		regB = regB >> 16;
 
-	printf("regB: %d\n", regB);
- 
-	int imm = lineInt & 0xFFFF;
+		printf("regB: %d\n", regB);
+	 
+		int imm = lineInt & 0xFFFF;
 
-	imm = convert_num(imm);
+		imm = convert_num(imm);
 
-	printf("imm: %d\n", imm);
+		printf("imm: %d\n", imm);
 
-	int destR = lineInt & 7;
+		int destR = lineInt & 7;
 
-	printf("destR: %d\n", destR);
- 
- 
-	// R type
-      	if(optCode == 0 || optCode == 1){
-		printf("found R type instruction!\n");
+		printf("destR: %d\n", destR);
+	 
+	 
+		// R type
+	      	if(optCode == 0 || optCode == 1){
+			printf("found R type instruction!\n");
 
-		state.reg[destR] = state.reg[regA] + state.reg[regB];
-      	}
+			state.reg[destR] = state.reg[regA] + state.reg[regB];
+	      	}
 
-      	// I type
-      	else if(optCode == 2 || optCode == 3 || optCode == 4){
+	      	// I type
+	      	else if(optCode == 2 || optCode == 3 || optCode == 4){
 
-      	}//else if
+	      	}//else if
 
-      	// J type
-      	else if(optCode == 5){
+	      	// J type
+	      	else if(optCode == 5){
 
-      	}//else if
+	      	}//else if
 
-      	// O type
-      	else if(optCode == 6 || optCode == 7){
+	      	// O type
+	      	else if(optCode == 6 || optCode == 7){
 
-      	}//else if
+	      	}//else if
 
-		// .fill directive
-//      	else if(optCode == -1 && strcmp( ".fill", lineArr[0]) == 0){
-
-//      	}//else if
-
-      	// check if opcode is not valid
-
-    }
+    }//while
     // Close files as apropriate
 	fclose(inFile);
     return 0;
