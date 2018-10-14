@@ -27,6 +27,7 @@ void print_stats(int n_instrs);
 
 int main(int argc, char **argv){
 	// Variables
+	struct state_struct state;
 	int opt; // the value of the opt form getopt
 	FILE* inFile; // our input File
 	char *inFileName; // our input file name
@@ -61,11 +62,13 @@ int main(int argc, char **argv){
 
 
 	/*-------------------------PROCESS FILE------------------------------*/
+
 	inFile = fopen(inFileName, "r");
 	char lineBuffer[100]; // Array to hold our line
 	// Loop through the lines of the file a second time
 	while (fgets(lineBuffer, 100, inFile) !=NULL){
 
+		print_state(&state);
 
 		// "add" 0
 		// "nand" 1
@@ -103,10 +106,17 @@ int main(int argc, char **argv){
 	imm = convert_num(imm);
 
 	printf("imm: %d\n", imm);
+
+	int destR = lineInt & 7;
+
+	printf("destR: %d\n", destR);
+ 
  
 	// R type
       	if(optCode == 0 || optCode == 1){
+		printf("found R type instruction!\n");
 
+		state.reg[destR] = state.reg[regA] + state.reg[regB];
       	}
 
       	// I type
