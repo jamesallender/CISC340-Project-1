@@ -83,9 +83,9 @@ int main(int argc, char **argv){
 	}	
 	state.pc =0;
 
-	while (state.pc <= i && haltFlag == 0){
-		print_state(&state);
-
+	while (1){
+		
+	
 		// "add" 0
 		// "nand" 1
 		// "lw" 2
@@ -99,7 +99,12 @@ int main(int argc, char **argv){
 		int optCode = state.mem[state.pc] & 0x1C00000;
 
 		optCode = optCode >> 22;
-		
+	
+		if (optCode == 6){
+			n_instrs ++;
+			break;
+		}
+	
 		int regA = state.mem[state.pc] & 0x380000;
 
 		regA = regA >> 19;
@@ -114,63 +119,59 @@ int main(int argc, char **argv){
 
 		int destR = state.mem[state.pc] & 7;
 	 
+		print_state(&state);
 	 
 		// ADD
 	      	if(optCode == 0){
-			printf("found ADD type instruction!\n");
-
 			state.reg[destR] = state.reg[regA] + state.reg[regB];
-	      	}
+	      		state.pc = state.pc +1;
+		}
 		// NAND
 	      	else if(optCode == 1){
-			printf("found AND instruction!\n");
-
 			state.reg[destR] =~( state.reg[regA] & state.reg[regB]);
-	      	}
+	      		state.pc = state.pc +1;
+		}
+	
 
 		// LW
 	      	else if(optCode == 2){
-			printf("found LW instruction!\n");
-
 			state.reg[regA] = state.mem[state.reg[regB] + imm];
-	      	}
+	      		state.pc = state.pc +1;
+		}
 		// SW
 	      	else if(optCode == 3){
-			printf("found SW instruction!\n");
-
 			state.mem[state.reg[regB] + imm] = state.reg[regA]; 
-	      	}
+	      		state.pc = state.pc +1;
+		}
 		// BEQ
 	      	else if(optCode == 4){
-			printf("found BEQ instruction!\n");
-
 			if (state.reg[regA] == state.reg[regB]){
 				state.pc = state.pc +  imm;
 			}
-	      	}
+	      		state.pc = state.pc +1;
+		}
 		// JALR
 	      	else if(optCode == 5){
-			printf("found JALR instruction!\n");
-
 			state.reg[regA] = state.pc +1;
 			state.pc = regB;
+			state.pc = state.pc +1;
 	      	}
 		// HALT
 	      	else if(optCode == 6){
-			printf("found HALT instruction!\n");
-
+			
 			haltFlag = 1;
 	      	}
 		// NOOP
 	      	else if(optCode == 7){
-			printf("found NOOP instruction!\n");
+			state.pc = state.pc +1;
 	      	}
 		n_instrs ++;
-		state.pc = state.pc +1;
-    	}//while
+	    	}//while
     	// Close files as apropriate
 	fclose(inFile);
+	// Print apropriate information
     	print_state(&state);
+	printf("machine halted\n");
 	print_stats(n_instrs);
 
 	return 0;
