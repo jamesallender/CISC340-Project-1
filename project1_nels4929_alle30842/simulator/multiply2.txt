@@ -14,8 +14,8 @@ skip	add		2	2	2		# add multiplicand to istself shifting it left
 done	halt
 mask	.fill	1		# fill 1 for the inital value for the mask
 maskR	.fill	1		# the regester mask is in
-mcand	.fill	29562	# the value of the multiplicad
-mplier	.fill	11834	# the value of the Multiplier
+mcand	.fill	4		# the value of the multiplicad
+mplier	.fill	4		# the value of the Multiplier
 mcandR	.fill	2		# the register the multiplicand is in
 mpliR	.fill	3		# the regester the multiplier is in
 prodR	.fill	7		# the register of the product
