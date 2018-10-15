@@ -3,7 +3,6 @@
 		lw		mpliR	0		mplier		# load Multiplier into reg 3
 		lw		loopR	0		loops		# load 32 into loop register to check what loop were on
 		lw		neg1R	0		neg1 		# load -1 into neg1R for loop decramenting
-		add		0		0		iReg		# add 0 into i reg to track loops
 loop	nand	maskR	mpliR	4			# nand the mask with the mplier and put in 4
 		add 	loopR	neg1R	loopR		# decrement loopR by 1
 		nand	4		4		4			# nand 4 with 4 to get and mask and mplier
