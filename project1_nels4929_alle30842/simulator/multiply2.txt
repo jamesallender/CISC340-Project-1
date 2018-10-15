@@ -9,7 +9,7 @@ loop	nand	1	3	4		# nand the mask with the mplier and put in 4
 		beq		0	4	skip	# if 4 is 0 skip down to skip
 		add		7	3	7		# add mpliR to prodR
 skip	add		2	2	2		# add multiplicand to istself shifting it left
-		and		1	1	1		# add the mask to itself to shift it left
+		add		1	1	1		# add the mask to itself to shift it left
 		beq		0	5	done	# of loopR is 0 branch to done
 done	halt
 mask	.fill	1		# fill 1 for the inital value for the mask
