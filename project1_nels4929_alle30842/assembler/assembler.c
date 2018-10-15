@@ -211,7 +211,7 @@ int main(int argc, char **argv){
       		offset = handleParams(lineArr[3], hash, lineNum, 3);
 
 		if (regA>7 || regA<0 || regB>7 || regB<0){
-			fprintf(stderr, "I type Error: Register A: %d or B: %d value on line number %d is invalid\nExiting\n", regA, regB, lineNum);
+			fprintf(stderr, "I type Error: Register A: %d(raw: %s) or B: %d(raw: %s) value on line number %d is invalid\nExiting\n", regA, lineArr[1], regB, lineArr[2], lineNum);
 			exit(EXIT_FAILURE);
 		}
       		// Do shifting
