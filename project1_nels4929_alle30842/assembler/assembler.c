@@ -188,7 +188,7 @@ int main(int argc, char **argv){
 
 		  	// Ensure register value is in range 
 			if (regA>7 || regA<0 || regB>7 || regB<0 || destReg>7 || destReg<0){
-				fprintf(stderr, "Register value on line number %d is invalid\nExiting\n", lineNum);
+				fprintf(stderr, "R type Error: Register A: %d or B: %d or dest %d value on line number %d is invalid\nExiting\n", regA, regB, dest, lineNum);
 				exit(EXIT_FAILURE);
 			}
       		// Do shifting
@@ -211,7 +211,7 @@ int main(int argc, char **argv){
       		offset = handleParams(lineArr[3], hash, lineNum, 3);
 
 		if (regA>7 || regA<0 || regB>7 || regB<0){
-			fprintf(stderr, "Register value on line number %d is invalid\nExiting\n", lineNum);
+			fprintf(stderr, "I type Error: Register A: %d or B: %d value on line number %d is invalid\nExiting\n", regA, regB, lineNum);
 			exit(EXIT_FAILURE);
 		}
       		// Do shifting
@@ -243,7 +243,7 @@ int main(int argc, char **argv){
 
       		// Ensure register value is in range 
 			if (regA>7 || regA<0 || regB>7 || regB<0){
-				fprintf(stderr, "Register value on line number %d is invalid\nExiting\n", lineNum);
+				fprintf(stderr, "J type Error: Register A: %d or B: %d value on line number %d is invalid\nExiting\n", regA, regB, lineNum);
 				exit(EXIT_FAILURE);
 			}
       		// Do shifting
