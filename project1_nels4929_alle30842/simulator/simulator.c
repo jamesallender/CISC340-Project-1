@@ -39,6 +39,7 @@ int main(int argc, char **argv){
 	int lineInt;
 	int lineArr[4];
 	int haltFlag =0;
+	int n_instrs =0;
 	// Verify correct # of args given either 3 or 5 for 1 or 2 options (i,o)
 	if (argc != 3) {
 	       fprintf(stderr, "Was not given either 1 or 2 sets of input arguments.\nShould be:\t-i [input file]\nExiting\n");
@@ -164,11 +165,14 @@ int main(int argc, char **argv){
 	      	else if(optCode == 7){
 			printf("found NOOP instruction!\n");
 	      	}
-	state.pc = state.pc +1;
-    }//while
-    // Close files as apropriate
+		n_instrs ++;
+		state.pc = state.pc +1;
+    	}//while
+    	// Close files as apropriate
 	fclose(inFile);
     	print_state(&state);
+	print_stats(n_instrs);
+
 	return 0;
 }//main
 
