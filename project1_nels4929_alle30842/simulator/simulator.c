@@ -12,12 +12,13 @@ Project 01
 #include <glib.h>
 #include <string.h>
 #include <ctype.h>
-
+#define NUMREG 8
+#define NUMMEMORY 65536
 // Structure for
 typedef struct state_struct {
 	int pc;
-	int mem[65536];
-	int reg[8];
+	int mem[NUMMEMORY];
+	int reg[NUMREG];
 	int num_memory;
 } statetype;
 
@@ -27,7 +28,7 @@ void print_stats(int n_instrs);
 
 int main(int argc, char **argv){
 	// Variables
-	struct state_struct state;
+	statetype state;
 	int opt; // the value of the opt form getopt
 	FILE* inFile; // our input File
 	char *inFileName; // our input file name
@@ -74,9 +75,9 @@ int main(int argc, char **argv){
 		lineInt  = strtol(lineBuffer,NULL,10);
 		
 		state.mem[i] = lineInt;
-	
-		printf("mem[i]: %d\n",state.mem[i]);
-
+		
+		state.num_memory++;	
+		
 		i++;
 	}	
 	state.pc =0;
