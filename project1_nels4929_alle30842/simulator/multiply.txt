@@ -1,0 +1,27 @@
+		lw		maskR	0		mask		# load our inital bitmask int reg 1
+		lw		mcandR	0		mcand		# load Multiplicand into reg 2
+		lw		mplierR	0		mplier		# load Multiplier into reg 3
+		lw		loopR	0		loops		# load 32 into loop register to check what loop were on
+		lw		neg1R	0		neg1 		# load -1 into neg1R for loop decramenting
+		add		0		0		iReg		# add 0 into i reg to track loops
+loop	nand	maskR	mplierR	4			# nand the mask with the mplier and put in 4
+		add 	loopR	neg1R	loopR		# decrement loopR by 1
+		nand	4		4		4			# nand 4 with 4 to get and mask and mplier
+		beq		0		4		skip		# if 4 is 0 skip down to skip
+		add		prodR	mplierR	prodR		# add mplierR to prodR
+skip	add		mcandR	mcandR	mcandR		# add multiplicand to istself shifting it left
+		and		maskR	maskR	maskR		# add the mask to itself to shift it left
+		beq		0		loopR	done		# of loopR is 0 branch to done
+done	halt
+
+mask	.fill	1		# fill 1 for the inital value for the mask
+maskR	.fill	1		# the regester mask is in
+mcand	.fill	29562	# the value of the multiplicad
+mplier	.fill	11834	# the value of the Multiplier
+mcandR	.fill	2		# the register the multiplicand is in
+mplierR	.fill	3		# the regester the multiplier is in
+prodR	.fill	7		# the register of the product
+loops	.fill	32		# 32 to be initall put in reg 5 (loopR)
+loopR	.fill	5		# the register holding the loop num decramenting from 32
+neg1	.fill 	-1		# -1 to be put in reg 6 (neg1R)
+neg1R	.fill	6		# reg holding -1
