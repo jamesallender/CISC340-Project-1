@@ -154,7 +154,6 @@ int main(int argc, char **argv){
 	      	else if(optCode == 5){
 			state.reg[regA] = state.pc +1;
 			state.pc =state.reg[regB];
-			state.pc = state.pc +1;
 	      	}
 		// HALT
 	      	else if(optCode == 6){
