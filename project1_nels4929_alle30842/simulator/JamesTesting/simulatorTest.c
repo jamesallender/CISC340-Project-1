@@ -122,12 +122,14 @@ int main(int argc, char **argv){
 		print_state(&state);
 	 
 		// ADD
-	      	if(optCode == 0){
+	    if(optCode == 0){
+	    	printf("!ADD!");
 			state.reg[destR] = state.reg[regA] + state.reg[regB];
 	      		state.pc = state.pc +1;
 		}
 		// NAND
-	      	else if(optCode == 1){
+		else if(optCode == 1){
+	      	printf("!NAND!");
 	      	printf("regA: %d, regB: %d\n", state.reg[regA], state.reg[regB]);
 	      	int regAaB = (state.reg[regA] & state.reg[regB]);
 	      	printf("regA&regB: %d\n", regAaB);
@@ -139,39 +141,44 @@ int main(int argc, char **argv){
 	
 
 		// LW
-	      	else if(optCode == 2){
+	    else if(optCode == 2){
+	    	printf("!LW!");
 			state.reg[regA] = state.mem[state.reg[regB] + imm];
 	      		state.pc = state.pc +1;
 		}
 		// SW
-	      	else if(optCode == 3){
+	    else if(optCode == 3){
+	      	printf("!SW!");
 			state.mem[state.reg[regB] + imm] = state.reg[regA]; 
-	      		state.pc = state.pc +1;
+	      	state.pc = state.pc +1;
 		}
 		// BEQ
-	      	else if(optCode == 4){
-			if (state.reg[regA] == state.reg[regB]){
+	    else if(optCode == 4){
+	      	printf("!BEQ!");
+			if (state.reg[regA] == state.reg[regB]){ // switch?? != ?
 				state.pc = state.pc +  imm;
 			}
-	      		state.pc = state.pc +1;
+	      	state.pc = state.pc +1;
 		}
 		// JALR
-	      	else if(optCode == 5){
+	    else if(optCode == 5){
+	    	printf("!JALR!");
 			state.reg[regA] = state.pc +1;
 			state.pc = regB;
 			state.pc = state.pc +1;
-	      	}
+	    }
 		// HALT
-	      	else if(optCode == 6){
-			
+	    else if(optCode == 6){
+			printf("!HALT!");
 			haltFlag = 1;
 	      	}
 		// NOOP
-	      	else if(optCode == 7){
+	    else if(optCode == 7){
+	    	printf("!NOOP!");
 			state.pc = state.pc +1;
-	      	}
+	    }
 		n_instrs ++;
-	    	}//while
+	}//while
     	// Close files as apropriate
 	fclose(inFile);
 	// Print apropriate information
