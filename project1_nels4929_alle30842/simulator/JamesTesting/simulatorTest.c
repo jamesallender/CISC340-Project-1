@@ -129,8 +129,10 @@ int main(int argc, char **argv){
 		// NAND
 	      	else if(optCode == 1){
 	      	printf("regA: %d, regB: %d\n", state.reg[regA], state.reg[regB]);
-	      	int regAaB = state.reg[regA] & state.reg[regB]
+	      	int regAaB = (state.reg[regA] & state.reg[regB]);
 	      	printf("regA&regB: %d\n", regAaB);
+	      	int regAnB = ~(state.reg[regA] & state.reg[regB]);
+	      	printf("regA&regB: %d\n", regAnB);
 			state.reg[destR] =~( state.reg[regA] & state.reg[regB]);
 	      		state.pc = state.pc +1;
 		}
