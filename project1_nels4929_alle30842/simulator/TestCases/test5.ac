@@ -4,8 +4,7 @@
 	sw	3	0	a
 	add	3	3	2
 	add	3	3	2	
-	sw	3	0	c
+	sw	3	0	1500
 	halt			
 a	.fill	4	
 b	.fill	2
-c	.fill	1500
