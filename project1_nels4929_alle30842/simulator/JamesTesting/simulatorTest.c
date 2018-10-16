@@ -201,10 +201,10 @@ void print_state(statetype *stateptr){
 	int i;
 	printf("\n@@@\nstate:\n");
 	printf("\tpc %d\n", stateptr->pc);
-	printf("\tmemory:\n");
-	for(i = 0; i < stateptr->num_memory; i++){
-		printf("\t\tmem[%d]=%d\n", i, stateptr->mem[i]);
-	}
+	//printf("\tmemory:\n");
+	//for(i = 0; i < stateptr->num_memory; i++){
+	//	printf("\t\tmem[%d]=%d\n", i, stateptr->mem[i]);
+	//}
 	printf("\tregisters:\n");
 	for(i = 0; i < 8; i++){
 		printf("\t\treg[%d]=%d\n", i, stateptr->reg[i]);
