@@ -1,0 +1,4 @@
+	lw	1	0	three
+	nand	2	1	1
+	halt
+three	.fill	3

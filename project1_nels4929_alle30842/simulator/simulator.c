@@ -141,11 +141,8 @@ int main(int argc, char **argv){
 		}
 		// SW
 	    else if(optCode == 3){
-			state.mem[state.reg[regB] + imm] = state.reg[regA]; 
+		state.mem[state.reg[regB] + imm] = state.reg[regA]; 
 	      	state.pc = state.pc +1;
-	      	if((state.reg[regB] + imm)>=state.num_memory){
-	      		state.num_memory = state.reg[regB] + imm + 1;
-	      	}
 		}
 		// BEQ
 	    else if(optCode == 4){
