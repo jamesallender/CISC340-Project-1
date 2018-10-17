@@ -14,17 +14,18 @@ Project 01
 #include <ctype.h>
 #define NUMREG 8
 #define NUMMEMORY 65536
-// Structure for
+
+// Structure to hold the state of the simulated machine durring the run of a machine code program
 typedef struct state_struct {
-	int pc;
-	int mem[NUMMEMORY];
-	int reg[NUMREG];
-	int num_memory;
+	int pc;	// program counter
+	int mem[NUMMEMORY]; // array to holm the memory of size NUMMEMORY
+	int reg[NUMREG]; // array to hold the registers of size NUMREG
+	int num_memory;	// int that holds the number of lines of machine code read into the program that are stored in memory
 } statetype;
 
-int convert_num(int num);
-void print_state(statetype *stateptr);
-void print_stats(int n_instrs);
+int convert_num(int num); // sign extends a 16bit number into its 32 bit equivilent
+void print_state(statetype *stateptr); // prints the current state of the machine
+void print_stats(int n_instrs); // prints statistics on the run of the machine code
 
 int main(int argc, char **argv){
 	// Variables
@@ -142,6 +143,9 @@ int main(int argc, char **argv){
 	      	else if(optCode == 3){
 			state.mem[state.reg[regB] + imm] = state.reg[regA]; 
 	      		state.pc = state.pc +1;
+	      	if((state.reg[regB] + imm)>state.num_memory){
+	      		state.num_memory = state.reg[regB] + imm;
+	      	}
 		}
 		// BEQ
 	      	else if(optCode == 4){
@@ -177,6 +181,7 @@ int main(int argc, char **argv){
 }//main
 
 
+// convert_num function sign extends a 16bit number into its 32 bit equivilent
 int convert_num(int num){
 	if (num & (1<<15) ) {
 		num -= (1<<16);
@@ -184,6 +189,7 @@ int convert_num(int num){
 	return(num);
 }
 
+// print_state function prints the current state of the machine
 void print_state(statetype *stateptr){
 	int i;
 	printf("\n@@@\nstate:\n");
@@ -199,6 +205,7 @@ void print_state(statetype *stateptr){
 	printf("end state\n");
 }
 
+// print_stats finction prints statistics on the run of the machine code
 void print_stats(int n_instrs){
 	printf("INSTRUCTIONS: %d\n", n_instrs); // total executed instructions
 }
