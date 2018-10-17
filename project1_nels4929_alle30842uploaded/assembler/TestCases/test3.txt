@@ -1,6 +1,0 @@
-        noop                            nothing
-	noop                            nothing
-	lw	1	4       imm
-	noop                            nothing
-	noop                            nothing
-imm	.fill   10
